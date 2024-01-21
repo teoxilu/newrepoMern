@@ -26,7 +26,7 @@ exports.userCart = async (req, res) => {
 
     object.product = cart[i]._id;
     object.count = cart[i].count;
-    object.color = cart[i].color;
+    object.size = cart[i].size;
     // get price for creating total
     let productFromDb = await Product.findById(cart[i]._id)
       .select("price")
@@ -216,7 +216,7 @@ exports.createCashOrder = async (req, res) => {
     paymentIntent: {
       id: uniqueid(),
       amount: finalAmount,
-      currency: "usd",
+      currency: "vnd",
       status: "Cash On Delivery",
       created: Date.now(),
       payment_method_types: ["cash"],
