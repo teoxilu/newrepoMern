@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, Tabs, Tooltip } from "antd";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -12,8 +11,10 @@ import { showAverage } from "../../functions/rating";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addToWishlist } from "../../functions/user";
+
+import config from "~/config";
 
 const { TabPane } = Tabs;
 
@@ -26,7 +27,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const handleAddToCart = () => {
     //create cart array
@@ -73,7 +74,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       });
     } else {
       toast.error("Please log in first.");
-      history.push("/login");
+      navigate.push("/login");
     }
   };
 
@@ -113,12 +114,12 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         <Card
           actions={[
             <Tooltip title={tooltip}>
-              <a onClick={handleAddToCart}>
+              <a href={config.routes.cart} onClick={handleAddToCart}>
                 <ShoppingCartOutlined className="text-danger" /> <br /> Add To
                 Cart
               </a>
             </Tooltip>,
-            <a onClick={handleAddToWishlist}>
+            <a href={config.routes.wishList} onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" /> <br /> Add to Wishlist
             </a>,
             <RatingModal>

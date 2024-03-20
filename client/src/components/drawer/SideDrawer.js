@@ -1,8 +1,8 @@
 import React from "react";
-import { Drawer, Button } from "antd";
+import { Drawer } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import unknown from "../../images/unknown.jpg";
+import { Link } from "react-router-dom";
 
 const SideDrawer = () => {
   const dispatch = useDispatch();

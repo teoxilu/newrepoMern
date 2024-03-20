@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LoadingToRedirect = () => {
-  const [count, setCount] = useState(5);
-  let history = useHistory();
+    const [count, setCount] = useState(5);
+    let navigate = useNavigate();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCount((currentCount) => --currentCount);
-    }, 1000);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCount((currentCount) => --currentCount);
+        }, 1000);
 
-    //redirect once count=0
-    count === 0 && history.push("/");
-    //cleanup
-    return () => clearInterval(interval);
-  }, [count, history]);
+        //redirect once count=0
+        count === 0 && navigate.push('/');
+        //cleanup
+        return () => clearInterval(interval);
+    }, [count, navigate]);
 
-  return (
-    <div className="container p-5 text-center">
-      <p>Redirecting you in {count} seconds</p>
-    </div>
-  );
+    return (
+        <div className="container p-5 text-center">
+            <p>Redirecting you in {count} seconds</p>
+        </div>
+    );
 };
 
 export default LoadingToRedirect;

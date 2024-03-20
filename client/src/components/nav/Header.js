@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Search from "../forms/Search";
 
 const { SubMenu, Item } = Menu;
@@ -23,7 +23,7 @@ const Header = () => {
   let dispatch = useDispatch();
   let { user, cart } = useSelector((state) => ({ ...state }));
 
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -35,7 +35,7 @@ const Header = () => {
       type: "LOGOUT",
       payload: null,
     });
-    history.push("/login");
+    navigate.push("/login");
   };
 
   return (

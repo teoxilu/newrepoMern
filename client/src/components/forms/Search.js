@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SearchOutlined } from "@ant-design/icons";
 
@@ -8,7 +8,7 @@ const Search = () => {
   const { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     dispatch({
@@ -19,7 +19,7 @@ const Search = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push(`/shop?${text}`);
+    navigate.push(`/shop?${text}`);
   };
 
   return (
