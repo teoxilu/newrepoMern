@@ -13,7 +13,7 @@ const Home = () => {
       </div> */}
 
       <h4 className="text-center p3 mt-5 mb-5 display-4 jumbotron">
-        New Arrivals
+        New Arrivalssss
       </h4>
 
       <NewArrivals />
