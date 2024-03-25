@@ -50,7 +50,7 @@ function StickyHeader() {
     );
 
     return (
-        <Navbar className="sticky top-0 z-50 h-max max-w-full w-full rounded-none px-4 py-2 lg:px-40 lg:py-4 bg-light-surface">
+        <Navbar className="sticky top-0 z-50 h-max max-w-full w-full rounded-none px-40 py-2 lg:px-40 lg:py-4 bg-light-surface">
             <div className="flex items-center justify-between text-blue-gray-900">
                 <Link to={config.routes.home}>
                     <img src={images.logo} alt="Logo" className="h-auto max-w-full w-44 z-50" />

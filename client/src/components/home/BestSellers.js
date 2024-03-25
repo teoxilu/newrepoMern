@@ -29,11 +29,11 @@ const BestSellers = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="px-40 mt-14">
         {loading ? (
           <LoadingCard count={3} />
         ) : (
-          <div className="row">
+          <div className="grid grid-rows-1 gap-x-2">
             {products.map((product) => (
               <div key={product._id} className="col-md-4">
                 <ProductCard product={product} />

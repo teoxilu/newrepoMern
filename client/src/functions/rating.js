@@ -1,3 +1,4 @@
+import { Typography } from "@material-tailwind/react";
 import React from "react";
 import StarRating from "react-star-ratings";
 
@@ -19,17 +20,15 @@ export const showAverage = (p) => {
     console.log("result", result);
 
     return (
-      <div className="text-center pt-1 pb-3">
-        <span>
+      <div className="inline-flex space-x-1 items-center text-center pt-2">
           <StarRating
             starRatedColor="orange"
-            starDimension="25px"
+            starDimension="24px"
             starSpacing="1px"
             rating={result}
             editing={false}
-          />{" "}
-          ({p.ratings.length})
-        </span>
+          />
+          <Typography className="text-sm text-light-on-surface">({p.ratings.length})</Typography>
       </div>
     );
   }
