@@ -33,7 +33,7 @@ const publicRoutes = [
     // Default Route
     { path: config.routes.home, component: Home },
     { path: config.routes.login, component: Login },
-    { path: config.routes.register, component: Register },
+    { path: config.routes.register, component: Register, layout:null },
     { path: config.routes.registerComplete, component: RegisterComplete },
     { path: config.routes.forgotPassword, component: ForgotPassword },
     { path: config.routes.product, component: ForgotPassword },

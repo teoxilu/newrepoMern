@@ -89,7 +89,7 @@ function StickyHeader() {
                                     className="hidden lg:inline-block rounded-full bg-light-primary 
                                 "
                                 >
-                                    <span className="text-light-on-primary hover:bg-light-on-primary/8">Log in</span>
+                                    <span className="text-light-on-primary ">Log in</span>
                                 </Button>
                             </Link>
                         </>
