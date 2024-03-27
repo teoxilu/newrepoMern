@@ -17,15 +17,18 @@ const LINKS = [
 ];
 function Footer() {
     const currentYear = new Date().getFullYear();
+    const screenHeight = window.innerHeight
     return (
-        <footer className="px-40 py-4 divide-y divide-light-outline-variant bg-light-surface-container-lowest">
+        <footer className={`mt-[${screenHeight}px] px-40 py-4 divide-y divide-light-outline-variant bg-light-surface-container-lowest`}>
             <div className="flex justify-between mb-6">
                 <div className="flex-col space-y-8">
-                    <img src={images.logo} alt="logo" className="h-auto max-w-full w-44 pb-8" />
+                    <img src={images.logo2} alt="Logo" className="h-auto max-w-full max-h-20 rounded-full z-50" />
                     <Typography className="text-base text-light-on-surface font-normal">
                         01 Vo Van Ngan, Linh Chieu, Thu Duc, Ho Chi Minh City, Vietnam
                     </Typography>
-                    <Typography className="text-base text-light-on-surface font-normal">Hotline: 0973711868 </Typography>
+                    <Typography className="text-base text-light-on-surface font-normal">
+                        Hotline: 0973711868{' '}
+                    </Typography>
                     <div className="flex space-x-5 items-center">
                         <Link to="#">
                             <IconButton
@@ -66,7 +69,7 @@ function Footer() {
                                 <li key={link}>
                                     <Typography
                                         as="a"
-                                        href="#"
+                                        to="#"
                                         className="py-1.5 font-normal transition-colors text-light-on-surface hover:text-light-primary"
                                     >
                                         {link}

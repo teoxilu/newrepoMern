@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import config from '~/config';
 
 // Pages
+import Test from '~/pages/Test';
 const Home = lazy(() => import('~/pages/Home'));
 const Login = lazy(() => import('~/pages/auth/Login'));
 const Register = lazy(() => import('~/pages/auth/Register'));
@@ -33,7 +34,7 @@ const publicRoutes = [
     // Default Route
     { path: config.routes.home, component: Home },
     { path: config.routes.login, component: Login },
-    { path: config.routes.register, component: Register, layout:null },
+    { path: config.routes.register, component: Register, layout: null },
     { path: config.routes.registerComplete, component: RegisterComplete },
     { path: config.routes.forgotPassword, component: ForgotPassword },
     { path: config.routes.product, component: ForgotPassword },
@@ -43,6 +44,7 @@ const publicRoutes = [
     { path: config.routes.cart, component: Cart },
     { path: config.routes.checkout, component: Checkout },
     { path: config.routes.payment, component: Payment },
+    { path: config.routes.test, component: Test, layout: null },
 
     // User Route
     { path: config.routes.history, component: History, customRoute: UserRoute },

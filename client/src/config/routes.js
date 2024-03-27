@@ -12,6 +12,7 @@ const routes = {
     cart: '/cart',
     checkout: '/checkout',
     payment: '/payment',
+    test: '/test',
 
     // User Route
     history: '/user/history',

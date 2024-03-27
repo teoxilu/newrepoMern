@@ -119,6 +119,7 @@ const Cart = ({ history }) => {
           )}
         </div>
       </div>
+      <br/>
     </div>
   );
 };

@@ -7,7 +7,7 @@ const Header = lazy(() => import('~/components/nav/Header'));
 const SideDrawer = lazy(() => import('~/components/drawer/SideDrawer'));
 function DefaultLayout({ children }) {
     return (
-        <div>
+        <div className="bg-light-background">
             <StickyHeader />
             {/* <Header /> */}
             <SideDrawer />

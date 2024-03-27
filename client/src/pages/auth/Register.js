@@ -35,7 +35,7 @@ const Register = ({ history }) => {
         <form onSubmit={handleSubmit}>
             <input
                 type="email"
-                className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border border-light-outline"
+                className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email"
@@ -55,7 +55,7 @@ const Register = ({ history }) => {
                         clipRule="evenodd"
                     />
                 </svg>
-                Use at least 8 characters, one uppercase, one lowercase and one number.
+                Use at least 6 characters, one uppercase, one lowercase and one number.
             </Typography>
 
             <br />
