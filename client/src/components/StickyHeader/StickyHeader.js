@@ -62,14 +62,14 @@ function StickyHeader() {
 
                     {/* Icon Cart */}
                     <Link to={config.routes.cart}>
-                        <IconButton
-                            variant="text"
-                            className="rounded-full text-light-on-surface-variant hover:bg-light-on-surface-variant/8"
-                        >
-                            <Badge content={cart.length} withBorder>
+                        <Badge content={cart.length} withBorder>
+                            <IconButton
+                                variant="text"
+                                className="rounded-full text-light-on-surface-variant hover:bg-light-on-surface-variant/8"
+                            >
                                 <ShoppingCartIcon className="w-6 h-6" />
-                            </Badge>
-                        </IconButton>
+                            </IconButton>
+                        </Badge>
                     </Link>
 
                     {/* Register/ Login */}
