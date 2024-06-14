@@ -67,14 +67,14 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   const handleAddToWishlist = (e) => {
     e.preventDefault();
     if (user && user.token) {
-      addToWishlist(product._id, user.token).then((res) => {
+      addToWishlist(product?._id, user.token).then((res) => {
         console.log("ADDED TO WISHLIST", res.data);
         toast.success("Added to wishlist");
         
       });
     } else {
       toast.error("Please log in first.");
-      navigate.push("/login");
+      navigate("/login");
     }
   };
 

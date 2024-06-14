@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { ToastContainer } from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.css';
 import StickyHeader from '~/components/StickyHeader';
 import Footer from '~/components/Footer';
 const Header = lazy(() => import('~/components/nav/Header'));
@@ -11,7 +11,19 @@ function DefaultLayout({ children }) {
             <StickyHeader />
             {/* <Header /> */}
             <SideDrawer />
-            <ToastContainer />
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                // transition={Bounce}
+            />
             <div className="bg-light-surface">{children}</div>
             <Footer />
         </div>

@@ -17,7 +17,7 @@ const App = () => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 const idTokenResult = await user.getIdTokenResult();
-                console.log('user', user);
+                // console.log('user', user);
 
                 currentUser(idTokenResult.token)
                     .then((res) => {
@@ -67,7 +67,7 @@ const App = () => {
 
                             return (
                                 <Route
-                                    // exact
+                                    exact
                                     key={index}
                                     path={route.path}
                                     element={
@@ -75,7 +75,7 @@ const App = () => {
                                             <Page />
                                         </Layout>
                                     }
-                                ></Route>
+                                />
                             );
                         })}
                     </Routes>

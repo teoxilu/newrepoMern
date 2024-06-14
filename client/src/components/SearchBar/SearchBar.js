@@ -30,7 +30,7 @@ function SearchBar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate.push(`/shop?${text}`);
+        navigate(`/shop?${text}`);
     };
 
     // useEffect(() => {

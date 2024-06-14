@@ -11,7 +11,7 @@ const LoadingToRedirect = () => {
         }, 1000);
 
         //redirect once count=0
-        count === 0 && navigate.push('/');
+        count === 0 && navigate('/');
         //cleanup
         return () => clearInterval(interval);
     }, [count, navigate]);

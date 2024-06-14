@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button, Typography } from '@material-tailwind/react';
 import config from '~/config';
 import images from '~/images';
+import { createOrUpdateUser } from '~/functions/auth';
 const Login = ({ navigate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,95 +16,98 @@ const Login = ({ navigate }) => {
 
     const screenWidth = window.innerWidth;
 
-    // useEffect(() => {
-    //     let intended = navigate.location.state;
-    //     if (intended) {
-    //         return;
-    //     } else {
-    //         if (user && user.token) navigate.push('/');
-    //     }
-    // }, [user, navigate]);
+    const _navigate = useNavigate();
+    useEffect(() => {
+        let intended = navigate?.location.state;
+        if (intended) {
+            return;
+        } else {
+            if (user && user.token) _navigate('/');
+        }
+    }, [user, navigate]);
 
     let dispatch = useDispatch();
 
-    // const roleBasedRedirect = (res) => {
-    //     // check if intended page
-    //     let intended = navigate.location.state;
-    //     if (intended) {
-    //         navigate.push(intended.from);
-    //     } else {
-    //         if (res.data.role === 'admin') {
-    //             navigate.push('/admin/dashboard');
-    //         } else {
-    //             navigate.push('/user/history');
-    //         }
-    //     }
-    // };
+    const roleBasedRedirect = (res) => {
+        // check if intended page
+        let intended = navigate?.location.state;
+        if (intended) {
+            navigate(intended.from);
+        } else {
+            if (res.data.role === 'admin') {
+                _navigate('/admin/dashboard');
+            } else {
+                // _navigate('/user/history');
+                _navigate('/');
+            }
+        }
+    };
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     setLoading(true);
-    //     // console.table(email, password);
-    //     try {
-    //         const result = await auth.signInWithEmailAndPassword(email, password);
-    //         const { user } = result;
-    //         const idTokenResult = await user.getIdTokenResult();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        // console.table(email, password);
+        try {
+            const result = await auth.signInWithEmailAndPassword(email, password);
+            const { user } = result;
+            const idTokenResult = await user.getIdTokenResult();
 
-    //         createOrUpdateUser(idTokenResult.token)
-    //             .then((res) => {
-    //                 dispatch({
-    //                     type: 'LOGGED_IN_USER',
-    //                     payload: {
-    //                         name: res.data.name,
-    //                         email: res.data.email,
-    //                         token: idTokenResult.token,
-    //                         role: res.data.role,
-    //                         _id: res.data._id,
-    //                     },
-    //                 });
-    //                 roleBasedRedirect(res);
-    //             })
-    //             .catch((err) => console.log(err));
+            createOrUpdateUser(idTokenResult.token)
+                .then((res) => {
+                    dispatch({
+                        type: 'LOGGED_IN_USER',
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: idTokenResult.token,
+                            role: res.data.role,
+                            _id: res.data._id,
+                        },
+                    });
+                    roleBasedRedirect(res);
+                })
+                .catch((err) => console.log(err));
 
-    //         // history.push("/");
-    //     } catch (error) {
-    //         console.log(error);
-    //         toast.error(error.message);
-    //         setLoading(false);
-    //     }
-    // };
+            _navigate('/');
+        } catch (error) {
+            console.error(error);
+            // toast.error(error.message);
+            setLoading(false);
+        }
+    };
 
-    // const googleLogin = async () => {
-    //     auth.signInWithPopup(googleAuthProvider)
-    //         .then(async (result) => {
-    //             const { user } = result;
-    //             const idTokenResult = await user.getIdTokenResult();
-    //             createOrUpdateUser(idTokenResult.token)
-    //                 .then((res) => {
-    //                     dispatch({
-    //                         type: 'LOGGED_IN_USER',
-    //                         payload: {
-    //                             name: res.data.name,
-    //                             email: res.data.email,
-    //                             token: idTokenResult.token,
-    //                             role: res.data.role,
-    //                             _id: res.data._id,
-    //                         },
-    //                     });
-    //                     roleBasedRedirect(res);
-    //                 })
-    //                 .catch((err) => console.log(err));
-    //             // history.push("/");
-    //         })
-    //         .catch((err) => {
-    //             console.log(err);
-    //             toast.error(err.message);
-    //         });
-    // };
+    const googleLogin = async () => {
+        auth.signInWithPopup(googleAuthProvider)
+            .then(async (result) => {
+                const { user } = result;
+                const idTokenResult = await user.getIdTokenResult();
+                createOrUpdateUser(idTokenResult.token)
+                    .then((res) => {
+                        dispatch({
+                            type: 'LOGGED_IN_USER',
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                role: res.data.role,
+                                _id: res.data._id,
+                                avatarImage: user.multiFactor.user.photoUrl,
+                                expirationTime: idTokenResult.expirationTime,
+                            },
+                        });
+                        roleBasedRedirect(res);
+                    })
+                    .catch((err) => console.log(err));
+                _navigate('/');
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error(err.message);
+            });
+    };
 
     const loginForm = () => (
-        // <form onSubmit={handleSubmit}>
-        <form className="flex-col space-y-3">
+        <form onSubmit={handleSubmit} className="flex-col space-y-3">
             <input
                 type="email"
                 className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
@@ -123,7 +127,7 @@ const Login = ({ navigate }) => {
                 required
             />
             <Button
-                // onClick={handleSubmit}
+                onClick={handleSubmit}
                 variant="filled"
                 size="lg"
                 className="inline-flex justify-center w-full items-center gap-3 rounded-full  disabled:bg-[#908d8c] bg-light-primary transition-colors"
@@ -149,7 +153,7 @@ const Login = ({ navigate }) => {
 
                 <div className="flex-col space-y-5 pt-10">
                     <Button
-                        // onClick={handleSubmit}
+                        onClick={handleSubmit}
                         variant="outlined"
                         size="lg"
                         className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
@@ -161,7 +165,7 @@ const Login = ({ navigate }) => {
                     </Button>
 
                     <Button
-                        // onClick={googleLogin}
+                        onClick={googleLogin}
                         // type="danger"
                         variant="outlined"
                         className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"

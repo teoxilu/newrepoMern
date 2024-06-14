@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
 import { userCart } from '../functions/user';
 import config from '~/config';
-import { Button, Typography } from '@material-tailwind/react';
+import { Button, Card, Typography } from '@material-tailwind/react';
+import numeral from 'numeral';
 const Cart = ({ history }) => {
+    const navigate = useNavigate();
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
@@ -21,7 +23,7 @@ const Cart = ({ history }) => {
         userCart(cart, user.token)
             .then((res) => {
                 console.log('CART POST RES', res);
-                if (res.data.ok) history.push('/checkout');
+                if (res.data.ok) navigate('/checkout');
             })
             .catch((err) => console.log('cart save err', err));
     };
@@ -35,41 +37,58 @@ const Cart = ({ history }) => {
         userCart(cart, user.token)
             .then((res) => {
                 console.log('CART POST RES', res);
-                if (res.data.ok) history.push('/checkout');
+                if (res.data.ok) navigate('/checkout');
             })
-            .catch((err) => console.log('cart save err', err));
+            .catch((err) => console.error('cart save err', err));
     };
 
+    const headerHeight = document.getElementById('header')?.offsetHeight
     const showCartItems = () => (
-        <table className="table table-bordered">
-            <thead className="thead-light">
-                <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Brand</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Remove</th>
-                </tr>
-            </thead>
-
-            {cart.map((p) => (
-                <ProductCardInCheckout key={p._id} p={p} />
-            ))}
-        </table>
+        <Card className={`h-full w-full overflow-y-scroll`}>
+            <table className="table table-auto table-bordered">
+                <thead className="thead-light">
+                    <tr >
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Image</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Title</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Price</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Brand</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Size</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Count</Typography>
+                        </th>
+                        <th scope="col" className="!bg-light-surface-container-lowest">
+                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Remove</Typography>
+                        </th>
+                    </tr>
+                </thead>
+    
+                {cart.map((p) => (
+                    <ProductCardInCheckout key={p._id} p={p} />
+                ))}
+            </table>
+        </Card>
     );
 
     return (
-        <div className="grid grid-cols-12 px-40 pt-2 gap-x-6">
+        <div className="grid grid-cols-12 px-40 pt-8 gap-x-6">
             <div className="col-span-8">
-                <Typography className="text-light-on-background ">
-                    Cart / <span className="text-light-primary">{cart.length}</span> Product
+                <Typography className="text-light-on-background font-normal ">
+                    Cart / <span className="text-light-primary font-medium">{cart.length}</span> Product
                 </Typography>
 
-                {!cart.length ? (
+                {cart.length === 0 ? (
                     <Typography className="text-center translate-y-4 text-light-on-background ">
-                        No products in cart.{' '}
+                        No products in cart.
                         <Link
                             to={config.routes.shop}
                             className="opacity-80 hover:opacity-100 transition-opacity hover:text-light-primary underline hover:no-underline"
@@ -80,24 +99,23 @@ const Cart = ({ history }) => {
                 ) : (
                     showCartItems()
                 )}
-                {showCartItems()}
             </div>
-            <div className="flex-col space-y-5 col-span-4 rounded-xl bg-light-surface-container-medium p-6">
+            <div className={`sticky z-49 flex-col space-y-5 col-span-4 rounded-xl divide-y divide-light-outline-variant bg-light-surface-container-medium p-6 mt-4 top-[${headerHeight + 16}px] h-fit`}>
                 <div className="flex-col">
                     <div className="w-full inline-flex items-center justify-between text-light-on-surface">
                         <Typography className="font-medium">Subtotal ({cart.length})</Typography>
-                        <b>{getTotal()} VND</b>
+                        <b>{numeral(getTotal()).format('0,0')} VND</b>
                     </div>
                     <Typography variant="small" className="text-light-on-surface-variant">
                         (excluding delivery)
                     </Typography>
                 </div>
-                {!user ? (
-                    <div className="flex divide-y divide-light-outline-variant">
+                {user ? (
+                    <div className="flex flex-col space-y-4 pt-2">
                         <Button
                             onClick={saveOrderToDb}
-                            variant="outlined"
-                            className="hidden lg:inline-block rounded-full border-light-outline hover:bg-light-primary/8"
+                            variant="text"
+                            className="hidden lg:inline-block rounded-full  hover:bg-light-primary/8"
                             disabled={!cart.length}
                         >
                             <span className="text-light-primary">Pay with Credit/Debit Card</span>
@@ -112,7 +130,7 @@ const Cart = ({ history }) => {
                         </Button>
                     </div>
                 ) : (
-                    <div>
+                    <div className="pt-2">
                         <Link
                             to={{
                                 pathname: '/login',

@@ -8,11 +8,11 @@ const Product = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
   const [related, setRelated] = useState([]);
-
+console.log(match);
   //redux
   const { user } = useSelector((state) => ({ ...state }));
 
-  const { slug } = match.params;
+  const { slug } = match?.params;
 
   useEffect(() => {
     loadSingleProduct();

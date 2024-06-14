@@ -16,7 +16,7 @@ const LoadingCard = ({ count }) => {
     return totalCards;
   };
 
-  return <div className="row pb-5">{cards()}</div>;
+  return <div className="flex items-center space-x-2 justify-evenly">{cards()}</div>;
 };
 
 export default LoadingCard;

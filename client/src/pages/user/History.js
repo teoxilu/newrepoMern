@@ -13,7 +13,7 @@ const History = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user.role !== 'customer') navigate.push('/');
+        if (user.role !== 'customer') navigate('/');
     }, [user, navigate]);
 
     useEffect(() => {
@@ -22,7 +22,7 @@ const History = () => {
 
     const loadUserOrders = () =>
         getUserOrders(user.token).then((res) => {
-            console.log(JSON.stringify(res.data, null, 4));
+            // console.log(JSON.stringify(res.data, null, 4));
             setOrders(res.data);
         });
 

@@ -36,7 +36,7 @@ const Header = () => {
             type: 'LOGOUT',
             payload: null,
         });
-        navigate.push(config.routes.login);
+        navigate(config.routes.login);
     };
 
     return (

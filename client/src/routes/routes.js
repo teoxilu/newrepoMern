@@ -17,6 +17,7 @@ const Wishlist = lazy(() => import('~/pages/user/Wishlist'));
 const AdminDashboard = lazy(() => import('~/pages/admin/AdminDashboard'));
 const CategoryCreate = lazy(() => import('~/pages/admin/category/CategoryCreate'));
 const CategoryUpdate = lazy(() => import('~/pages/admin/category/CategoryUpdate'));
+const CategoryHome = lazy(() => import('~/pages/category/CategoryHome'))
 const SubCreate = lazy(() => import('~/pages/admin/sub/SubCreate'));
 const ProductCreate = lazy(() => import('~/pages/admin/product/ProductCreate'));
 const AllProducts = lazy(() => import('~/pages/admin/product/AllProducts'));
@@ -37,8 +38,8 @@ const publicRoutes = [
     { path: config.routes.register, component: Register, layout: null },
     { path: config.routes.registerComplete, component: RegisterComplete },
     { path: config.routes.forgotPassword, component: ForgotPassword },
-    { path: config.routes.product, component: ForgotPassword },
-    { path: config.routes.category, component: Product },
+    { path: config.routes.product, component: Product },
+    { path: config.routes.category, component: CategoryHome },
     { path: config.routes.subcategory, component: SubHome },
     { path: config.routes.shop, component: Shop },
     { path: config.routes.cart, component: Cart },

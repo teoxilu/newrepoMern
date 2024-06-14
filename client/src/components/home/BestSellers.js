@@ -33,9 +33,9 @@ const BestSellers = () => {
         {loading ? (
           <LoadingCard count={3} />
         ) : (
-          <div className="grid grid-rows-1 gap-x-2">
+          <div className="flex items-center space-x-2 justify-evenly">
             {products.map((product) => (
-              <div key={product._id} className="col-md-4">
+              <div key={product._id} >
                 <ProductCard product={product} />
               </div>
             ))}

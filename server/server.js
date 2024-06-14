@@ -21,6 +21,7 @@ mongoose
   .catch((err) => console.log(`DB CONNECTION ERR`, err));
 
 //middlewares
+
 app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());

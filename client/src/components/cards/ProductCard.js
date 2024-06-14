@@ -11,11 +11,11 @@ import _ from 'lodash';
 
 import { showAverage } from '../../functions/rating';
 import config from '~/config';
+import numeral from 'numeral';
 
 const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
-    const [tooltip, setTooltip] = useState('Click to add');
 
     //redux
     const { user, cart } = useSelector((state) => ({ ...state }));
@@ -39,8 +39,6 @@ const ProductCard = ({ product }) => {
             //save to localstorage
             localStorage.setItem('cart', JSON.stringify(unique));
 
-            //show Tooltip
-            setTooltip('Added!');
 
             //add to redux state
             dispatch({
@@ -57,10 +55,9 @@ const ProductCard = ({ product }) => {
     };
     //destructure
     const { images, title, description, slug, price } = product;
-    console.log(product);
     return (
-        <Card className="w-96">
-            <CardHeader shadow={false} floated={false} className="h-96">
+        <Card className="w-72 h-[492px]">
+            <CardHeader shadow={false} floated={false} className="h-52">
                 <img
                     src={images && images.length ? images[0].url : unknown}
                     alt={title}
@@ -68,13 +65,13 @@ const ProductCard = ({ product }) => {
                 />
             </CardHeader>
             <CardBody>
-                <div className="pb-2 flex items-center justify-between text-[22px] leading-7 font-medium">
-                    <Typography color="blue-gray" className="text-[22px] leading-7 font-medium text-light-on-surface">
-                        {title}
-                    </Typography>
-                    <Typography className="text-[22px] leading-7 font-medium text-light-primary ">
-                        {price} VND
-                    </Typography>
+                <div className="pb-2 flex items-center justify-between gap-x-2">
+                    <p className="text-xl font-medium text-light-on-surface">{title}</p>
+                    <div>
+                        <Typography className="text-xl font-medium text-light-primary">
+                            {numeral(price).format('0,0')}
+                        </Typography>
+                    </div>
                 </div>
                 <Typography variant="small" className="font-normal opacity-75 text-light-on-surface-variant">
                     {description}
@@ -82,28 +79,27 @@ const ProductCard = ({ product }) => {
                 {product && product.ratings && product.ratings.length > 0 ? (
                     showAverage(product)
                 ) : (
-                    <Typography variant="small" className="pt-2 text-light-on-surface">
-                        No ratings yet
-                    </Typography>
+                    <Typography className="pt-2 text-light-on-surface text-xs">No ratings yet</Typography>
                 )}
             </CardBody>
-            <CardFooter className="flex space-x-2">
-                <Link to={config.routes.product}>
+            <CardFooter className="w-full flex items-center justify-between space-x-2">
+                <Link to={`/product/${slug}`}>
                     <Button
+                        size="sm"
                         ripple
                         variant="outlined"
-                        fullWidth={true}
-                        className="flex items-center space-x-2 rounded-full  border-light-outline hover:bg-light-primary/8 text-light-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        className="flex items-center space-x-1 rounded-full border-light-outline hover:bg-light-primary/8 text-light-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
-                        <EyeIcon className="w-6 h-6" />
+                        {/* <EyeIcon className="w-6 h-6" /> */}
                         <Typography className="text-xs font-bold">View Product</Typography>
                     </Button>
                 </Link>
-                <Tooltip title={tooltip}>
-                    <button
+                    <Button
+                        fullWidth
+                        size="sm"
                         onClick={handleAddToCart}
                         disabled={product.quantity < 1}
-                        className="flex grow items-center space-x-2 rounded-full bg-light-primary text-light-on-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        className="flex items-center space-x-1 rounded-full bg-light-primary text-light-on-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
                     >
                         <ShoppingCartIcon className="w-6 h-6" />
                         {product.quantity < 1 ? (
@@ -111,8 +107,7 @@ const ProductCard = ({ product }) => {
                         ) : (
                             <Typography className="text-xs font-bold">Add to Cart</Typography>
                         )}
-                    </button>
-                </Tooltip>
+                    </Button>
             </CardFooter>
         </Card>
 
