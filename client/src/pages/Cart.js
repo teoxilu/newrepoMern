@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
@@ -6,7 +6,9 @@ import { userCart } from '../functions/user';
 import config from '~/config';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
+import { useEffect } from 'react';
 const Cart = ({ history }) => {
+    const [headerHeight, setHeaderHeight] = useState(null)
     const navigate = useNavigate();
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
@@ -42,36 +44,74 @@ const Cart = ({ history }) => {
             .catch((err) => console.error('cart save err', err));
     };
 
-    const headerHeight = document.getElementById('header')?.offsetHeight
+    useEffect(() => {
+        const headerHeight = document.getElementById('header')?.offsetHeight;
+        setHeaderHeight(headerHeight);
+    }, []);
     const showCartItems = () => (
         <Card className={`h-full w-full overflow-y-scroll`}>
             <table className="table table-auto table-bordered">
                 <thead className="thead-light">
-                    <tr >
+                    <tr>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Image</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Image
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Title</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Title
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Price</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Price
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Brand</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Brand
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Size</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Size
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Count</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Count
+                            </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">
-                            <Typography variant="small" className='font-normal leading-none opacity-70 text-light-on-surface'>Remove</Typography>
+                            <Typography
+                                variant="small"
+                                className="font-normal leading-none opacity-70 text-light-on-surface"
+                            >
+                                Remove
+                            </Typography>
                         </th>
                     </tr>
                 </thead>
-    
+
                 {cart.map((p) => (
                     <ProductCardInCheckout key={p._id} p={p} />
                 ))}
@@ -100,7 +140,9 @@ const Cart = ({ history }) => {
                     showCartItems()
                 )}
             </div>
-            <div className={`sticky z-49 flex-col space-y-5 col-span-4 rounded-xl divide-y divide-light-outline-variant bg-light-surface-container-medium p-6 mt-4 top-[${headerHeight + 16}px] h-fit`}>
+            <div
+                className={`sticky z-49 flex-col space-y-5 col-span-4 rounded-xl divide-y divide-light-outline-variant bg-light-surface-container-medium p-6 mt-4 top-[${headerHeight + 16}px] h-fit`}
+            >
                 <div className="flex-col">
                     <div className="w-full inline-flex items-center justify-between text-light-on-surface">
                         <Typography className="font-medium">Subtotal ({cart.length})</Typography>

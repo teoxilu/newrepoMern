@@ -15,6 +15,7 @@ const Checkout = ({ history }) => {
     const [address, setAddress] = useState('');
     const [addressSaved, setAddressSaved] = useState(false);
     const [coupon, setCoupon] = useState('');
+    const [headerHeight, setHeaderHeight] = useState(null);
 
     // discount price
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
@@ -154,11 +155,16 @@ const Checkout = ({ history }) => {
     const pushToPayMent = () => {
         navigate('/payment');
     };
-    console.log(products.length);
+    console.log(products);
+
+    useEffect(() => {
+        const headerHeight = document.getElementById('header')?.offsetHeight;
+        setHeaderHeight(headerHeight);
+    }, []);
 
     return (
         <div className="grid grid-cols-12 grid-flow-row px-40 pt-8 gap-x-6">
-            <div className="flex flex-col space-y-2 col-span-7 text-light-on-surface">
+            <div className="flex flex-col space-y-12 col-span-7 text-light-on-surface">
                 {/* Address Container */}
                 <div>
                     <p className="text-2xl font-normal">Shipping Address</p>
@@ -174,16 +180,38 @@ const Checkout = ({ history }) => {
                         variant="small"
                         className="mt-2 flex items-center text-xs gap-1 font-normal text-light-on-surface"
                     >
-                       
                         Please enter your address details
                     </Typography>
                 </div>
+                {/* Product Container */}
+                <div className="flex flex-col space-y-2">
+                    <p className="text-2xl font-normal">Order Details</p>
+                    <div className="flex flex-col space-y-2 divide-y divide-light-outline-variant">
+                        {products.map((p, i) => {
+                            const isFirst = i === 0;
+                            const classes = isFirst ? undefined : 'pt-2';
+                            return (
+                                <div className={`flex items-center justify-between ${classes}`} key={i}>
+                                    <p className="font-medium">{p.product.title}</p>
+                                    <div className="flex flex-col items-end">
+                                        <span className="text-base font-medium text-light-primary">
+                                            {numeral(p.product.price).format('0,0')}
+                                        </span>
+                                        <span>x{p.count}</span>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
-            <div className="col-span-5">
-                <div className="flex flex-col space-y-8 p-6 rounded-lg bg-light-tertiary-container text-light-on-tertiary-container">
+            <div className={`col-span-5 sticky z-49 mt-4 top-[${headerHeight + 16}px]`}>
+                <div
+                    className={`flex flex-col space-y-8 p-6 rounded-xl bg-light-tertiary-container text-light-on-tertiary-container`}
+                >
                     <span className="text-xl">Order Summary</span>
                     <div className="flex items-center justify-between">
-                        <span>Subtotal ({products?.length}items)</span>
+                        <span>Subtotal ({products?.length} items)</span>
                         <span className="font-bold">{numeral(total).format('0,0')} VND</span>
                     </div>
                     {/* {totalAfterDiscount > 0 && (
@@ -222,7 +250,7 @@ const Checkout = ({ history }) => {
                         {COD ? (
                             <Button
                                 className="rounded-full bg-light-primary text-light-on-primary"
-                                disabled={products.length > 0 || !!address.length > 0 ? false : true}
+                                disabled={products.length > 0 && !!address.length > 0 ? false : true}
                                 onClick={() => {
                                     saveAddressToDb();
                                     createCashOrder();
@@ -233,7 +261,7 @@ const Checkout = ({ history }) => {
                         ) : (
                             <Button
                                 className="rounded-full bg-light-primary text-light-on-primary"
-                                disabled={products.length > 0 || !!address.length > 0 ? false : true}
+                                disabled={products.length > 0 && !!address.length > 0 ? false : true}
                                 onClick={() => {
                                     saveAddressToDb();
                                     navigate('/payment');
