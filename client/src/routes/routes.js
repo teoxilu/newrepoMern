@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import config from '~/config';
 
 // Pages
-import Test from '~/pages/Test';
+// import Test from '~/pages/Test';
 const Home = lazy(() => import('~/pages/Home'));
 const Login = lazy(() => import('~/pages/auth/Login'));
 const Register = lazy(() => import('~/pages/auth/Register'));
@@ -45,7 +45,7 @@ const publicRoutes = [
     { path: config.routes.cart, component: Cart },
     { path: config.routes.checkout, component: Checkout },
     { path: config.routes.payment, component: Payment },
-    { path: config.routes.test, component: Test, layout: null },
+    // { path: config.routes.test, component: Test, layout: null },
 
     // User Route
     { path: config.routes.history, component: History, customRoute: UserRoute },
