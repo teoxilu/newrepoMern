@@ -20,7 +20,7 @@ export const showAverage = (p) => {
     // console.log("result", result);
 
     return (
-      <div className="inline-flex space-x-1 items-center text-center pt-2">
+      <div className="inline-flex space-x-1 items-center text-center py-2">
           <StarRating
             starRatedColor="orange"
             starDimension="24px"
@@ -28,7 +28,7 @@ export const showAverage = (p) => {
             rating={result}
             editing={false}
           />
-          <Typography className="text-sm text-light-on-surface">({p.ratings.length})</Typography>
+          <Typography className="text-sm text-light-on-surface font-normal">({p.ratings.length})</Typography>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { auth, googleAuthProvider } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { Button, Typography } from '@material-tailwind/react';
 import config from '~/config';
 import images from '~/images';
 import { createOrUpdateUser } from '~/functions/auth';
-const Login = ({ navigate }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -16,29 +16,30 @@ const Login = ({ navigate }) => {
 
     const screenWidth = window.innerWidth;
 
-    const _navigate = useNavigate();
+    const history = useHistory();
+
     useEffect(() => {
-        let intended = navigate?.location.state;
+        let intended = history?.location.state;
         if (intended) {
             return;
         } else {
-            if (user && user.token) _navigate('/');
+            if (user && user.token) history.push('/');
         }
-    }, [user, navigate]);
+    }, [user, history]);
 
     let dispatch = useDispatch();
 
     const roleBasedRedirect = (res) => {
         // check if intended page
-        let intended = navigate?.location.state;
+        let intended = history?.location.state;
         if (intended) {
-            navigate(intended.from);
+            history.push(intended.from);
         } else {
             if (res.data.role === 'admin') {
-                _navigate('/admin/dashboard');
+                history.push('/admin/dashboard');
             } else {
-                // _navigate('/user/history');
-                _navigate('/');
+                // history.push('/user/history');
+                history.push('/');
             }
         }
     };
@@ -68,7 +69,7 @@ const Login = ({ navigate }) => {
                 })
                 .catch((err) => console.log(err));
 
-            _navigate('/');
+            history.push('/');
         } catch (error) {
             console.error(error);
             // toast.error(error.message);
@@ -98,7 +99,7 @@ const Login = ({ navigate }) => {
                         roleBasedRedirect(res);
                     })
                     .catch((err) => console.log(err));
-                _navigate('/');
+                history.push('/');
             })
             .catch((err) => {
                 console.error(err);

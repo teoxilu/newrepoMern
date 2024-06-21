@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
 import { userCart } from '../functions/user';
 import config from '~/config';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
 import { useEffect } from 'react';
-const Cart = ({ history }) => {
+const Cart = () => {
     const [headerHeight, setHeaderHeight] = useState(null)
-    const navigate = useNavigate();
+    const history = useHistory();
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const Cart = ({ history }) => {
         userCart(cart, user.token)
             .then((res) => {
                 console.log('CART POST RES', res);
-                if (res.data.ok) navigate('/checkout');
+                if (res.data.ok) history.push('/checkout');
             })
             .catch((err) => console.log('cart save err', err));
     };
@@ -39,7 +39,7 @@ const Cart = ({ history }) => {
         userCart(cart, user.token)
             .then((res) => {
                 console.log('CART POST RES', res);
-                if (res.data.ok) navigate('/checkout');
+                if (res.data.ok) history.push('/checkout');
             })
             .catch((err) => console.error('cart save err', err));
     };
@@ -120,7 +120,7 @@ const Cart = ({ history }) => {
     );
 
     return (
-        <div className="grid grid-cols-12 px-40 pt-8 gap-x-6">
+        <div className="grid grid-cols-12 px-40 pt-28 gap-x-6">
             <div className="col-span-8">
                 <Typography className="text-light-on-background font-normal ">
                     Cart / <span className="text-light-primary font-medium">{cart.length}</span> Product
@@ -141,7 +141,7 @@ const Cart = ({ history }) => {
                 )}
             </div>
             <div
-                className={`sticky z-49 flex-col space-y-5 col-span-4 rounded-xl divide-y divide-light-outline-variant bg-light-surface-container-medium p-6 mt-4 top-[${headerHeight + 16}px] h-fit`}
+                className={`sticky z-49 flex-col space-y-5 col-span-4 rounded-xl divide-y divide-light-outline-variant bg-light-surface-container-medium p-6 mt-6 top-[${headerHeight + 16}px] h-fit`}
             >
                 <div className="flex-col">
                     <div className="w-full inline-flex items-center justify-between text-light-on-surface">

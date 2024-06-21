@@ -1,5 +1,5 @@
 import React from 'react';
-import {Typography, Button } from '@material-tailwind/react';
+import { Typography, Button } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { ShoppingCartIcon, EyeIcon } from '@heroicons/react/24/outline';
 // import JumboTron from "../components/cards/JumboTron";
@@ -21,7 +21,7 @@ const Home = () => {
             {/* <div className="jumbotron text-info h1 display-3 font-weight-bolder text-center">
         <JumboTron text={["DoubleHuy Shoes", "GIÁ HẤP DẪN", "CHÍNH HÃNG 100%"]} />
       </div> */}
-            <section className="relative flex">
+            <section className="relative flex mt-28">
                 <img src={images.heroImage} alt="Shoe" className={`w-full h-[780px] md:h-auto -mt-64 object-cover`} />
                 <div
                     className={`w-[552px] h-[440px] flex absolute self-center right-40 -translate-y-1/4 rounded-xl bg-light-surface-container-low px-14 py-8 flex-col justify-between`}
@@ -55,7 +55,7 @@ const Home = () => {
             <NewArrivals /> */}
 
             <section className="mt-[68px]">
-                <Typography className="w-full py-4 text-center text-[32px] leading-10 bg-light-primary-container text-light-on-primary-container ">
+                <Typography className="w-full py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container">
                     Best Sellers
                 </Typography>
 

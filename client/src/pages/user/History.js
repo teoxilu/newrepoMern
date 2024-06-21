@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import UserNav from '../../components/nav/UserNav';
-import { getUserOrders } from '../../functions/user';
 import { useSelector } from 'react-redux';
-import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import Invoice from '../../components/order/Invoice';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import UserNav from '~/components/nav/UserNav';
+import { getUserOrders } from '~/functions/user';
+import ShowPaymentInfo from '~/components/cards/ShowPaymentInfo';
+import Invoice from '~/components/order/Invoice';
 
 const History = () => {
     const [orders, setOrders] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
-    const navigate = useNavigate();
+    const history = useHistory();
 
     useEffect(() => {
-        if (user.role !== 'customer') navigate('/');
-    }, [user, navigate]);
+        if (user?.role !== 'customer') history.push('/');
+    }, [user, history]);
 
     useEffect(() => {
         loadUserOrders();

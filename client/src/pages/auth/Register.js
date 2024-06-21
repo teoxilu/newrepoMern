@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import StickyHeader from '~/components/StickyHeader';
 import { Typography } from '@material-tailwind/react';
 
 const Register = ({ history }) => {
@@ -69,7 +68,6 @@ const Register = ({ history }) => {
     );
     return (
         <div>
-            <StickyHeader />
             <div className="container px-40 py-5">
                 <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
                     <Typography className="text-base font-normal">Register</Typography>

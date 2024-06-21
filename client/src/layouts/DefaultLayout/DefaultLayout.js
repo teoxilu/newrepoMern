@@ -7,7 +7,7 @@ const Header = lazy(() => import('~/components/nav/Header'));
 const SideDrawer = lazy(() => import('~/components/drawer/SideDrawer'));
 function DefaultLayout({ children }) {
     return (
-        <div className="bg-light-background">
+        <div>
             <StickyHeader />
             {/* <Header /> */}
             <SideDrawer />
@@ -24,7 +24,7 @@ function DefaultLayout({ children }) {
                 theme="light"
                 // transition={Bounce}
             />
-            <div className="bg-light-surface">{children}</div>
+            <div>{children}</div>
             <Footer />
         </div>
     );
