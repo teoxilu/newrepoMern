@@ -80,7 +80,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
     return (
         <>
-            <div className="grid grid-cols-12 grid-flow-row gap-8">
+            <div className="grid grid-cols-12 grid-flow-row gap-4">
                 <div className="col-span-7">
                     {images && images.length ? (
                         <Carousel showArrows={true} autoPlay infiniteLoop>

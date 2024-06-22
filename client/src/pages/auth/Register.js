@@ -68,9 +68,9 @@ const Register = ({ history }) => {
     );
     return (
         <div>
-            <div className="container px-40 py-5">
+            <div className="container px-40 pb-5 pt-28">
                 <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
-                    <Typography className="text-base font-normal">Register</Typography>
+                    <Typography className="text-base font-normal text-light-on-surface">Register</Typography>
                     {registerform()}
                 </div>
             </div>

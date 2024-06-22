@@ -29,7 +29,7 @@ const BestSellers = () => {
 
   return (
     <>
-      <div className="px-40 mt-14">
+      <div className="px-40 mt-14 w-full">
         {loading ? (
           <LoadingCard count={3} />
         ) : (

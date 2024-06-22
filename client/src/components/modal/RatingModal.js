@@ -4,18 +4,18 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { StarOutlined } from '@ant-design/icons';
 import { useHistory, useParams } from 'react-router-dom';
-import { Button } from '@material-tailwind/react';
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from '@material-tailwind/react';
 
 const RatingModal = ({ children }) => {
     const { user } = useSelector((state) => ({ ...state }));
-    const [modalVisible, setModalVisible] = useState(false);
+    const [dialogVisible, setDialogVisible] = useState(false);
 
-    // let navigate = useHistory();
+    const handleOpen = () => setDialogVisible(!dialogVisible);
     let { slug } = useParams();
 
     const handleModal = () => {
         if (user && user.token) {
-            setModalVisible(true);
+            setDialogVisible(true);
         } else {
             this.props.history.push({
                 pathname: '/login',
@@ -26,22 +26,50 @@ const RatingModal = ({ children }) => {
 
     return (
         <>
-            <Button variant='text' onClick={handleModal} className="text-light-primary rounded-lg hover:bg-light-primary/8">
+            <Button
+                variant="text"
+                onClick={handleModal}
+                className="text-light-primary rounded-lg hover:bg-light-primary/8"
+            >
                 <StarOutlined className="text-light-primary" /> <br />
                 {user ? 'Leave Rating' : 'Login to leave rating'}
             </Button>
-            <Modal
+
+            <Dialog open={dialogVisible} handler={handleOpen}>
+                <DialogHeader>Leave your rating</DialogHeader>
+                <DialogBody>{children}</DialogBody>
+                <DialogFooter className="flex items-center space-x-2">
+                    <Button
+                        variant="text"
+                        className="rounded-full text-light-primary hover:bg-light-primary/8 transition-colors"
+                        onClick={handleOpen}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            handleOpen();
+                            toast.success('Thanks for your review.');
+                        }}
+                        className="rounded-full bg-light-primary text-light-on-primary"
+                    >
+                        Submit
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
+            {/* <Modal
                 title="Leave your rating"
                 centered
                 visible={modalVisible}
                 onOk={() => {
-                    setModalVisible(false);
+                    setDialogVisible(false);
                     toast.success('Thanks for your review.');
                 }}
-                onCancel={() => setModalVisible(false)}
+                onCancel={() => setDialogVisible(false)}
             >
                 {children}
-            </Modal>
+            </Modal> */}
         </>
     );
 };

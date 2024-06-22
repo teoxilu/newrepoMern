@@ -262,7 +262,7 @@ const Shop = () => {
   
 
     return (
-        <div className="grid grid-cols-12 px-40 pt-2 gap-x-2">
+        <div className="grid grid-cols-12 px-40 pt-28 gap-x-2">
             <div className="col-span-3">
                 <Menu
                     defaultOpenKeys={['1', '2', '3', '4', '5', '6']}

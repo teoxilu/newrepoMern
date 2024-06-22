@@ -139,7 +139,7 @@ const Login = () => {
         </form>
     );
     return (
-        <div className="container px-40 py-5 ">
+        <div className="container px-40 pb-5 pt-28">
             <div
                 className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-10 divide-y divide-light-outline-variant`}
             >
@@ -147,7 +147,7 @@ const Login = () => {
                     {loading ? (
                         <h4 className="text-danger">Loading...</h4>
                     ) : (
-                        <Typography className="text-base font-normal">Log in</Typography>
+                        <Typography className="text-base font-normal text-light-on-surface">Log in</Typography>
                     )}
                     {loginForm()}
                 </div>
