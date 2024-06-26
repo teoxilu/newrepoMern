@@ -3,7 +3,7 @@ import { Navbar, MobileNav, Button, IconButton, Badge } from '@material-tailwind
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 
 import config from '~/config';
@@ -18,7 +18,7 @@ function StickyHeader() {
     let dispatch = useDispatch();
     let { user, cart } = useSelector((state) => ({ ...state }));
 
-    let navigate = useNavigate();
+    let history = useHistory();
 
     const handleClick = (e) => {
         setCurrent(e.key);
@@ -30,7 +30,7 @@ function StickyHeader() {
             type: 'LOGOUT',
             payload: null,
         });
-        navigate(config.routes.login);
+        history.push(config.routes.login);
     };
     useEffect(() => {
         window.addEventListener('resize', () => window.innerWidth >= 960 && setOpenNav(false));
@@ -66,7 +66,7 @@ function StickyHeader() {
     return (
         <Navbar
             id="header"
-            className="sticky top-0 z-50 h-max max-w-full w-full rounded-none px-40 py-2 lg:px-40 lg:py-4 bg-light-surface"
+            className="fixed top-0 z-50 h-max max-w-full w-screen rounded-none px-40 py-2 lg:px-40 lg:py-4 bg-light-surface"
         >
             <div className="flex items-center justify-between text-blue-gray-900">
                 <Link to={config.routes.home}>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { MagnifyingGlassIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import { IconButton, Spinner } from '@material-tailwind/react';
@@ -19,7 +19,7 @@ function SearchBar() {
         inputRef.current.focus();
     };
 
-    const navigate = useNavigate();
+    const history = useHistory();
 
     const handleChange = (e) => {
         dispatch({
@@ -30,7 +30,7 @@ function SearchBar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate(`/shop?${text}`);
+        history.push(`/shop?${text}`);
     };
 
     // useEffect(() => {

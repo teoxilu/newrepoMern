@@ -12,7 +12,7 @@ import {
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import config from '~/config';
 import SearchBar from '~/components/SearchBar';
@@ -24,7 +24,7 @@ const Header = () => {
     let dispatch = useDispatch();
     let { user, cart } = useSelector((state) => ({ ...state }));
 
-    let navigate = useNavigate();
+    let history = useHistory();
 
     const handleClick = (e) => {
         setCurrent(e.key);
@@ -36,7 +36,7 @@ const Header = () => {
             type: 'LOGOUT',
             payload: null,
         });
-        navigate(config.routes.login);
+        history.push(config.routes.login);
     };
 
     return (

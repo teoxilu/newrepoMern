@@ -12,7 +12,6 @@ const SideDrawer = () => {
     const bottomNavbar = document.getElementById('bottomNavbar');
     const heightBottomNavbar = bottomNavbar?.offsetHeight;
 
-    console.log(cart);
 
     return (
         <Drawer

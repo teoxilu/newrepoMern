@@ -4,12 +4,12 @@ import { toast } from 'react-toastify';
 import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createCashOrderForUser } from '../functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Typography from 'antd/lib/typography/Typography';
 import numeral from 'numeral';
 import { Button, ButtonGroup } from '@material-tailwind/react';
 
-const Checkout = ({ history }) => {
+const Checkout = () => {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState('');
@@ -21,7 +21,7 @@ const Checkout = ({ history }) => {
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
     // const [discountError, setDiscountError] = useState('');
 
-    const navigate = useNavigate;
+    const history = useHistory;
     const dispatch = useDispatch();
     const { user, COD } = useSelector((state) => ({ ...state }));
     const couponTrueOrFalse = useSelector((state) => state.coupon);
@@ -146,14 +146,14 @@ const Checkout = ({ history }) => {
                 emptyUserCart(user?.token);
                 // redirect
                 setTimeout(() => {
-                    navigate('/user/history');
+                    history.push('/user/history');
                 }, 1000);
             }
         });
     };
 
     const pushToPayMent = () => {
-        navigate('/payment');
+        history.push('/payment');
     };
     console.log(products);
 
@@ -163,7 +163,7 @@ const Checkout = ({ history }) => {
     }, []);
 
     return (
-        <div className="grid grid-cols-12 grid-flow-row px-40 pt-8 gap-x-6">
+        <div className="grid grid-cols-12 grid-flow-row px-40 pt-28 gap-x-6">
             <div className="flex flex-col space-y-12 col-span-7 text-light-on-surface">
                 {/* Address Container */}
                 <div>
@@ -264,7 +264,7 @@ const Checkout = ({ history }) => {
                                 disabled={products.length > 0 && !!address.length > 0 ? false : true}
                                 onClick={() => {
                                     saveAddressToDb();
-                                    navigate('/payment');
+                                    history.push('/payment');
                                 }}
                             >
                                 Place Order
@@ -324,7 +324,7 @@ const Checkout = ({ history }) => {
         //                         disabled={!products.length || !address.length}
         //                         onClick={() => {
         //                             saveAddressToDb();
-        //                             navigate('/payment');
+        //                             history.push('/payment');
         //                         }}
         //                     >
         //                         Place Order

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const LoadingToRedirect = () => {
     const [count, setCount] = useState(5);
-    let navigate = useNavigate();
+    let history = useHistory();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -11,10 +11,10 @@ const LoadingToRedirect = () => {
         }, 1000);
 
         //redirect once count=0
-        count === 0 && navigate('/');
+        count === 0 && history.push('/');
         //cleanup
         return () => clearInterval(interval);
-    }, [count, navigate]);
+    }, [count, history]);
 
     return (
         <div className="container p-5 text-center">
