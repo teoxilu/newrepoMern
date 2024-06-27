@@ -2,8 +2,11 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import images from '~/images';
 
-export const DashboardIcon = () => <img className="w-6 h-6 flex-shrink-0" src={images.dashboardIcon} alt="Dashboard icon" />;
+export const DashboardIcon = () => (
+    <img className="w-6 h-6 flex-shrink-0" src={images.dashboardIcon} alt="Dashboard icon" />
+);
 export const LogoutIcon = () => <img className="w-6 h-6 flex-shrink-0" src={images.logoutIcon} alt="Logout icon" />;
+
 
 export const FacebookIcon = () => (
     <svg className="h-6 w-6" fill="light-on-surface" viewBox="0 0 24 24" aria-hidden="true">
@@ -31,7 +34,7 @@ export const TwitterIcon = () => (
     </svg>
 );
 
-export const CloseIcon = ({className:customClassName}) => {
-    customClassName?.split(' ')
-    return <FontAwesomeIcon className={`w-6 h-6 text-light-primary ${customClassName}`} icon={faXmark}/>
-}
+export const CloseIcon = ({ className: customClassName }) => {
+    customClassName?.split(' ');
+    return <FontAwesomeIcon className={`w-6 h-6 text-light-primary ${customClassName}`} icon={faXmark} />;
+};

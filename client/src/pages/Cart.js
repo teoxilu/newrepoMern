@@ -8,7 +8,7 @@ import { Button, Card, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
 import { useEffect } from 'react';
 const Cart = () => {
-    const [headerHeight, setHeaderHeight] = useState(null)
+    const [headerHeight, setHeaderHeight] = useState(null);
     const history = useHistory();
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
@@ -21,6 +21,10 @@ const Cart = () => {
 
     const saveOrderToDb = () => {
         // console.log("cart", JSON.stringify(cart, null, 4));
+        dispatch({
+            type: 'COD',
+            payload: false,
+        });
         userCart(cart, user.token)
             .then((res) => {
                 // console.log('CART POST RES', res);
