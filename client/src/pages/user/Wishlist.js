@@ -39,7 +39,7 @@ const Wishlist = () => {
                 <div className="col">
                     <h1 className="font-medium text-base">Wishlist</h1>
 
-                    <div className="flex flex-col space-y-4 mt-2">
+                    <div className="flex flex-col space-y-4 mt-4">
                         {wishlist?.map((p) => (
                             <div
                                 key={p._id}
