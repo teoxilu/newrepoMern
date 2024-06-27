@@ -28,7 +28,7 @@ const Password = () => {
     };
 
     const passwordUpdateForm = () => (
-        <form onSubmit={handleSubmit} className="mt-2">
+        <form onSubmit={handleSubmit} className="mt-4">
             <div className="form-group">
                 <label>New Password</label>
                 <input

@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-import { Tooltip } from 'antd';
+import React from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Typography, Button } from '@material-tailwind/react';
-import { ShoppingCartIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
-import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import unknown from '../../images/unknown.jpg';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 
 import { showAverage } from '../../functions/rating';
-import config from '~/config';
 import numeral from 'numeral';
 
-const { Meta } = Card;
 
 const ProductCard = ({ product }) => {
 
@@ -56,7 +52,7 @@ const ProductCard = ({ product }) => {
     //destructure
     const { images, title, description, slug, price } = product;
     return (
-        <Card className="w-72 h-[492px]">
+        <Card className="w-72 h-[492px] hover:shadow-lg hover:scale-105 transition">
             <CardHeader shadow={false} floated={false} className="h-52">
                 <img
                     src={images && images.length ? images[0].url : unknown}

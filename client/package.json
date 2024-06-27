@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@ant-design/icons": "^4.2.2",
-        "@david.kucsai/react-pdf-table": "^0.3.0",
+        "@david.kucsai/react-pdf-table": "^0.4.1",
         "@fortawesome/fontawesome-svg-core": "^6.5.2",
         "@fortawesome/free-brands-svg-icons": "^6.5.2",
         "@fortawesome/free-regular-svg-icons": "^6.5.2",
@@ -41,6 +41,7 @@
         "redux-devtools-extension": "^2.13.8"
     },
     "devDependencies": {
+        "@types/react-router-dom": "^5.3.3",
         "autoprefixer": "^10.4.19",
         "babel-plugin-module-resolver": "^5.0.0",
         "customize-cra": "^1.0.0",

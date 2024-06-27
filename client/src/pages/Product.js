@@ -68,7 +68,7 @@ const Product = () => {
     };
 
     return (
-        <div className=" pt-28 px-40 text-light-on-surface">
+        <div className="pt-28 px-40 text-light-on-surface">
             <div className="row">
                 <SingleProduct product={product} onStarClick={onStarClick} star={star} />
             </div>
@@ -112,7 +112,7 @@ const Product = () => {
 
             <div className="row">
                 <div className="col text-center pt-5 pb-5">
-                    <Typography className="w-full py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
+                    <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
                         Related Products
                     </Typography>
                 </div>

@@ -13,31 +13,25 @@ export default function ProfileMenu({ onClick: signOutClick, loginStatus: user }
                     src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 />
             </MenuHandler>
-            <MenuList>
-                <MenuItem className="flex items-center gap-2">
+            <MenuList className="bg-light-surface-container-lowest text-light-on-surface">
+                <MenuItem className="flex items-center gap-2 transition-colors hover:text-light-on-secondary-container hover:bg-light-secondary-container/8">
                     <DashboardIcon />
                     {user && user.role === 'customer' && (
-                        <Link to={config.routes.history}>
-                            <Typography variant="small" className="font-medium">
-                                Dashboard
-                            </Typography>
+                        <Link to={config.routes.history} className='hover:text-light-on-secondary-container'>
+                            <p>Dashboard</p>
                         </Link>
                     )}
                     {user && user.role === 'admin' && (
-                        <Link to={config.routes.adminDashboard}>
-                            <Typography variant="small" className="font-medium">
-                                Dashboard
-                            </Typography>
+                        <Link to={config.routes.adminDashboard} className='hover:text-light-on-secondary-container'>
+                            <p>Dashboard</p>
                         </Link>
                     )}
                 </MenuItem>
 
-                <hr className="my-2 border-blue-gray-50" />
-                <MenuItem className="flex items-center gap-2" onClick={signOutClick}>
+                <hr style={{ borderColor: '#e6bdb7' }} className="my-2" />
+                <MenuItem className="flex items-center gap-2 transition-colors hover:text-light-on-secondary-container hover:bg-light-secondary-container/8" onClick={signOutClick}>
                     <LogoutIcon />
-                    <Typography variant="small" className="font-medium">
-                        Sign Out
-                    </Typography>
+                    <p>Sign Out</p>
                 </MenuItem>
             </MenuList>
         </Menu>

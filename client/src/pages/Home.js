@@ -17,7 +17,7 @@ const Home = () => {
     const screenHeight = window.innerHeight;
 
     return (
-        <div className="container mt-28">
+        <div className="mt-24 overflow-x-hidden">
             <section className="relative flex">
                 <img src={images.heroImage} alt="Shoe" className={`w-full h-[${screenHeight}px] md:h-auto -mt-64 object-cover rounded-lg`} />
                 <div

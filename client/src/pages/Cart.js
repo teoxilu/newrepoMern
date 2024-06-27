@@ -13,7 +13,6 @@ const Cart = () => {
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
-    console.log(cart);
     const getTotal = () => {
         return cart.reduce((currentValue, nextValue) => {
             return currentValue + nextValue.count * nextValue.price;
@@ -24,7 +23,7 @@ const Cart = () => {
         // console.log("cart", JSON.stringify(cart, null, 4));
         userCart(cart, user.token)
             .then((res) => {
-                console.log('CART POST RES', res);
+                // console.log('CART POST RES', res);
                 if (res.data.ok) history.push('/checkout');
             })
             .catch((err) => console.log('cart save err', err));
@@ -38,7 +37,7 @@ const Cart = () => {
         });
         userCart(cart, user.token)
             .then((res) => {
-                console.log('CART POST RES', res);
+                // console.log('CART POST RES', res);
                 if (res.data.ok) history.push('/checkout');
             })
             .catch((err) => console.error('cart save err', err));

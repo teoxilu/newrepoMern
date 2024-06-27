@@ -21,7 +21,7 @@ const Checkout = () => {
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
     // const [discountError, setDiscountError] = useState('');
 
-    const history = useHistory;
+    const history = useHistory();
     const dispatch = useDispatch();
     const { user, COD } = useSelector((state) => ({ ...state }));
     const couponTrueOrFalse = useSelector((state) => state.coupon);
