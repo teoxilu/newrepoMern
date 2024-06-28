@@ -8,11 +8,12 @@ import { Menu, Slider, Checkbox, Radio } from 'antd';
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
 import Star from '../components/forms/Star';
 import { Typography } from '@material-tailwind/react';
-import {useDebounce} from '~/hooks'
+import { useDebounce } from '~/hooks';
 const { SubMenu, ItemGroup } = Menu;
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [filteredItem, setFilteredItem] = useState([]);
     const [loading, setLoading] = useState(false);
     const [price, setPrice] = useState([0, 0]);
     const [ok, setOk] = useState(false);
@@ -31,6 +32,7 @@ const Shop = () => {
         'Salomon',
         'Vans',
         'Converse',
+        'All',
     ]);
     const [brand, setBrand] = useState('');
     const [sizes, setSizes] = useState([
@@ -47,15 +49,15 @@ const Shop = () => {
         '41.5',
         '43.5',
         '36',
+        'All',
     ]);
+    const [starList, setStarList] = useState([5, 4, 3, 2, 1, 0]);
     const [size, setSize] = useState('');
-
 
     let dispatch = useDispatch();
     let { search } = useSelector((state) => ({ ...state }));
     const { text } = search;
 
-    
     useEffect(() => {
         loadAllProducts();
         // fetch categories
@@ -73,6 +75,7 @@ const Shop = () => {
     // 1. load products by default on page load
     const loadAllProducts = () => {
         getProductsByCount(12).then((p) => {
+            setFilteredItem(p.data);
             setProducts(p.data);
             setLoading(false);
         });
@@ -90,9 +93,15 @@ const Shop = () => {
     }, [text]);
 
     // 3. load products based on price range
+    const [choosePrice, setChoosePrice] = useState([]);
+    const fetchPrice = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChoosePrice(res.data);
+        });
+    };
     useEffect(() => {
         console.log('ok to request');
-        fetchProducts({ price });
+        fetchPrice({ price });
     }, [ok]);
 
     const handleSlider = (value) => {
@@ -102,12 +111,12 @@ const Shop = () => {
         });
 
         // reset
-        setCategoryIds([]);
+        // setCategoryIds([]);
         setPrice(value);
-        setStar('');
-        setSub('');
-        setBrand('');
-        setSize('');
+        // setStar('');
+        // setSub('');
+        // setBrand('');
+        // setSize('');
         setTimeout(() => {
             setOk(!ok);
         }, 300);
@@ -115,6 +124,12 @@ const Shop = () => {
 
     // 4. load products based on category
     // show categories in a list of checkbox
+    const [chooseCat, setChooseCat] = useState([]);
+    const fetchCat = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChooseCat(res.data);
+        });
+    };
     const showCategories = () =>
         categories.map((c) => (
             <div key={c._id}>
@@ -138,11 +153,11 @@ const Shop = () => {
             type: 'SEARCH_QUERY',
             payload: { text: '' },
         });
-        setPrice([0, 0]);
-        setStar('');
-        setSub('');
-        setBrand('');
-        setSize('');
+        // setPrice([0, 0]);
+        // setStar('');
+        // setSub('');
+        // setBrand('');
+        // setSize('');
         // console.log(e.target.value);
         let inTheState = [...categoryIds];
         let justChecked = e.target.value;
@@ -158,108 +173,249 @@ const Shop = () => {
 
         setCategoryIds(inTheState);
         // console.log(inTheState);
-        fetchProducts({ category: inTheState });
+        fetchCat({ category: inTheState });
     };
 
     // 5. show products by star rating
+    const [chooseRate, setChooseRate] = useState([]);
+    const fetchRate = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChooseRate(res.data);
+        });
+    };
     const handleStarClick = (num) => {
         // console.log(num);
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: '' },
         });
-        setPrice([0, 0]);
-        setCategoryIds([]);
-        setStar(num);
-        setSub('');
-        setBrand('');
-        setSize('');
-        fetchProducts({ stars: num });
+        // setPrice([0, 0]);
+        // setCategoryIds([]);
+        if (num === 0) {
+            setStar('');
+            setChooseRate([]);
+        } else {
+            setStar(num);
+            // setSub('');
+            // setBrand('');
+            // setSize('');
+            fetchRate({ stars: num });
+        }
     };
 
     const showStars = () => (
-        <div className="pr-4 pl-4 pb-2">
-            <Star starClick={handleStarClick} numberOfStars={5} />
+        <div>
+            {starList.map((b) => (
+                <div
+                    className="pr-4 pl-4 pb-2"
+                    style={{ display: 'flex', gap: '10px', alignItems: 'center', maringTop: '10px' }}
+                    key={b}
+                >
+                    <Radio
+                        key={b}
+                        value={b === 0 ? '' : b}
+                        name={b}
+                        checked={(b === 0 ? '' : b) === star}
+                        onChange={(e) => handleStarClick(b)}
+                        // className="pb-1 pl-4 pr-4"
+                    >
+                        {b === 0 ? <b>All Rate</b> : <Star starClick={handleStarClick} numberOfStars={b} />}
+                    </Radio>
+                </div>
+            ))}
+            {/* <Radio key={5} value={5} name={5} checked={5 === star} onChange={(e)=>handleStarClick(5)} className="pb-1 pl-4 pr-4">
+                {' '}
+                <Star starClick={handleStarClick} numberOfStars={5} />
+
             <Star starClick={handleStarClick} numberOfStars={4} />
             <Star starClick={handleStarClick} numberOfStars={3} />
             <Star starClick={handleStarClick} numberOfStars={2} />
-            <Star starClick={handleStarClick} numberOfStars={1} />
+            <Star starClick={handleStarClick} numberOfStars={1} /> */}
         </div>
     );
 
     // 6. show products by sub category
-    const showSubs = () =>
-        subs.map((s) => (
+    const [chooseSub, setChooseSub] = useState([]);
+    const fetchSub = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChooseSub(res.data);
+        });
+    };
+    // console.log(sub);
+    const showSubs = () => (
+        <div>
+            {subs.map((s) => (
+                <div
+                    key={s._id}
+                    onClick={() => handleSub(s)}
+                    className={s.name === sub.name ? 'p-1 m-1 badge badge-primary' : 'p-1 m-1 badge badge-secondary'}
+                    style={{ cursor: 'pointer' }}
+                >
+                    {s.name}
+                </div>
+            ))}
             <div
-                key={s._id}
-                onClick={() => handleSub(s)}
-                className="p-1 m-1 badge badge-secondary"
+                key={'All'}
+                onClick={() => handleSub('All')}
+                className={sub === '' ? 'p-1 m-1 badge badge-primary' : 'p-1 m-1 badge badge-secondary'}
                 style={{ cursor: 'pointer' }}
             >
-                {s.name}
+                All
             </div>
-        ));
+        </div>
+    );
 
     const handleSub = (sub) => {
         // console.log("SUB", sub);
-        setSub(sub);
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: '' },
         });
-        setPrice([0, 0]);
-        setCategoryIds([]);
-        setStar('');
-        setBrand('');
-        setSize('');
-        fetchProducts({ sub });
+        if (sub === 'All') {
+            setSub('');
+            setChooseSub([]);
+        } else {
+            setSub(sub);
+
+            // setPrice([0, 0]);
+            // setCategoryIds([]);
+            // setStar('');
+            // setBrand('');
+            // setSize('');
+            fetchSub({ sub });
+        }
     };
 
     // 7. show products based on brand name
+    const [chooseBrand, setChooseBrand] = useState([]);
+    const fetchBrand = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChooseBrand(res.data);
+        });
+    };
     const showBrands = () =>
         brands.map((b) => (
-            <Radio key={b} value={b} name={b} checked={b === brand} onChange={handleBrand} className="pb-1 pl-4 pr-4">
+            <Radio
+                key={b}
+                value={b}
+                name={b}
+                checked={(b === 'All' ? '' : b) === brand}
+                onChange={handleBrand}
+                className="pb-1 pl-4 pr-4"
+            >
                 {b}
             </Radio>
         ));
 
     const handleBrand = (e) => {
-        setSub('');
+        // setSub('');
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: '' },
         });
-        setPrice([0, 0]);
-        setCategoryIds([]);
-        setStar('');
-        setSize('');
-        setBrand(e.target.value);
-        fetchProducts({ brand: e.target.value });
+        // setPrice([0, 0]);
+        // setCategoryIds([]);
+        // setStar('');
+        // setSize('');
+        if (e.target.value === 'All') {
+            setBrand('');
+            setChooseBrand([]);
+        } else {
+            setBrand(e.target.value);
+            fetchBrand({ brand: e.target.value });
+        }
     };
 
     // 8. show products based on size
+    const [chooseSize, setChooseSize] = useState([]);
+    const fetchSize = (arg) => {
+        fetchProductsByFilter(arg).then((res) => {
+            setChooseSize(res.data);
+        });
+    };
     const showSizes = () =>
         sizes.map((s) => (
-            <Radio key={s} value={s} name={s} checked={s === size} onChange={handleSize} className="pb-1 pl-4 pr-4">
+            <Radio
+                key={s}
+                value={s}
+                name={s}
+                checked={(s === 'All' ? '' : s) === size}
+                onChange={handleSize}
+                className="pb-1 pl-4 pr-4"
+            >
                 {s}
             </Radio>
         ));
 
     const handleSize = (e) => {
-        setSub('');
+        // setSub('');
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: '' },
         });
-        setPrice([0, 0]);
-        setCategoryIds([]);
-        setStar('');
-        setBrand('');
-        setSize(e.target.value);
-        fetchProducts({ size: e.target.value });
+        // setPrice([0, 0]);
+        // setCategoryIds([]);
+        // setStar('');
+        // setBrand('');
+        if (e.target.value === 'All') {
+            setSize('');
+            setChooseSize([]);
+        } else {
+            setSize(e.target.value);
+            fetchSize({ size: e.target.value });
+        }
     };
+    useEffect(() => {
+        if (
+            sub === '' &&
+            price[1] === 0 &&
+            price[0] === 0 &&
+            star === '' &&
+            brand === '' &&
+            categoryIds.length === 0 &&
+            size === ''
+        ) {
+            loadAllProducts();
+        } else {
+            let arrays = [chooseBrand, chooseCat, choosePrice, chooseRate, chooseSub, chooseSize];
+            // console.log(arrays);
+            let validArrays = arrays.filter((array) => array && array.length > 0);
+            // console.log(validArrays.length);
+            if (
+                (sub !== '' && chooseSub.length === 0) ||
+                (price[1] !== 0 && choosePrice.length === 0) ||
+                (star !== '' && chooseRate.length === 0) ||
+                (brand !== '' && chooseBrand.length === 0) ||
+                (categoryIds.length !== 0 && chooseCat.length === 0) ||
+                (size !== '' && chooseSize.length === 0)
+            ) {
+                setFilteredItem([]);
+            } else
+                setFilteredItem(
+                    validArrays.length > 1
+                        ? validArrays.reduce(
+                              (acc, curr) => acc.filter((element) => curr.some((item) => item.sold === element.sold)),
+                              validArrays[0],
+                          )
+                        : validArrays[0],
+                );
+        }
+    }, [chooseBrand, chooseCat, choosePrice, chooseRate, chooseSize, chooseSub]);
 
-  
+    let arrayItem = filteredItem;
+    // chooseSub.length === 0 &&
+    // choosePrice.length === 0 &&
+    // chooseRate.length === 0 &&
+    // chooseBrand.length === 0 &&
+    // chooseCat.length === 0 &&
+    // chooseSize.length === 0
+    //     ? filteredItem
+    //     : arrays.length > 1
+    //       ? validArrays.reduce((acc, curr) =>
+    //             acc.length > 0 ? acc.filter((element) => curr.includes(element)) : curr,
+    //         )
+    //       : validArrays;
+    // const ArrayItem =
 
     return (
         <div className="grid grid-cols-12 px-40 pt-28 gap-x-2">
@@ -362,11 +518,11 @@ const Shop = () => {
             <div className="col-span-9">
                 {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
 
-                {products.length < 1 ? (
+                {arrayItem.length < 1 ? (
                     <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
                 ) : (
                     <div className="grid grid-cols-3">
-                        {products.map((p) => (
+                        {arrayItem.map((p) => (
                             <div key={p._id} className="col-md-4 mt-3">
                                 <ProductCard product={p} />
                             </div>
