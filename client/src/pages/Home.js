@@ -21,7 +21,7 @@ const Home = () => {
             <section className="relative flex">
                 <img src={images.heroImage} alt="Shoe" className={`w-full h-[${screenHeight}px] md:h-auto -mt-64 object-cover rounded-lg`} />
                 <div
-                    className={`w-[552px] h-[440px] flex absolute self-center bottom-20 right-20 -translate-y-1/4 rounded-xl bg-light-surface-container-low px-14 py-8 flex-col justify-between`}
+                    className={`w-[552px] h-[440px] flex absolute self-center bottom-20 right-20 -translate-y-1/2 rounded-xl bg-light-surface-container-low px-14 py-8 flex-col justify-between`}
                 >
                     <div className="flex-col space-y-2">
                         <Typography className="text-2xl text-light-on-surface">New Arrival</Typography>
@@ -48,7 +48,7 @@ const Home = () => {
             </section>
 
             <section className="mt-[68px]">
-                <Typography className="w-full py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
+                <Typography className="w-full font-normal py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
                     Best Sellers
                 </Typography>
 

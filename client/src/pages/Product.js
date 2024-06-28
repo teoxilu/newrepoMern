@@ -112,7 +112,7 @@ const Product = () => {
 
             <div className="row">
                 <div className="col text-center pt-5 pb-5">
-                    <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
+                    <Typography className="mx-[-160px] font-normal py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container rounded-lg">
                         Related Products
                     </Typography>
                 </div>

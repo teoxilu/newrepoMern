@@ -25,7 +25,7 @@ const CategoryHome = ({ match }) => {
             <div className="row">
                 <div className="col text-center py-2">
                     {loading ? (
-                        <Typography className="text-center text-[32px] leading-10 p-3 mt-5 mb-5 display-4 jumbotron text-light-on-surface">
+                        <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-transparent via-light-primary to-transparent text-light-on-primary-container animate-pulse">
                             Loading...
                         </Typography>
                     ) : (
@@ -36,13 +36,13 @@ const CategoryHome = ({ match }) => {
                 </div>
             </div>
 
-            <div className="row">
+            <div className="row mt-2">
                 <div className="w-full grid gap-5 grid-flow-col">
-                  {products.map((p) => (
-                      <div key={p._id}>
-                          <ProductCard product={p} />
-                      </div>
-                  ))}
+                    {products.map((p) => (
+                        <div key={p._id}>
+                            <ProductCard product={p} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

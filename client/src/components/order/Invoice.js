@@ -1,114 +1,233 @@
 import React from 'react';
-import { Document, Page, Text, StyleSheet } from '@react-pdf/renderer';
-import { Table, TableHeader, TableCell, TableBody, DataTableCell } from '@david.kucsai/react-pdf-table';
-
-const Invoice = ({ order }) => (
-    <Document>
-        <Page style={styles.body}>
-            <Text style={styles.header} fixed>
-                ~ {new Date().toLocaleString()} ~
-            </Text>
-            <Text style={styles.title}>Order Invoice</Text>
-            <Text style={styles.author}>React Redux Ecommerce - DoubleHuy</Text>
-            <Text style={styles.subtitle}>Order Summary</Text>
-
-            {/* <Table>
-                <TableHeader>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Price</TableCell>
-                    <TableCell>Quantity</TableCell>
-                    <TableCell>Brand</TableCell>
-                    <TableCell>Size</TableCell>
-                </TableHeader>
-            </Table>
-
-            <Table data={order.products}>
-                <TableBody>
-                    <DataTableCell getContent={(x) => x.product.title} />
-                    <DataTableCell getContent={(x) => `${x.product.price} VND`} />
-                    <DataTableCell getContent={(x) => x.count} />
-                    <DataTableCell getContent={(x) => x.product.brand} />
-                    <DataTableCell getContent={(x) => x.product.size} />
-                </TableBody>
-            </Table> */}
-
-            <Text style={styles.text}>
-                <Text>
-                    Date: {'               '}
-                    {new Date(order.paymentIntent.created * 1000).toLocaleString()}
-                </Text>
-                {'\n'}
-                <Text>
-                    Order Id: {'         '}
-                    {order.paymentIntent.id}
-                </Text>
-                {'\n'}
-                <Text>
-                    Order Status: {'  '}
-                    {order.orderStatus}
-                </Text>
-                {'\n'}
-                <Text>
-                    Total Paid: {'       '}
-                    {order.paymentIntent.amount}
-                </Text>
-            </Text>
-
-            <Text style={styles.footer}> ~ Thank you for shopping with us ~ </Text>
-        </Page>
-    </Document>
-);
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import numeral from 'numeral';
 
 const styles = StyleSheet.create({
-    body: {
-        paddingTop: 35,
-        paddingBottom: 65,
-        paddingHorizontal: 35,
+    page: {
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF',
+        padding: 20,
     },
-    title: {
-        fontSize: 24,
-        textAlign: 'center',
-    },
-    author: {
-        fontSize: 12,
-        textAlign: 'center',
-        marginBottom: 40,
-    },
-    subtitle: {
-        fontSize: 18,
-        margin: 12,
-    },
-    text: {
-        margin: 12,
-        fontSize: 14,
-        textAlign: 'justify',
-    },
-    image: {
-        marginVertical: 15,
-        marginHorizontal: 100,
+    section: {
+        marginVertical: 10,
     },
     header: {
-        fontSize: 12,
-        marginBottom: 20,
+        fontSize: 14,
+        fontWeight: 500,
+        marginBottom: 10,
         textAlign: 'center',
-        color: 'grey',
+        textTransform: 'uppercase',
+        color: '#281714',
     },
+    companyInfo: {
+        fontSize: 12,
+        marginBottom: 10,
+        color: '#281714',
+    },
+    keyInfo: {
+        fontSize: 12,
+        marginBottom: 10,
+        color: '#5d403b',
+    },
+    customerInfo: {
+        fontSize: 12,
+        marginBottom: 10,
+    },
+    title: {
+        fontSize: 13,
+        marginBottom: 10,
+        fontWeight: 500,
+        color: '#281714',
+    },
+    table: {
+        display: 'table',
+        width: 'auto',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderRightWidth: 0,
+        borderBottomWidth: 0,
+    },
+    tableRow: {
+        flexDirection: 'row',
+    },
+    tableColHeader: {
+        verticalAlign: 'middle',
+        width: '20%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderLeftWidth: 0,
+        borderTopWidth: 0,
+        backgroundColor: '#E4E4E4',
+        padding: 5,
+    },
+    tableCol: {
+        width: '20%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderLeftWidth: 0,
+        borderTopWidth: 0,
+        padding: 5,
+    },
+    tableCellHeader: {
+        fontSize: 10,
+        fontWeight: 'bold',
+    },
+    tableColHeaderContentHighlight: {
+        width: '20%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderLeftWidth: 0,
+        borderTopWidth: 0,
+        backgroundColor: '#8c611280',
+        color: '#ffffff',
+        padding: 5,
+    },
+    tableColHeaderContentNonHighlight: {
+        width: '20%',
+        borderStyle: 'solid',
+        borderWidth: 1,
+        borderLeftWidth: 0,
+        borderTopWidth: 0,
+        backgroundColor: '#ffffff',
+        color: '#281714',
+        padding: 5,
+    },
+    tableCell: {
+        fontSize: 10,
+    },
+    total: {
+        fontSize: 12,
+        marginTop: 10,
+    },
+    paymentMethod: {
+        fontSize: 12,
+        marginTop: 10,
+    },
+    notes: {
+        fontSize: 12,
+        textAlign: 'center',
+        marginTop: 10,
+        color: '#5d403b',
+    },
+    primary: { fontSize: 12, color: '#8f0000' },
+    text: { fontSize: 12, color: '#281714' },
     footer: {
-        padding: '100px',
+        paddingTop: '100px',
+        paddingHorizontal: '100px',
         fontSize: 12,
-        marginBottom: 20,
         textAlign: 'center',
-        color: 'grey',
-    },
-    pageNumber: {
-        position: 'absolute',
-        fontSize: 12,
-        bottom: 30,
-        left: 0,
-        right: 0,
-        textAlign: 'center',
-        color: 'grey',
+        color: '#8f0000',
+        backgroundImage: '-webkit-linear-gradient(0deg, #8f0000 0%, #a7382a 50%, #603f00 100%)',
+        backgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        textFillColor: 'transparent',
     },
 });
+
+const Invoice = ({ order }) => {
+    console.log(order);
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <Text style={styles.header}>INVOICE</Text>
+
+                <View style={styles.section}>
+                    <Text style={styles.title}>Company Info</Text>
+                    <Text style={styles.companyInfo}>
+                        <Text>
+                            <Text style={styles.keyInfo}>Company Name:</Text> 2HS{'\n'}
+                        </Text>
+                        <Text>
+                            <Text style={styles.keyInfo}>Address:</Text> 01 Vo Van Ngan, Linh Chieu, Thu Duc, Ho Chi
+                            Minh City{'\n'}
+                        </Text>
+                        <Text>
+                            <Text style={styles.keyInfo}>Hotline:</Text> +84 973 711 868{'\n'}
+                        </Text>
+                        <Text>
+                            <Text style={styles.keyInfo}>Email:</Text> support@2hs.com
+                        </Text>
+                    </Text>
+                </View>
+                {/* 
+                <View style={styles.section}>
+                    <Text style={styles.customerInfo}>
+                        <Text>Customer Name: John Doe{'\n'}</Text>
+                        <Text>Address: 456 XYZ Street, District 3, Ho Chi Minh City{'\n'}</Text>
+                        <Text>Phone Number: +84 987 654 321{'\n'}</Text>
+                        <Text>Email: johndoe@example.com</Text>
+                    </Text>
+                </View> */}
+
+                <View style={styles.section}>
+                    <Text style={styles.title}>Order Details:</Text>
+                    <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>Title</Text>
+                            </View>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>Price</Text>
+                            </View>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>Brand</Text>
+                            </View>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>Size</Text>
+                            </View>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellHeader}>Quantity</Text>
+                            </View>
+                        </View>
+
+                        {order.products.map((product) => (
+                            <View style={styles.tableRow}>
+                                <View style={styles.tableColHeaderContentNonHighlight}>
+                                    <Text style={styles.tableCellHeader}>{product.product.title}</Text>
+                                </View>
+                                <View style={styles.tableColHeaderContentHighlight}>
+                                    <Text
+                                        style={styles.tableCellHeader}
+                                        className="bg-light-tertiary-container/50 text-light-on-primary-container"
+                                    >
+                                        {numeral(product.product.price).format('0,0')} VND
+                                    </Text>
+                                </View>
+                                <View style={styles.tableColHeaderContentNonHighlight}>
+                                    <Text style={styles.tableCellHeader}>{product.product.brand}</Text>
+                                </View>
+                                <View style={styles.tableColHeaderContentHighlight}>
+                                    <Text
+                                        style={styles.tableCellHeader}
+                                        className="bg-light-tertiary-container/50 text-light-on-primary-container"
+                                    >
+                                        {product.product.size}
+                                    </Text>
+                                </View>
+                                <View style={styles.tableColHeaderContentNonHighlight}>
+                                    <Text style={styles.tableCellHeader}>{product.count}</Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                <View style={styles.section}>
+                    <Text style={styles.title}>Total Amount:{'\n'}</Text>
+                    <Text style={styles.primary}>{numeral(order.paymentIntent.amount).format('0,0')} VND</Text>
+                </View>
+                <View style={styles.section}>
+                    <Text style={styles.title}>Payment Method:{'\n'}</Text>
+                    <Text style={styles.text}>{order.paymentIntent.status}</Text>
+                </View>
+                <Text style={styles.footer}>~ Thank you for shopping at 2HS! ~{'\n'}</Text>
+                <Text style={styles.notes}>
+                    If you have any questions, please contact us via email or phone number above.
+                </Text>
+            </Page>
+        </Document>
+    );
+};
 
 export default Invoice;
