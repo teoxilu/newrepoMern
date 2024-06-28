@@ -31,7 +31,12 @@ const BestSellers = () => {
     <>
       <div className="px-40 mt-14 w-full">
         {loading ? (
-          <LoadingCard count={3} />
+          <div className="flex items-center space-x-2 justify-evenly">
+            <LoadingCard />
+            <LoadingCard />
+            <LoadingCard />
+          </div>
+
         ) : (
           <div className="flex items-center space-x-2 justify-evenly">
             {products.map((product) => (

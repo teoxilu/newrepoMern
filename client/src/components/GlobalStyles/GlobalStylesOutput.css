@@ -1499,6 +1499,10 @@ h1,
   height: 3rem;
 }
 
+.h-14{
+  height: 3.5rem;
+}
+
 .h-2{
   height: 0.5rem;
 }
@@ -1692,6 +1696,10 @@ h1,
 
 .w-5{
   width: 1.25rem;
+}
+
+.w-56{
+  width: 14rem;
 }
 
 .w-6{
@@ -1956,6 +1964,16 @@ h1,
 
 .animate-bounce{
   animation: bounce 1s infinite;
+}
+
+@keyframes pulse{
+  50%{
+    opacity: .5;
+  }
+}
+
+.animate-pulse{
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 @keyframes spin{
@@ -3096,6 +3114,12 @@ h1,
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-transparent{
+  --tw-gradient-from: transparent var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-yellow-600{
   --tw-gradient-from: #fdd835 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(253 216 53 / 0) var(--tw-gradient-to-position);
@@ -3105,6 +3129,11 @@ h1,
 .via-light-primary{
   --tw-gradient-to: rgb(143 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #8f0000 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-light-secondary{
+  --tw-gradient-to: rgb(167 56 42 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #a7382a var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .to-amber-400{
@@ -3185,6 +3214,10 @@ h1,
 
 .to-teal-400{
   --tw-gradient-to: #26a69a var(--tw-gradient-to-position);
+}
+
+.to-transparent{
+  --tw-gradient-to: transparent var(--tw-gradient-to-position);
 }
 
 .to-yellow-400{
