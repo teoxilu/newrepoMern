@@ -1371,6 +1371,10 @@ h1,
   margin-right: 3rem;
 }
 
+.mr-2{
+  margin-right: 0.5rem;
+}
+
 .mr-4{
   margin-right: 1rem;
 }
@@ -1399,6 +1403,10 @@ h1,
   margin-top: 0.5rem;
 }
 
+.mt-24{
+  margin-top: 6rem;
+}
+
 .mt-28{
   margin-top: 7rem;
 }
@@ -1425,10 +1433,6 @@ h1,
 
 .mt-px{
   margin-top: 1px;
-}
-
-.mt-24{
-  margin-top: 6rem;
 }
 
 .box-border{
@@ -1612,10 +1616,6 @@ h1,
 
 .max-h-\[48px\]{
   max-height: 48px;
-}
-
-.max-h-\[100px\]{
-  max-height: 100px;
 }
 
 .min-h-\[100px\]{
@@ -1940,6 +1940,22 @@ h1,
 
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes bounce{
+  0%, 100%{
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50%{
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce{
+  animation: bounce 1s infinite;
 }
 
 @keyframes spin{
@@ -5290,9 +5306,20 @@ h1,
   border-top-color: rgb(244 67 54 / var(--tw-border-opacity));
 }
 
+.focus-within\:border-light-primary:focus-within{
+  --tw-border-opacity: 1;
+  border-color: rgb(143 0 0 / var(--tw-border-opacity));
+}
+
 .focus-within\:border-light-secondary-container:focus-within{
   --tw-border-opacity: 1;
   border-color: rgb(255 138 120 / var(--tw-border-opacity));
+}
+
+.focus-within\:shadow-xl:focus-within{
+  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .hover\:scale-105:hover{
@@ -5372,6 +5399,10 @@ h1,
   background-color: rgb(143 0 0 / .08);
 }
 
+.hover\:bg-light-secondary-container\/8:hover{
+  background-color: rgb(255 138 120 / .08);
+}
+
 .hover\:bg-lime-500\/10:hover{
   background-color: rgb(205 220 57 / 0.1);
 }
@@ -5406,18 +5437,6 @@ h1,
 
 .hover\:bg-yellow-500\/10:hover{
   background-color: rgb(255 235 59 / 0.1);
-}
-
-.hover\:bg-light-secondary-container\/8:hover{
-  background-color: rgb(255 138 120 / .08);
-}
-
-.hover\:bg-light-tertiary-container\/8:hover{
-  background-color: rgb(140 97 18 / .08);
-}
-
-.hover\:bg-light-primary-container\/8:hover{
-  background-color: rgb(206 27 15 / .08);
 }
 
 .hover\:bg-opacity-80:hover{

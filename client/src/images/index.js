@@ -5,6 +5,7 @@ const images = {
     emailIcon: require('./EmailIcon.png'),
     logoutIcon: require('./Logout.png'),
     heroImage: require('./HeroImage.jpg'),
+    shoeShopIcon:require('./shoe-shop.png')
 };
 
 export default images;

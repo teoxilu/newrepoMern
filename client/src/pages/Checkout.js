@@ -1,22 +1,40 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createCashOrderForUser } from '../functions/user';
+import {
+    Button,
+    ButtonGroup,
+    Dialog,
+    DialogBody,
+    DialogFooter,
+    DialogHeader,
+    Typography,
+} from '@material-tailwind/react';
+import {
+    getUserCart,
+    emptyUserCart,
+    saveUserAddress,
+    applyCoupon,
+    createCashOrderForUser,
+    getUserOrders,
+} from '~/functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useHistory } from 'react-router-dom';
-import Typography from 'antd/lib/typography/Typography';
 import numeral from 'numeral';
-import { Button, ButtonGroup } from '@material-tailwind/react';
+import config from '~/config';
+import images from '~/images';
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState('');
     const [addressSaved, setAddressSaved] = useState(false);
+    const [isOpenDialog, setIsOpenDialog] = useState(false);
     const [coupon, setCoupon] = useState('');
     const [headerHeight, setHeaderHeight] = useState(null);
-
+    const [orderInfo, setOrderInfo] = useState(null);
+    console.log(orderInfo);
     // discount price
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
     // const [discountError, setDiscountError] = useState('');
@@ -144,9 +162,11 @@ const Checkout = () => {
                 });
                 // mepty cart from backend
                 emptyUserCart(user?.token);
+
                 // redirect
-                setTimeout(() => {
-                    history.push('/user/history');
+                setTimeout(async () => {
+                    await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
+                    setIsOpenDialog(true);
                 }, 1000);
             }
         });
@@ -155,7 +175,6 @@ const Checkout = () => {
     const pushToPayMent = () => {
         history.push('/payment');
     };
-    console.log(products);
 
     useEffect(() => {
         const headerHeight = document.getElementById('header')?.offsetHeight;
@@ -164,6 +183,71 @@ const Checkout = () => {
 
     return (
         <div className="grid grid-cols-12 grid-flow-row px-40 pt-28 gap-x-6">
+            <Dialog
+                size="sm"
+                open={isOpenDialog}
+                animate={{
+                    mount: { scale: 1, y: 0 },
+                    unmount: { scale: 0.9, y: 100 },
+                }}
+            >
+                <DialogHeader className="text-light-on-surface flex items-center space-x-2">
+                    <Typography
+                        className="text-2xl font-semibold text-light-on-surface"
+                        style={{
+                            color: '#8f0000',
+                            backgroundImage: '-webkit-linear-gradient(0deg, #8f0000 0%, #a7382a 50%, #603f00 100%)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            textFillColor: 'transparent',
+                        }}
+                    >
+                        Thanks for ordering
+                    </Typography>
+                    <img
+                        className="w-12 h-12 flex-shrink-0 animate-bounce"
+                        src={images.shoeShopIcon}
+                        alt="Shoe Shop icon"
+                    />
+                </DialogHeader>
+                <DialogBody className="flex flex-col space-y-2 text-light-on-surface">
+                    <p>
+                        Order Id: <b>{orderInfo?._id}</b>
+                    </p>
+                    <p>
+                        Date: <b>{new Date(orderInfo?.paymentIntent.created * 1000).toLocaleString()}</b>
+                    </p>
+                    <p>
+                        <span className="text-light-on-surface-variant">Total amount:</span>{' '}
+                        <b className="text-light-primary">
+                            {numeral(orderInfo?.paymentIntent.amount).format('0,0')}{' '}
+                            {orderInfo?.paymentIntent.currency.toUpperCase()}
+                        </b>
+                    </p>
+                </DialogBody>
+                <DialogFooter>
+                    <Button
+                        variant="text"
+                        className="text-light-primary hover:bg-light-primary/8 mr-2 rounded-full"
+                        onClick={() => {
+                            setIsOpenDialog(false);
+                            history.replace(config.routes.home);
+                        }}
+                    >
+                        Go back Shopping
+                    </Button>
+                    <Button
+                        className="bg-light-primary text-light-on-primary rounded-full"
+                        onClick={() => {
+                            setIsOpenDialog(false);
+                            history.replace(config.routes.history);
+                        }}
+                    >
+                        View order history
+                    </Button>
+                </DialogFooter>
+            </Dialog>
             <div className="flex flex-col space-y-12 col-span-7 text-light-on-surface">
                 {/* Address Container */}
                 <div>
@@ -223,11 +307,11 @@ const Checkout = () => {
                     <div className="flex items-center justify-between space-x-2">
                         <input
                             onChange={(e) => {
-                                setCoupon(e.target.value);
+                                setCoupon(e.target.value.trim());
                             }}
                             value={coupon || ''}
                             type="text"
-                            className="w-[50%] rounded-lg outline-none border border-light-outline p-2 text-light-on-surface"
+                            className="w-[50%] rounded-lg outline-none border-light-outline focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
                             placeholder="Enter Promo Code"
                         />
                         <Button

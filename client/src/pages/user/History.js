@@ -30,7 +30,6 @@ const History = () => {
             // console.log(JSON.stringify(res.data, null, 4));
             setOrders(res.data);
         });
-    console.log(orders);
     const showOrderInTable = (order) => (
         <table className="table table-auto table-bordered ">
             <thead className="thead-light ">
