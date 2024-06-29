@@ -20,7 +20,7 @@ import { Button } from '@material-tailwind/react';
 
 //children component of Product page
 const SingleProduct = ({ product, onStarClick, star }) => {
-    const { _id, title, images, description } = product;
+    const { _id, title, images, description, slug, price } = product;
     const [tooltip, setTooltip] = useState('Click to add');
 
     //redux
@@ -28,6 +28,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
     const dispatch = useDispatch();
 
     let history = useHistory();
+    
 
     const handleAddToCart = () => {
         //create cart array
@@ -116,9 +117,13 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                             <Button
                                 // fullWidth
                                 onClick={handleAddToCart}
+                                disabled = {product.quantity < 1}
                                 className="text-light-on-primary bg-light-primary rounded-lg "
                             >
-                                <ShoppingCartOutlined className="text-light-on-primary" /> <br /> Add To Cart
+                                {product.quantity < 1 ? (
+                                    <div><ShoppingCartOutlined className="text-light-on-primary" /> <br /> Out of stock</div>
+                                ): (<div><ShoppingCartOutlined className="text-light-on-primary" /> <br /> Add To Cart</div>)}
+                                
                             </Button>,
                             <Button variant="outlined" onClick={handleAddToWishlist} className="text-light-primary border-light-primary hover:bg-light-primary/8">
                                 <HeartOutlined className="text-light-primary rounded-lg" /> <br /> Add to Wishlist
