@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import config from '~/config';
 
 // Pages
-import Test from '~/pages/Test';
+// import Test from '~/pages/Test';
 const Home = lazy(() => import('~/pages/Home'));
 const Login = lazy(() => import('~/pages/auth/Login'));
 const Register = lazy(() => import('~/pages/auth/Register'));
