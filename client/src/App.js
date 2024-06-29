@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { currentUser } from './functions/auth';
+import ScrollToTop from '~/utils/scrollToTop';
 
 const SideDrawer = lazy(() => import('~/components/drawer/SideDrawer'));
 const StickyHeader = lazy(() => import('~/components/StickyHeader'));
@@ -38,7 +39,16 @@ const Checkout = lazy(() => import('~/pages/Checkout'));
 const CreateCouponPage = lazy(() => import('~/pages/admin/coupon/CreateCouponPage'));
 const Payment = lazy(() => import('~/pages/Payment'));
 const SubUpdate = lazy(() => import('~/pages/admin/sub/SubUpdate'));
+const NotFoundPage = lazy(() => import('~/pages/NotFoundPage'));
+const Test = lazy(() => import('~/pages/Test'));
 
+const contextClass = {
+    success: 'bg-gradient-to-r from-green-600 from-75% to-light-tertiary',
+    error: 'bg-gradient-to-r from-red-600 from-50% to-light-tertiary',
+    info: 'bg-gradient-to-r from-blue-600 from-50% to-light-primary',
+    warning: 'bg-gradient-to-r from-yellow-600 from-50% to-light-tertiary text-light-on-surface',
+    default: 'bg-gradient-to-r from-blue-600 from-50% to-light-primary',
+};
 const App = () => {
     const dispatch = useDispatch();
 
@@ -72,8 +82,7 @@ const App = () => {
         <Suspense
             fallback={
                 <div className="col text-center p-5">
-                    2HS Shoe Shop{' '}
-                    <LoadingOutlined /> Please wait...
+                    2HS Shoe Shop <LoadingOutlined /> Please wait...
                 </div>
             }
         >
@@ -81,6 +90,10 @@ const App = () => {
                 <StickyHeader />
                 <SideDrawer />
                 <ToastContainer
+                    toastClassName={(context) =>
+                        contextClass[context?.type || 'default'] +
+                        ' relative flex p-2 min-h-12 rounded-lg justify-between overflow-hidden cursor-pointer'
+                    }
                     position="top-right"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -93,7 +106,9 @@ const App = () => {
                     theme="light"
                     // transition={Bounce}
                 />
-                <Switch>
+                <div className="App bg-light-background">
+                    <ScrollToTop />
+                    <Switch>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
@@ -118,8 +133,11 @@ const App = () => {
                         <Route exact path="/cart" component={Cart} />
                         <Route exact path="/checkout" component={Checkout} />
                         <Route exact path="/payment" component={Payment} />
-                </Switch>
-                <Footer />
+                        <Route exact path="/test" component={Test} />
+                        <Route exact path="*" component={NotFoundPage} />
+                    </Switch>
+                    <Footer />
+                </div>
             </BrowserRouter>
         </Suspense>
     );
