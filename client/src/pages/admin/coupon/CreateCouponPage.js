@@ -57,19 +57,20 @@ const CreateCouponPage = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid pt-28">
       <div className="row">
         <div className="col-md-2">
           <AdminNav />
         </div>
         <div className="col-md-10">
           {loading ? (
-            <h4 className="text-danger">Loading...</h4>
+            <h1 className="text-light-on-surface-variant">Loading...</h1>
           ) : (
-            <h4>Coupon</h4>
+            <h1 className="font-medium text-base text-left">Coupon</h1>
           )}
+          <hr className="text-light-outline-variant"/>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="mt-4">
             <div className="form-group">
               <label className="text-muted">Name</label>
               <input

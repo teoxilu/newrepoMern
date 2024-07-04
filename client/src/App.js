@@ -10,8 +10,11 @@ import { initGA, logPageView } from './components/analytics/analytics';
 import ScrollToTop from './functions/ScrollToTop';
 // import ChatBot from './components/chat/ChatBot';
 // import ChatComponent from './components/chat/ChatComponent.js';
+import {AnimatePresence} from 'framer-motion'
 
 import { currentUser } from './functions/auth';
+import ScrollToTop from '~/utils/scrollToTop';
+import images from './images';
 
 const SideDrawer = lazy(() => import('~/components/drawer/SideDrawer'));
 const StickyHeader = lazy(() => import('~/components/StickyHeader'));
@@ -42,7 +45,16 @@ const Checkout = lazy(() => import('~/pages/Checkout'));
 const CreateCouponPage = lazy(() => import('~/pages/admin/coupon/CreateCouponPage'));
 const Payment = lazy(() => import('~/pages/Payment'));
 const SubUpdate = lazy(() => import('~/pages/admin/sub/SubUpdate'));
+const NotFoundPage = lazy(() => import('~/pages/NotFoundPage'));
+const Test = lazy(() => import('~/pages/Test'));
 
+const contextClass = {
+    success: 'bg-gradient-to-r from-green-600 from-75% to-light-tertiary',
+    error: 'bg-gradient-to-r from-red-600 from-50% to-light-tertiary',
+    info: 'bg-gradient-to-r from-blue-600 from-50% to-light-primary',
+    warning: 'bg-gradient-to-r from-yellow-600 from-50% to-light-tertiary text-light-on-surface',
+    default: 'bg-gradient-to-r from-blue-600 from-50% to-light-primary',
+};
 const App = () => {
     const dispatch = useDispatch();
 
@@ -79,15 +91,26 @@ const App = () => {
     return (
         <Suspense
             fallback={
-                <div className="col text-center p-5">
-                    2HS Shoe Shop <LoadingOutlined /> Please wait...
+                <div className="w-screen h-screen relative">
+                    <div id="loader">
+                        <div id="shadow"></div>
+                        <div id="box"></div>
+                    </div>
                 </div>
+
+                // <div className="col text-center p-5">
+                //     2HS Shoe Shop <LoadingOutlined /> Please wait...
+                // </div>
             }
         >
             <BrowserRouter>
                 <StickyHeader />
                 <SideDrawer />
                 <ToastContainer
+                    toastClassName={(context) =>
+                        contextClass[context?.type || 'default'] +
+                        ' relative flex p-2 min-h-12 rounded-lg justify-between overflow-hidden cursor-pointer'
+                    }
                     position="top-right"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -100,35 +123,40 @@ const App = () => {
                     theme="light"
                     // transition={Bounce}
                 />
-                <ScrollToTop />
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <Route exact path="/register/complete" component={RegisterComplete} />
-                    <Route exact path="/forgot/password" component={ForgotPassword} />
-                    <UserRoute exact path="/user/history" component={History} />
-                    <UserRoute exact path="/user/password" component={Password} />
-                    <UserRoute exact path="/user/wishlist" component={Wishlist} />
-                    <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
-                    <AdminRoute exact path="/admin/category" component={CategoryCreate} />
-                    <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
-                    <AdminRoute exact path="/admin/sub" component={SubCreate} />
-                    <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
-                    <AdminRoute exact path="/admin/product" component={ProductCreate} />
-                    <AdminRoute exact path="/admin/products" component={AllProducts} />
-                    <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
-                    <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
-                    <Route exact path="/product/:slug" component={Product} />
-                    <Route exact path="/category/:slug" component={CategoryHome} />
-                    <Route exact path="/sub/:slug" component={SubHome} />
-                    <Route exact path="/shop" component={Shop} />
-                    <Route exact path="/cart" component={Cart} />
-                    <Route exact path="/checkout" component={Checkout} />
-                    <Route exact path="/payment" component={Payment} />
-                </Switch>
-                {/* <ChatBot /> */}
-                <Footer />
+                <div className="App bg-light-background transition-colors">
+                    <ScrollToTop />
+                    <AnimatePresence mode='wait'>
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/register" component={Register} />
+                            <Route exact path="/register/complete" component={RegisterComplete} />
+                            <Route exact path="/forgot/password" component={ForgotPassword} />
+                            <UserRoute exact path="/user/history" component={History} />
+                            <UserRoute exact path="/user/password" component={Password} />
+                            <UserRoute exact path="/user/wishlist" component={Wishlist} />
+                            <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+                            <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+                            <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+                            <AdminRoute exact path="/admin/sub" component={SubCreate} />
+                            <AdminRoute exact path="/admin/sub/:slug" component={SubUpdate} />
+                            <AdminRoute exact path="/admin/product" component={ProductCreate} />
+                            <AdminRoute exact path="/admin/products" component={AllProducts} />
+                            <AdminRoute exact path="/admin/coupon" component={CreateCouponPage} />
+                            <AdminRoute exact path="/admin/product/:slug" component={ProductUpdate} />
+                            <Route exact path="/product/:slug" component={Product} />
+                            <Route exact path="/category/:slug" component={CategoryHome} />
+                            <Route exact path="/sub/:slug" component={SubHome} />
+                            <Route exact path="/shop" component={Shop} />
+                            <Route exact path="/cart" component={Cart} />
+                            <Route exact path="/checkout" component={Checkout} />
+                            <Route exact path="/payment" component={Payment} />
+                            <Route exact path="/test" component={Test} />
+                            <Route exact path="*" component={NotFoundPage} />
+                        </Switch>
+                    </AnimatePresence>
+                    <Footer />
+                </div>
             </BrowserRouter>
         </Suspense>
     );

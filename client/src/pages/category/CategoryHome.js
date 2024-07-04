@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getCategory } from '../../functions/category';
 import ProductCard from '../../components/cards/ProductCard';
 import { Typography } from '@material-tailwind/react';
+import transition from '~/utils/transition';
 
 const CategoryHome = ({ match }) => {
     const [category, setCategory] = useState({});
@@ -49,4 +50,4 @@ const CategoryHome = ({ match }) => {
     );
 };
 
-export default CategoryHome;
+export default transition(CategoryHome);

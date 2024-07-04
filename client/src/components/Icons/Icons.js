@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faFire, faXmark, faHeart, faAward, faHandPointer, faTrophy, faShield, faHeadset, faMedal } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import images from '~/images';
 
@@ -6,7 +6,6 @@ export const DashboardIcon = () => (
     <img className="w-6 h-6 flex-shrink-0" src={images.dashboardIcon} alt="Dashboard icon" />
 );
 export const LogoutIcon = () => <img className="w-6 h-6 flex-shrink-0" src={images.logoutIcon} alt="Logout icon" />;
-
 
 export const FacebookIcon = () => (
     <svg className="h-6 w-6" fill="light-on-surface" viewBox="0 0 24 24" aria-hidden="true">
@@ -38,3 +37,35 @@ export const CloseIcon = ({ className: customClassName }) => {
     customClassName?.split(' ');
     return <FontAwesomeIcon className={`w-6 h-6 text-light-primary ${customClassName}`} icon={faXmark} />;
 };
+
+export const FireIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faFire} className={`w-6 h-6 transition-colors ${customClassName}`} />
+);
+
+export const HeartIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faHeart} className={`w-6 h-6 transition-colors ${customClassName}`} />
+);
+
+export const BestIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faMedal} className={`w-6 h-6 transition-colors ${customClassName}`} />
+);
+
+export const TopPickIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faHandPointer} className={`w-6 h-6 transition-colors ${customClassName}`} />
+);
+
+export const TrophyIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faTrophy} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+);
+
+export const SecureIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faShield} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+);
+
+export const SupportIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faHeadset} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+);
+
+export const WarrantyIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faAward} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+);

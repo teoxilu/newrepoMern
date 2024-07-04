@@ -8,6 +8,8 @@ import { Button, Typography } from '@material-tailwind/react';
 import config from '~/config';
 import images from '~/images';
 import { createOrUpdateUser } from '~/functions/auth';
+import transition from '~/utils/transition';
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -195,4 +197,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default transition(Login);

@@ -71,7 +71,6 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             addToWishlist(product?._id, user.token).then((res) => {
                 // console.log('ADDED TO WISHLIST', res.data);
                 toast.success('Added to wishlist');
-                history.push(config.routes.wishList);
             });
         } else {
             toast.error('Please log in first.');
