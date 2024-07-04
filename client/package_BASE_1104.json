@@ -1,0 +1,76 @@
+{
+    "name": "client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@ant-design/icons": "^4.2.2",
+        "@fortawesome/fontawesome-svg-core": "^6.5.2",
+        "@fortawesome/free-brands-svg-icons": "^6.5.2",
+        "@fortawesome/free-regular-svg-icons": "^6.5.2",
+        "@fortawesome/free-solid-svg-icons": "^6.5.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
+        "@heroicons/react": "^2.1.1",
+        "@material-tailwind/react": "^2.1.9",
+        "@react-pdf/renderer": "^3.4.0",
+        "@stripe/react-stripe-js": "^1.1.2",
+        "@stripe/stripe-js": "^1.9.0",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
+        "antd": "^4.12.2",
+        "axios": "^1.6.2",
+        "draft-js": "^0.11.7",
+        "firebase": "^9.6.7",
+        "lodash": "^4.17.20",
+        "normalize.css": "^8.0.1",
+        "numeral": "^2.0.6",
+        "react": "^18.2.0",
+        "react-chatbot-kit": "^2.2.2",
+        "react-datepicker": "^6.4.0",
+        "react-dom": "^18.2.0",
+        "react-image-file-resizer": "^0.3.7",
+        "react-modal-image": "^2.5.0",
+        "react-quill": "^2.0.0",
+        "react-redux": "^7.2.1",
+        "react-responsive-carousel": "^3.2.9",
+        "react-router-dom": "^5.2.0",
+        "react-scripts": "^5.0.1",
+        "react-star-ratings": "^2.3.0",
+        "react-toastify": "^6.0.8",
+        "redux": "^4.0.5",
+        "redux-devtools-extension": "^2.13.8"
+    },
+    "devDependencies": {
+        "@types/react-router-dom": "^5.3.3",
+        "autoprefixer": "^10.4.19",
+        "babel-plugin-module-resolver": "^5.0.0",
+        "customize-cra": "^1.0.0",
+        "postcss-import": "^16.1.0",
+        "postcss-nesting": "^12.1.0",
+        "prettier": "3.2.5",
+        "react-app-rewired": "^2.2.1",
+        "tailwindcss": "^3.4.1"
+    },
+    "scripts": {
+        "start": "react-app-rewired start",
+        "production": "react-app-rewired start",
+        "build": "react-app-rewired build",
+        "test": "react-app-rewired test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
