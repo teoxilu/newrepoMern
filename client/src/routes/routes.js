@@ -30,6 +30,7 @@ const Checkout = lazy(() => import('~/pages/Checkout'));
 const CreateCouponPage = lazy(() => import('~/pages/admin/coupon/CreateCouponPage'));
 const Payment = lazy(() => import('~/pages/Payment'));
 const SubUpdate = lazy(() => import('~/pages/admin/sub/SubUpdate'));
+const Test = lazy(() => import('~/pages/Test'));
 
 const defaultRoutes = [
     { path: config.routes.home, component: Home },

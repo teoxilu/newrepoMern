@@ -15,7 +15,7 @@ const AdminProductCard = ({ product, handleRemove }) => {
         <img
           src={images && images.length ? images[0].url : unknown}
           style={{ height: "230px", objectFit: "cover" }}
-          className="p-1"
+          className="p-1" alt="Illustrate"
         />
       }
       actions={[

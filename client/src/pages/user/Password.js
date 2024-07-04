@@ -61,7 +61,7 @@ const Password = () => {
     );
 
     return (
-        <div className="container-fluid mt-28 text-light-on-surface">
+        <div className="container-fluid pt-28 text-light-on-surface">
             <div className="row">
                 <div className="col-md-2">
                     <UserNav />

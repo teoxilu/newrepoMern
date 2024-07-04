@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
 import { useParams } from 'react-router-dom';
 import { Tab, TabPanel, Tabs, TabsBody, TabsHeader, Typography } from '@material-tailwind/react';
+import transition from '~/utils/transition';
 
 // const { TabPane } = Tabs;
 const DATA_TAB = [
@@ -136,4 +137,4 @@ const Product = () => {
     );
 };
 
-export default Product;
+export default transition(Product);

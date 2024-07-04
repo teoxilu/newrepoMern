@@ -46,9 +46,9 @@ const AllProducts = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid pt-28">
       <div className="row">
-        <div className="colmd-2">
+        <div className="col-md-2">
           <AdminNav />
         </div>
 
@@ -56,9 +56,10 @@ const AllProducts = () => {
           {loading ? (
             <h4 className="text-danger">Loading...</h4>
           ) : (
-            <h4>All Products</h4>
+            <h1 className="font-medium text-base text-left">All Products</h1>
           )}
-          <div className="row">
+          <hr className="text-light-outline-variant"/> 
+          <div className="row mt-4">
             {products.map((product) => (
               <div key={product._id} className="col-md-4 pb-3">
                 <AdminProductCard

@@ -16,7 +16,7 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => (
         <div className="flex items-center space-x-5">
             <p>
                 <span className="text-light-on-surface-variant">Payment Method:</span>{' '}
-                <b>{order.paymentIntent.status.toUpperCase()}</b>
+                <b>{order.paymentIntent.status}</b>
             </p>
             <p>
                 <span className="text-light-on-surface-variant">Total amount:</span>{' '}

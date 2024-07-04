@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { getProductsByCount, fetchProductsByFilter } from '../functions/product';
-import { getCategories } from '../functions/category';
-import { getSubs } from '../functions/sub';
 import { useSelector, useDispatch } from 'react-redux';
-import ProductCard from '~/components/cards/ProductCard';
 import { Menu, Slider, Checkbox, Radio } from 'antd';
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
-import Star from '../components/forms/Star';
 import { Typography } from '@material-tailwind/react';
+
+import { getProductsByCount, fetchProductsByFilter } from '../functions/product';
+import { getCategories } from '../functions/category';
+import ProductCard from '~/components/cards/ProductCard';
+import { getSubs } from '../functions/sub';
+import Star from '../components/forms/Star';
 import { useDebounce } from '~/hooks';
+import LoadingCard from '~/components/cards/LoadingCard';
+import transition from '~/utils/transition';
+
 const { SubMenu, ItemGroup } = Menu;
 
 const Shop = () => {
@@ -516,22 +520,20 @@ const Shop = () => {
             </div>
 
             <div className="col-span-9">
-                {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
-
-                {arrayItem.length < 1 ? (
-                    <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
-                ) : (
+                {arrayItem.length > 0 ? (
                     <div className="grid grid-cols-3">
                         {arrayItem.map((p) => (
                             <div key={p._id} className="col-md-4 mt-3">
-                                <ProductCard product={p} />
+                                {loading ? <LoadingCard /> : <ProductCard product={p} />}
                             </div>
                         ))}
                     </div>
+                ) : (
+                    <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
                 )}
             </div>
         </div>
     );
 };
 
-export default Shop;
+export default transition(Shop);

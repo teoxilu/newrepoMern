@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
     //destructure
     const { images, title, description, slug, price } = product;
     return (
-        <Card className="w-72 h-[492px] hover:shadow-lg hover:scale-105 transition">
+        <Card className="w-72 h-[492px] overflow-hidden hover:shadow-lg hover:scale-105 transition">
             <CardHeader shadow={false} floated={false} className="h-52">
                 <img
                     src={images && images.length ? images[0].url : unknown}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getSub } from '../../functions/sub';
 import ProductCard from '../../components/cards/ProductCard';
 import { Typography } from '@material-tailwind/react';
+import transition from '~/utils/transition';
 
 const SubHome = ({ match }) => {
     const [sub, setSub] = useState({});
@@ -52,4 +53,4 @@ const SubHome = ({ match }) => {
     );
 };
 
-export default SubHome;
+export default transition(SubHome);

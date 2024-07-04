@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Typography } from '@material-tailwind/react';
+import transition from '~/utils/transition';
 
 const Register = ({ history }) => {
     const [email, setEmail] = useState('');
@@ -78,4 +79,4 @@ const Register = ({ history }) => {
     );
 };
 
-export default Register;
+export default transition(Register);

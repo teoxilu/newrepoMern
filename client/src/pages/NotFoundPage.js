@@ -1,5 +1,6 @@
 import { Button, Typography } from '@material-tailwind/react';
 import { useHistory } from 'react-router-dom';
+import transition from '~/utils/transition';
 
 function NotFoundPage() {
     const history = useHistory();
@@ -23,4 +24,4 @@ function NotFoundPage() {
     );
 }
 
-export default NotFoundPage;
+export default transition(NotFoundPage);

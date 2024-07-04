@@ -44,7 +44,7 @@ function SearchBar() {
     // }, [debouncedValue, handleChange]);
     return (
         <form
-            className="max-w-[360px] w-full flex justify-between p-2 items-center space-x-2 border rounded-full bg-light-surface-container-high focus-within:border-light-secondary-container"
+            className="max-w-[360px] w-full flex justify-between p-2 items-center space-x-2 border !border-light-outline rounded-full bg-light-surface-container-medium focus-within:border-light-secondary-container"
             onSubmit={handleSubmit}
         >
             <input
@@ -53,7 +53,7 @@ function SearchBar() {
                 type="text"
                 value={text}
                 spellCheck={false}
-                className="pl-2 text-base text-light-on-surface outline-none w-full bg-transparent"
+                className="pl-2 text-base text-light-on-surface outline-none placeholder:text-light-on-surface-variant/75 w-full bg-transparent"
                 placeholder="Nike"
             />
             <div className="flex items-center">

@@ -11,6 +11,7 @@ import UserNav from '~/components/nav/UserNav';
 import { getUserOrders } from '~/functions/user';
 import Invoice from '~/components/order/Invoice';
 import unknown from '~/images/unknown.jpg';
+import transition from '~/utils/transition';
 
 const History = () => {
     const [orders, setOrders] = useState([]);
@@ -88,24 +89,34 @@ const History = () => {
             <tbody>
                 {order.products.map((p, i) => (
                     <tr key={i}>
-                        <td className="bg-light-tertiary-container/50">
-                            <div className="w-full max-w-[100px] m-auto ">
+                        <td className="bg-light-tertiary-container/50 w-[20%] h-full">
+                            <div className="w-full m-auto ">
                                 {p.product.images.length > 0 ? (
                                     <ModalImage
                                         small={p.product.images[0].url}
                                         large={p.product.images[0].url}
-                                        className="w-full object-cover rounded-lg"
+                                        className="w-full h-full !max-h-32 object-cover rounded-lg"
                                     />
                                 ) : (
-                                    <ModalImage small={unknown} large={unknown} className="object-cover rounded-lg" />
+                                    <ModalImage small={unknown} large={unknown} className="w-full h-full !max-h-24  object-cover rounded-lg" />
                                 )}
                             </div>
                         </td>
-                        <td style={{verticalAlign:'middle'}} className="m-auto"><p>{p.product.title}</p></td>
-                        <td style={{verticalAlign:'middle'}} className="bg-light-tertiary-container/50"><p className='text-light-on-tertiary-container'>{numeral(p.product.price).format('0,0')}</p></td>
-                        <td style={{verticalAlign:'middle'}}>{p.product.brand}</td>
-                        <td style={{verticalAlign:'middle'}} className="bg-light-tertiary-container/50"><p className='text-light-on-tertiary-container'>{p.size}</p></td>
-                        <td style={{verticalAlign:'middle'}}>{p.count}</td>
+                        <td style={{ verticalAlign: 'middle' }} className="m-auto w-[20%]">
+                            <p>{p.product.title}</p>
+                        </td>
+                        <td style={{ verticalAlign: 'middle' }} className="bg-light-tertiary-container/50 w-[15%]">
+                            <p className="text-light-on-tertiary-container">{numeral(p.product.price).format('0,0')}</p>
+                        </td>
+                        <td style={{ verticalAlign: 'middle' }} className="w-[15%]">
+                            {p.product.brand}
+                        </td>
+                        <td style={{ verticalAlign: 'middle' }} className="bg-light-tertiary-container/50 w-[15%]">
+                            <p className="text-light-on-tertiary-container">{p.size}</p>
+                        </td>
+                        <td style={{ verticalAlign: 'middle' }} className="w-[15%]">
+                            {p.count}
+                        </td>
                     </tr>
                 ))}
             </tbody>
@@ -116,7 +127,7 @@ const History = () => {
         <PDFDownloadLink
             document={<Invoice order={order} />}
             fileName="Invoice.pdf"
-            className="btn btn-sm max-w-[50%] w-full mb-3 text-light-primary border-light-primary hover:bg-light-primary/8 hover:text-light-primary transition-colors"
+            className="btn btn-sm max-w-[75%] w-full mb-3 text-light-primary border-light-primary hover:bg-light-primary/8 hover:text-light-primary transition-colors"
         >
             {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
         </PDFDownloadLink>
@@ -134,7 +145,7 @@ const History = () => {
         ));
 
     return (
-        <div className="container-fluid mt-28 text-light-on-surface">
+        <div className="container-fluid pt-28 text-light-on-surface">
             <div className="row">
                 <div className="col-md-2">
                     <UserNav />
@@ -150,4 +161,4 @@ const History = () => {
     );
 };
 
-export default History;
+export default transition(History);

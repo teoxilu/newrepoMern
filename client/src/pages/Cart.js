@@ -7,6 +7,8 @@ import config from '~/config';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
 import { useEffect } from 'react';
+import transition from '~/utils/transition';
+
 const Cart = () => {
     const [headerHeight, setHeaderHeight] = useState(null);
     const history = useHistory();
@@ -54,7 +56,7 @@ const Cart = () => {
     const showCartItems = () => (
         <Card className={`h-full w-full overflow-y-scroll`}>
             <table className="table table-auto table-bordered">
-                <thead className="thead-light">
+                <thead className="thead-light text-center">
                     <tr>
                         <th scope="col" className="!bg-light-surface-container-lowest">
                             <Typography
@@ -194,4 +196,4 @@ const Cart = () => {
     );
 };
 
-export default Cart;
+export default transition(Cart);

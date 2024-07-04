@@ -24,6 +24,7 @@ import { useHistory } from 'react-router-dom';
 import numeral from 'numeral';
 import config from '~/config';
 import images from '~/images';
+import transition from '~/utils/transition';
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
@@ -427,4 +428,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default transition(Checkout);

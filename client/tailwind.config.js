@@ -1,4 +1,5 @@
 const withMT = require('@material-tailwind/react/utils/withMT');
+const { transform } = require('lodash');
 /** @type {import('tailwindcss').Config} */
 module.exports = withMT({
     content: ['./src/**/*.{html,js}'],
@@ -45,6 +46,38 @@ module.exports = withMT({
                 8: '.08',
                 12: '.12',
                 16: '.16',
+            },
+            keyframes: {
+                textClip: {
+                    '0%': { clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)' },
+                    '100%': { clipPath: ' polygon(0 0, 100% 0, 100% 100%, 0 100%)' },
+                },
+                imageIn: {
+                    '0%': { clipPath: 'polygon(0 0, 100% 0, 100% 0, 0 0)' },
+                    '100%': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' },
+                },
+                appear: {
+                    '0%': { opacity: 0 },
+                    '100%': { opacity: 1 },
+                },
+                slide: {
+                    '0%': {
+                        transform: 'translateY(-135px)',
+                    },
+                    '50%': {
+                        transform: 'translateY(-5px)',
+                    },
+                    '100%': {
+                        transform: 'translateY(-135px)',
+                    },
+                },
+            },
+            animation: {
+                textClip: 'textClip 1s 1s cubic-bezier(0.5, 0, 0.1, 1) both',
+                imageIn: 'imageIn 1s cubic-bezier(0.5, 0, 0.1, 1) 0s backwards',
+                appear: 'appear 1s ease 1s backwards',
+                bounceInRight: 'bounce-in-right .8s 1.8s both',
+                slide: 'slide 8s infinite'
             },
         },
     },
