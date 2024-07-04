@@ -163,7 +163,7 @@ const Cart = () => {
                             className="hidden lg:inline-block rounded-full  hover:bg-light-primary/8"
                             disabled={!cart.length}
                         >
-                            <span className="text-light-primary">Pay with Credit/Debit Card</span>
+                            <span className="text-light-primary">Pay with Stripe</span>
                         </Button>
                         <Button
                             onClick={saveCashOrderToDb}

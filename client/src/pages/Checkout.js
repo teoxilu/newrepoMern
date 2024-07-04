@@ -317,6 +317,7 @@ const Checkout = () => {
                         <Button
                             disabled={coupon ? false : true}
                             className="bg-light-secondary text-light-on-secondary rounded-full"
+                            onClick={applyDiscountCoupon}
                         >
                             Apply
                         </Button>

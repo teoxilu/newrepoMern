@@ -68,6 +68,7 @@ const Shop = () => {
 
     const fetchProducts = (arg) => {
         fetchProductsByFilter(arg).then((res) => {
+            setFilteredItem(res.data)
             setProducts(res.data);
         });
     };

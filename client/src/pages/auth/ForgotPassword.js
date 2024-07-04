@@ -58,7 +58,7 @@ const ForgotPassword = ({ history }) => {
                             autoFocus
                         />
                         <br />
-                        <Button className="rounded-full bg-light-primary mt-3" disabled={!email}>
+                        <Button onClick={handleSubmit} className="rounded-full bg-light-primary mt-3" disabled={!email}>
                             Submit
                         </Button>
                     </form>

@@ -53,6 +53,7 @@ const Password = () => {
                 <Button
                     className="bg-light-primary text-light-on-primary rounded-full"
                     disabled={!password || password.length < 6 || loading || password !== confirmPassword}
+                    onClick={handleSubmit}
                 >
                     Submit
                 </Button>
