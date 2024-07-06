@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Navbar, MobileNav, Button, IconButton, Badge } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon } from '~/components/Icons';
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 
@@ -68,7 +68,7 @@ function StickyHeader() {
             id="header"
             className="fixed top-0 z-50 h-max max-w-full w-screen rounded-none px-40 py-2 lg:px-40 lg:py-4 bg-light-surface"
         >
-            <div className="flex items-center justify-between text-blue-gray-900">
+            <div className="flex items-center justify-between text-light-on-surface">
                 <Link to={config.routes.home}>
                     <img src={images.logo2} alt="Logo" className="h-auto max-w-full max-h-20 rounded-full z-50" />
                 </Link>
@@ -82,9 +82,9 @@ function StickyHeader() {
                         <Badge content={cart.length} withBorder>
                             <IconButton
                                 variant="text"
-                                className="rounded-full text-light-on-surface-variant hover:bg-light-on-surface-variant/8"
+                                className="rounded-full hover:bg-light-primary/8"
                             >
-                                <ShoppingCartIcon className="w-6 h-6" />
+                                <ShoppingCartIcon />
                             </IconButton>
                         </Badge>
                     </Link>

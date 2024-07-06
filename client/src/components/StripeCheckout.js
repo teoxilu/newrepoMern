@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPaymentIntent } from '../functions/stripe';
-import { sendConfirmationEmail } from '../functions/email';
 import { Link, useHistory } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined, SwapOutlined } from '@ant-design/icons';
@@ -80,6 +79,10 @@ const StripeCheckout = () => {
                         type: 'COUPON_APPLIED',
                         payload: false,
                     });
+                    dispatch({
+                        type: 'COD',
+                        payload: false,
+                    });
                     // empty cart from database
                     emptyUserCart(user.token);
 
@@ -87,7 +90,6 @@ const StripeCheckout = () => {
                     setTimeout(async () => {
                         await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                         setIsOpenDialog(true);
-                        sendConfirmationEmail(user.email, res.data[res.data.length - 1]);
                     }, 1000);
                 }
             });
@@ -108,18 +110,18 @@ const StripeCheckout = () => {
 
     const cartStyle = {
         style: {
-            base: {
-                color: '#32325d',
-                fontFamily: 'Arial, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                    color: '#32325d',
-                },
-            },
+            // base: {
+            //     color: '#281714',
+            //     fontFamily: 'Arial, sans-serif',
+            //     fontSmoothing: 'antialiased',
+            //     fontSize: '16px',
+            //     '::placeholder': {
+            //         color: '#5d403b',
+            //     },
+            // },
             invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a',
+                color: '#ba1a1a',
+                iconColor: '#ba1a1a',
             },
         },
     };
@@ -192,7 +194,7 @@ const StripeCheckout = () => {
                 </DialogFooter>
             </Dialog>
 
-            {!succeeded && (
+            {/* {!succeeded && (
                 <div>
                     {coupon && totalAfterDiscount !== undefined ? (
                         <p className="alert alert-success">{`Total after discount: ${totalAfterDiscount} VND`}</p>
@@ -200,49 +202,79 @@ const StripeCheckout = () => {
                         <p className="alert alert-danger">No coupon applied</p>
                     )}
                 </div>
-            )}
-            <div className="text-center pb-5">
-                <Card
-                    cover={
-                        <img
-                            src={spongepay}
-                            style={{
-                                height: '480px',
-                                objectFit: 'cover',
-                                marginBottom: '-50px',
-                            }}
-                            alt="illustrate"
-                        />
-                    }
-                    actions={[
-                        <>
-                            <DollarOutlined className="text-info" /> <br /> Total:
-                            {cartTotal} VND
-                        </>,
-                        <>
-                            <CheckOutlined className="text-info" /> <br /> Total payable:
-                            {(payable / 100).toFixed(2)} VND
-                        </>,
-                    ]}
-                />
-            </div>
+            )} */}
+            <div className="grid grid-cols-3 px-40 pt-28 text-light-on-surface h-fit">
+                <div className="col-span-1">
+                    <img
+                        src={images.checkoutImage}
+                        alt={'checkout shoe'}
+                        className="w-full h-auto rounded-ss-lg rounded-es-lg object-cover shadow-xl"
+                    />
+                </div>
+                <div className="col-span-2">
+                    <form
+                        id="payment-form"
+                        className="stripe-form flex flex-col justify-between h-full border border-light-outline outline-none shadow-xl rounded-ee-lg rounded-se-lg"
+                        onSubmit={handleSubmit}
+                    >
+                        <div>
+                            <h1 className="text-xl">Payment Information</h1>
+                            <div className="flex flex-col space-y-2 py-2 border-t border-b border-light-outline-variant mt-4">
+                                <div className="flex items-center justify-between">
+                                    <h1>Subtotal:</h1>
+                                    <p className="text-light-primary">{numeral(cartTotal).format('0,0')} VND</p>
+                                </div>
 
-            <form id="payment-form" className="stripe-form" onSubmit={handleSubmit}>
-                <CardElement id="card-element" options={cartStyle} onChange={handleChange} />
-                <button className="stripe-button" disabled={processing || disabled || succeeded}>
-                    <span id="button-text">{processing ? <div className="spinner" id="spinner"></div> : 'Pay'}</span>
-                </button>
-                <br />
-                {error && (
-                    <div className="card-error" role="alert">
-                        {error}
-                    </div>
-                )}
-                <br />
-                <p className={succeeded ? 'result-message' : 'result-message hidden'}>
-                    Payment Successful. <Link to="/user/history">See it in your purchase history.</Link>
-                </p>
-            </form>
+                                {coupon && totalAfterDiscount !== undefined ? (
+                                    <div className="flex items-center justify-between">
+                                        <h1>Total after discount:</h1>
+                                        <p className="text-light-on-surface-variant">
+                                            {numeral(totalAfterDiscount).format('0,0')} VND
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <p className="italic text-light-on-surface-variant">No coupon applied</p>
+                                )}
+                            </div>
+
+                            <div className="flex items-center justify-between mt-2">
+                                <h1>Total:</h1>
+                                <p className="text-light-primary font-bold text-base">
+                                    {numeral(payable).format('0,0')} VND
+                                </p>
+                            </div>
+
+                            <CardElement
+                                id="card-element"
+                                options={cartStyle}
+                                className="!text-light-on-surface placeholder:!text-light-on-surface-variant/80 rounded-lg mt-4"
+                                onChange={handleChange}
+                            />
+                            <br />
+                            {error && (
+                                <div className="text-light-error" role="alert">
+                                    {error}
+                                </div>
+                            )}
+                        </div>
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            size="lg"
+                            className="bg-light-primary text-light-on-primary rounded-full mt-8"
+                            disabled={processing || disabled || succeeded || error}
+                        >
+                            <span id="button-text">
+                                {processing ? <div className="spinner" id="spinner"></div> : 'Pay'}
+                            </span>
+                        </Button>
+                        {/* <p className={succeeded ? 'result-message' : 'result-message hidden'}>
+                            Payment Successful. <Link to="/user/history">See it in your purchase history.</Link>
+                        </p> */}
+                    </form>
+                </div>
+            </div>
         </>
     );
 };
