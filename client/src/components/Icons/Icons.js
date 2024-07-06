@@ -1,4 +1,4 @@
-import { faFire, faXmark, faHeart, faAward, faHandPointer, faTrophy, faShield, faHeadset, faMedal } from '@fortawesome/free-solid-svg-icons';
+import { faFire, faXmark, faHeart, faAward, faHandPointer, faTrophy, faShield, faHeadset, faMedal, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import images from '~/images';
 
@@ -68,4 +68,7 @@ export const SupportIcon = ({ className: customClassName }) => (
 
 export const WarrantyIcon = ({ className: customClassName }) => (
     <FontAwesomeIcon icon={faAward} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+);
+export const ShoppingCartIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon icon={faCartShopping} className={`w-6 h-6 transition-colors text-light-on-surface ${customClassName}`} />
 );

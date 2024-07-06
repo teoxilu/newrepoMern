@@ -25,6 +25,7 @@ import numeral from 'numeral';
 import config from '~/config';
 import images from '~/images';
 import transition from '~/utils/transition';
+import { ShoppingCartIcon } from '~/components/Icons';
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
@@ -35,7 +36,8 @@ const Checkout = () => {
     const [coupon, setCoupon] = useState('');
     const [headerHeight, setHeaderHeight] = useState(null);
     const [orderInfo, setOrderInfo] = useState(null);
-    console.log(orderInfo);
+    const [isCheckout, setIsCheckout] = useState(false);
+
     // discount price
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
     // const [discountError, setDiscountError] = useState('');
@@ -141,7 +143,7 @@ const Checkout = () => {
 
     const createCashOrder = () => {
         createCashOrderForUser(user?.token, COD, couponTrueOrFalse).then((res) => {
-            console.log('USER CASH ORDER CREATED RES ', res);
+            // console.log('USER CASH ORDER CREATED RES ', res);
             // empty cart form redux, local Storage, reset coupon, reset COD, redirect
             if (res.data.ok) {
                 // empty local storage
@@ -165,10 +167,10 @@ const Checkout = () => {
                 emptyUserCart(user?.token);
 
                 // redirect
-                setTimeout(async () => {
-                    await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
-                    setIsOpenDialog(true);
-                }, 1000);
+                // setTimeout(async () => {
+                getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
+                setIsOpenDialog(true);
+                // }, 1000);
             }
         });
     };
@@ -182,6 +184,23 @@ const Checkout = () => {
         setHeaderHeight(headerHeight);
     }, []);
 
+    useEffect(() => {
+        const cartIconCheckout = document.getElementById('cart-checkout');
+        const labelBtnCheckout = document.getElementById('label-checkout');
+        const labelSuccessCheckout = document.getElementById('label-success');
+        const buttonCheckout = document.getElementById('btn');
+
+        return () => {
+            setTimeout(() => {
+                cartIconCheckout?.classList.remove('animate-rollOut');
+                labelBtnCheckout?.classList.remove('animate-slideUpFade');
+                labelSuccessCheckout?.classList.remove('animate-slideInFade');
+                buttonCheckout?.classList.remove('animate-changeColor');
+
+                setIsCheckout(false);
+            }, 3000);
+        };
+    }, [isCheckout]);
     return (
         <div className="grid grid-cols-12 grid-flow-row px-40 pt-28 gap-x-6">
             <Dialog
@@ -292,7 +311,7 @@ const Checkout = () => {
             </div>
             <div className={`col-span-5 sticky z-49 mt-4 top-[${headerHeight + 16}px]`}>
                 <div
-                    className={`flex flex-col space-y-8 p-6 rounded-xl bg-light-tertiary-container text-light-on-tertiary-container`}
+                    className={`flex flex-col space-y-8 p-6 rounded-xl bg-light-surface-container-medium text-light-on-surface`}
                 >
                     <span className="text-xl">Order Summary</span>
                     <div className="flex items-center justify-between">
@@ -312,12 +331,13 @@ const Checkout = () => {
                             }}
                             value={coupon || ''}
                             type="text"
-                            className="w-[50%] rounded-lg outline-none border-light-outline focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
+                            className="w-[50%] rounded-lg outline-none border !border-light-outline focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
                             placeholder="Enter Promo Code"
                         />
                         <Button
+                            variant="outlined"
                             disabled={coupon ? false : true}
-                            className="bg-light-secondary text-light-on-secondary rounded-full"
+                            className="text-light-tertiary border !border-light-tertiary outline-none hover:bg-light-tertiary/8 rounded-full"
                         >
                             Apply
                         </Button>
@@ -334,14 +354,43 @@ const Checkout = () => {
                         </div>
                         {COD ? (
                             <Button
-                                className="rounded-full bg-light-primary text-light-on-primary"
+                                id="btn"
                                 disabled={products.length > 0 && !!address.length > 0 ? false : true}
+                                className="flex items-center justify-center space-x-2 rounded-full bg-light-primary text-light-on-primary mt-28"
                                 onClick={() => {
-                                    saveAddressToDb();
-                                    createCashOrder();
+                                    // setIsCheckout(true);
+                                    const cartIconCheckout = document.getElementById('cart-checkout');
+                                    const labelBtnCheckout = document.getElementById('label-checkout');
+                                    const labelSuccessCheckout = document.getElementById('label-success');
+                                    const buttonCheckout = document.getElementById('btn');
+
+                                    cartIconCheckout?.classList.add('animate-rollOut');
+                                    labelBtnCheckout?.classList.add('animate-slideUpFade');
+                                    labelSuccessCheckout?.classList.add('animate-slideInFade');
+                                    buttonCheckout?.classList.add('animate-changeColor');
+
+                                    setIsCheckout(true);
+                                    setTimeout(() => {
+                                        createCashOrder();
+                                    }, 1500);
                                 }}
                             >
-                                Place Order
+                                <svg
+                                    id="cart-checkout"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    height="24"
+                                    width="27"
+                                    viewBox="0 0 576 512"
+                                >
+                                    <path
+                                        fill="#ffffff"
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"
+                                    />
+                                </svg>
+                                <p id="label-checkout">Place Order</p>
+                                <p id="label-success" className="opacity-0 translate-y-4 absolute left-[50% -12px]">
+                                    Order Success
+                                </p>
                             </Button>
                         ) : (
                             <Button
@@ -352,79 +401,17 @@ const Checkout = () => {
                                     history.push('/payment');
                                 }}
                             >
-                                Place Order
+                                Check out with Stripe
                             </Button>
                         )}
                     </div>
-                    <Typography className="text-xs font-normal text-light-on-tertiary-container text-pretty">
+                    <Typography className="text-xs font-normal text-light-on-surface text-pretty">
                         By placing your order, you agree to 2HS’s <b className="underline">privacy notice</b> and{' '}
                         <b className="underline">conditions of use</b>.
                     </Typography>
                 </div>
             </div>
         </div>
-        // <div className="row">
-        //     <div className="col-md-6">
-        //         <h4>Delivery Address</h4>
-        //         <br />
-        //         <br />
-        //         {showAddress()}
-        //         <hr />
-        //         <h4>Got Coupon?</h4>
-        //         <br />
-        //         {showApplyCoupon()}
-        //         <br />
-        //         {discountError && <p className="bg-danger p-2">{discountError}</p>}
-        //     </div>
-
-        //     <div className="col-md-6">
-        //         <h4>Order Summary</h4>
-        //         <hr />
-        //         <p>Products {products.length}</p>
-        //         <hr />
-        //         {showProductSummary()}
-        //         <hr />
-        //         <p>Cart Total: {total}</p>
-
-        //         {totalAfterDiscount > 0 && (
-        //             <p className="bg-success p-2">Discount Applied: Total Payable: {totalAfterDiscount} VND</p>
-        //         )}
-
-        //         <div className="row">
-        //             <div className="col-md-6">
-        //                 {COD ? (
-        //                     <button
-        //                         className="btn btn-primary"
-        //                         disabled={!products.length || !address.length}
-        //                         onClick={() => {
-        //                             saveAddressToDb();
-        //                             createCashOrder();
-        //                         }}
-        //                     >
-        //                         Place Order
-        //                     </button>
-        //                 ) : (
-        //                     <button
-        //                         className="btn btn-primary"
-        //                         disabled={!products.length || !address.length}
-        //                         onClick={() => {
-        //                             saveAddressToDb();
-        //                             history.push('/payment');
-        //                         }}
-        //                     >
-        //                         Place Order
-        //                     </button>
-        //                 )}
-        //             </div>
-
-        //             <div className="col-md-6">
-        //                 <button disabled={!products.length} onClick={emptyCart} className="btn btn-primary">
-        //                     Empty Cart
-        //                 </button>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
     );
 };
 

@@ -15,6 +15,7 @@ const images = {
     nikeLogo: require('./nikeLogo.png'),
     salomonLogo: require('./salomonLogo.png'),
     yonexLogo: require('./yonexLogo.png'),
+    checkoutImage: require('./checkoutImage.jpg'),
 };
 
 export default images;

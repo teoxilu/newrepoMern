@@ -18,6 +18,8 @@ module.exports = withMT({
                 'secondary-container': '#ff8a78',
                 tertiary: '#603f00',
                 'tertiary-container': '#8c6112',
+                error: '#ba1a1a',
+                'error-container': '#ffdad6',
                 on: {
                     primary: '#ffffff',
                     'primary-container': '#ffffff',
@@ -27,6 +29,8 @@ module.exports = withMT({
                     surface: '#281714',
                     'surface-variant': '#5d403b',
                     background: '#281714',
+                    error: '#ffffff',
+                    'error-container': '#410002',
                 },
                 surface: '#fff8f6',
                 'surface-variant': '#ffdad4',
@@ -60,15 +64,46 @@ module.exports = withMT({
                     '0%': { opacity: 0 },
                     '100%': { opacity: 1 },
                 },
-                slide: {
+                slideUpFade: {
                     '0%': {
-                        transform: 'translateY(-135px)',
-                    },
-                    '50%': {
-                        transform: 'translateY(-5px)',
+                        transform: 'translateY(0)',
+                        opacity: 1,
                     },
                     '100%': {
-                        transform: 'translateY(-135px)',
+                        transform: 'translateY(-16px)',
+                        opacity: 0,
+                    },
+                },
+                slideInFade: {
+                    '0%': {
+                        transform: 'translateY(16px)',
+                        opacity: 0,
+                    },
+                    '100%': {
+                        transform: 'translateY(0)',
+                        opacity: 1,
+                    },
+                },
+                rollOut: {
+                    '0%': {
+                        transform: 'translate(0) rotate(0)',
+                    },
+                    '20%': {
+                        transform: 'translate(0) rotate(-70deg)',
+                        opacity: 1,
+                    },
+                    '50%': {
+                        transform: 'translate(0) rotate(-45deg)',
+                        opacity: 1,
+                    },
+                    '100%': {
+                        transform: 'translate(140px) rotate(-47deg)',
+                        opacity: 0,
+                    },
+                },
+                changeColor: {
+                    '100%': {
+                        backgroundColor: '#16a34a',
                     },
                 },
             },
@@ -77,7 +112,10 @@ module.exports = withMT({
                 imageIn: 'imageIn 1s cubic-bezier(0.5, 0, 0.1, 1) 0s backwards',
                 appear: 'appear 1s ease 1s backwards',
                 bounceInRight: 'bounce-in-right .8s 1.8s both',
-                slide: 'slide 8s infinite'
+                slideUpFade: 'slideUpFade 150ms 1 both',
+                slideInFade: 'slideInFade 300ms 1 1150ms both',
+                rollOut: 'rollOut 1s 1 150ms ease-in both',
+                changeColor: 'changeColor 150ms 1 1300ms cubic-bezier(0.4, 0, 0.2, 1) both',
             },
         },
     },
