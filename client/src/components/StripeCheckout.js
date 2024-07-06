@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector, useDispatch } from 'react-redux';
 import { createPaymentIntent } from '../functions/stripe';
+import { sendConfirmationEmail } from '../functions/email';
 import { Link, useHistory } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined, SwapOutlined } from '@ant-design/icons';
@@ -86,6 +87,7 @@ const StripeCheckout = () => {
                     setTimeout(async () => {
                         await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                         setIsOpenDialog(true);
+                        sendConfirmationEmail(user.email, res.data[res.data.length - 1]);
                     }, 1000);
                 }
             });

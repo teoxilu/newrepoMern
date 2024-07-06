@@ -18,6 +18,7 @@ import {
     createCashOrderForUser,
     getUserOrders,
 } from '~/functions/user';
+import { sendConfirmationEmail } from '~/functions/email';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useHistory } from 'react-router-dom';
@@ -51,7 +52,7 @@ const Checkout = () => {
             setProducts(res.data.products);
             setTotal(res.data.cartTotal);
         });
-    }, []);
+    }, [user?.token]);
 
     const emptyCart = () => {
         // remove from local storage
@@ -166,8 +167,15 @@ const Checkout = () => {
 
                 // redirect
                 setTimeout(async () => {
+                    // const orderRes = await getUserOrders(user.token);
+                    // setOrderInfo(orderRes.data[orderRes.data.length - 1]);
                     await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                     setIsOpenDialog(true);
+
+                    //confirmation email
+                   
+
+                    console.log('Email sent response:', emailResponse);
                 }, 1000);
             }
         });
