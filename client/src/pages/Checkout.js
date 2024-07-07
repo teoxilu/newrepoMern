@@ -223,7 +223,7 @@ const Checkout = () => {
                     <p className="text-2xl font-normal">Shipping Address</p>
                     <input
                         type="text"
-                        className="w-1/2 rounded-lg outline-none border border-light-outline py-2 px-3 text-light-on-surface"
+                        className="w-1/2 rounded-lg focus:outline-none border border-light-outline py-2 px-3 text-light-on-surface  focus:border-light-primary focus:shadow"
                         label="Address"
                         placeholder="Address"
                         value={address}
@@ -272,7 +272,7 @@ const Checkout = () => {
 
                     <div>
                         <AnimatePresence mode="wait">
-                            {totalAfterDiscount <= 0 ? (
+                            {totalAfterDiscount <= 0 && (
                                 <motion.div
                                     initial={{ opacity: 0, transform: 'translateX((-200px)' }}
                                     animate={{ opacity: 1, transform: 'translateX(0)' }}
@@ -286,8 +286,8 @@ const Checkout = () => {
                                         }}
                                         value={coupon || ''}
                                         type="text"
-                                        className="w-[50%] rounded-lg outline-none border !border-light-outline focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
-                                        placeholder="Enter Promo Code"
+                                        className="w-[50%] h-11 rounded-lg outline-none border !border-light-outline focus-within:border-2 focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
+                                        placeholder="Enter promotion code"
                                     />
                                     <Button
                                         onClick={applyDiscountCoupon}
@@ -298,7 +298,11 @@ const Checkout = () => {
                                         Apply
                                     </Button>
                                 </motion.div>
-                            ) : (
+                            )}
+                        </AnimatePresence>
+
+                        <AnimatePresence mode='wait'>
+                            {totalAfterDiscount > 0 && (
                                 <motion.div
                                     initial={{ opacity: 0, transform: 'translateX((200px)' }}
                                     animate={{ opacity: 1, transform: 'translateX(0)' }}
@@ -317,6 +321,7 @@ const Checkout = () => {
                                                 type: 'COUPON_APPLIED',
                                                 payload: false,
                                             });
+                                            setCoupon('')
                                             setTotalAfterDiscount(0);
                                         }}
                                     >

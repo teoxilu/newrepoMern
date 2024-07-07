@@ -95,7 +95,7 @@ const App = () => {
                 // </div>
             }
         >
-            <BrowserRouter>
+            <BrowserRouter basename="/newrepoMern">
                 <StickyHeader />
                 <SideDrawer />
                 <ToastContainer

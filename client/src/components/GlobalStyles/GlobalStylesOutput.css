@@ -1790,6 +1790,10 @@ h1,
   min-height: 48px;
 }
 
+.min-h-96{
+  min-height: 24rem;
+}
+
 .w-0{
   width: 0px;
 }
@@ -3887,6 +3891,16 @@ h1,
   line-height: 1rem;
 }
 
+.text-6xl{
+  font-size: 3.75rem;
+  line-height: 1;
+}
+
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
 .font-bold{
   font-weight: 700;
 }
@@ -5719,6 +5733,10 @@ h1,
 .placeholder-shown\:border-t-red-500:placeholder-shown{
   --tw-border-opacity: 1;
   border-top-color: rgb(244 67 54 / var(--tw-border-opacity));
+}
+
+.focus-within\:border-2:focus-within{
+  border-width: 2px;
 }
 
 .focus-within\:border-light-primary:focus-within{
