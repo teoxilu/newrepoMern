@@ -41,7 +41,7 @@ export const applyCoupon = async (authtoken, coupon) =>
     `${process.env.REACT_APP_API}/user/cart/coupon`,
     { coupon },
     {
-      headers: {
+      headers: {  
         authtoken,
       },
     }

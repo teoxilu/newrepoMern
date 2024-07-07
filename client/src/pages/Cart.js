@@ -191,7 +191,6 @@ const Cart = () => {
                     </div>
                 )}
             </div>
-            <br />
         </div>
     );
 };
