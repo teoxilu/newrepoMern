@@ -36,7 +36,7 @@ const StripeCheckout = () => {
     let cart = [];
 
     useEffect(() => {
-        createPaymentIntent(user.token, coupon).then((res) => {
+        createPaymentIntent(user?.token, coupon).then((res) => {
             console.log('create payment intent', res.data);
             setClientSecret(res.data.clientSecret);
             // additional response received on successful payment
@@ -65,7 +65,7 @@ const StripeCheckout = () => {
         } else {
             // here you get result after successful payment
             // create order and save in database for admin to process
-            createOrder(payload, user.token).then((res) => {
+            createOrder(payload, user?.token).then((res) => {
                 if (res.data.ok) {
                     // empty cart from local storage
                     if (typeof window !== 'undefined') localStorage.removeItem('cart');
@@ -84,11 +84,11 @@ const StripeCheckout = () => {
                         payload: false,
                     });
                     // empty cart from database
-                    emptyUserCart(user.token);
+                    emptyUserCart(user?.token);
 
                     // Open dialog
                     setTimeout(async () => {
-                        await getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
+                        await getUserOrders(user?.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                         setIsOpenDialog(true);
                     }, 1000);
                 }
@@ -222,13 +222,13 @@ const StripeCheckout = () => {
                             <div className="flex flex-col space-y-2 py-2 border-t border-b border-light-outline-variant mt-4">
                                 <div className="flex items-center justify-between">
                                     <h1>Subtotal:</h1>
-                                    <p className="text-light-primary">{numeral(cartTotal).format('0,0')} VND</p>
+                                    <p className="text-light-on-surface font-medium">{numeral(cartTotal).format('0,0')} VND</p>
                                 </div>
 
                                 {coupon && totalAfterDiscount !== undefined ? (
                                     <div className="flex items-center justify-between">
                                         <h1>Total after discount:</h1>
-                                        <p className="text-light-on-surface-variant">
+                                        <p className="text-light-on-surface font-medium">
                                             {numeral(totalAfterDiscount).format('0,0')} VND
                                         </p>
                                     </div>

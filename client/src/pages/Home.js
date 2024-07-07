@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Typography, Button } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { useScroll } from 'framer-motion';
@@ -12,37 +12,50 @@ import videos from '~/assets/videos';
 import AnimateSection from '~/components/AnimateSection';
 import PartnersSection from '~/components/home/PartnersSection';
 import transition from '~/utils/transition';
+import axios from 'axios';
 
 // const product = {
 //     ratings: [{ star: 2 }, { star: 2 }, { star: 2 }, { star: 2 }],
 // };
 const Home = () => {
+    const [bannerContent, setBannerContent] = useState(null);
     const screenHeight = window.innerHeight;
-    const bestSellerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: bestSellerRef,
-        offset: ['0 1', '1 0.9'],
-    });
 
+    useEffect(() => {
+        const fetchBannerContent = async () => {
+            try {
+                await axios.get(`${process.env.REACT_APP_API}/banner`).then((res) => setBannerContent(res.data));
+            } catch (error) {
+                console.error('Error fetching: ', error);
+            }
+        };
+        fetchBannerContent();
+    }, []);
     return (
         <div className="pt-24 overflow-x-hidden">
             <section className="relative flex">
                 <img
-                    src={images.heroImage}
-                    alt="Shoe"
+                    src={images[`${bannerContent?.image}`]}
+                    alt={bannerContent?.image}
                     className={`w-full h-[${screenHeight}px] md:h-auto -mt-64 object-cover animate-imageIn`}
                 />
                 <div
-                    className={`w-[552px] h-[440px] flex absolute self-center bottom-20 right-20 -translate-y-1/2 rounded-xl bg-light-surface-container-low px-14 py-8 flex-col justify-between animate-appear`}
+                    className={`w-[552px] min-h-96 flex absolute self-center rounded-xl bg-light-surface-container-low px-14 py-8 flex-col justify-between animate-appear bottom- ${bannerContent?.class}`}
                 >
-                    <div className="flex-col space-y-2 animate-textClip">
-                        <Typography className="text-2xl text-light-on-surface">New Arrival</Typography>
-                        <Typography className="text-[57px] font-bold text-light-on-surface leading-[64px]">
-                            Discover Our New Collection
-                        </Typography>
-                        <Typography className="text-base text-light-on-surface-variant">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec
-                            ullamcorper mattis.
+                    <div className="flex flex-col space-y-4 animate-textClip">
+                        <div className="flex flex-col space-y-2">
+                            <Typography className="text-2xl text-light-on-surface">
+                                {bannerContent?.subTitle}
+                            </Typography>
+                            <Typography
+                                className="text-5xl font-bold text-light-on-surface text-pretty
+                            "
+                            >
+                                {bannerContent?.title}
+                            </Typography>
+                        </div>
+                        <Typography className="text-base font-normal text-light-on-surface-variant">
+                            {bannerContent?.desc}
                         </Typography>
                     </div>
                     <Link to={config.routes.shop}>
@@ -51,22 +64,16 @@ const Home = () => {
                             className="lg:inline-block rounded-full bg-light-primary opacity-0 animate-bounceInRight"
                         >
                             <Typography className="text-light-on-primary hover:bg-light-on-primary/8 text-sm font-medium">
-                                Purchase Now!
+                                {bannerContent?.button}
                             </Typography>
                         </Button>
                     </Link>
                 </div>
             </section>
 
-            {/* <motion.section
-                className="mt-24"
-                ref={bestSellerRef}
-                style={{ scale: scrollYProgress, opacity: scrollYProgress }}
-            > */}
             <AnimateSection>
                 <CategoriesSection />
             </AnimateSection>
-            {/* </motion.section> */}
 
             <AnimateSection className="bg-light-surface-container-medium shadow-inner">
                 <video className="h-full w-full rounded-lg px-40 py-4" controls autoPlay muted>
@@ -85,7 +92,6 @@ const Home = () => {
                 </Typography>
                 <PartnersSection />
             </section>
-
         </div>
     );
 };

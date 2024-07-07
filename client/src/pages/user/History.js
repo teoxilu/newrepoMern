@@ -33,12 +33,12 @@ const History = () => {
         });
     const showOrderInTable = (order) => (
         <table className="table table-auto table-bordered ">
-            <thead className="thead-light ">
+            <thead className="thead-light">
                 <tr>
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
                             Image
                         </Typography>
@@ -46,7 +46,7 @@ const History = () => {
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
                             Title
                         </Typography>
@@ -54,7 +54,7 @@ const History = () => {
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
                             Price
                         </Typography>
@@ -62,7 +62,7 @@ const History = () => {
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
                             Brand
                         </Typography>
@@ -70,7 +70,7 @@ const History = () => {
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
                             Size
                         </Typography>
@@ -78,9 +78,9 @@ const History = () => {
                     <th scope="col" className="!bg-light-surface-container-lowest">
                         <Typography
                             variant="small"
-                            className="font-normal leading-none opacity-70 text-light-on-surface"
+                            className="font-normal opacity-70 text-light-on-surface"
                         >
-                            Count
+                            Quantity
                         </Typography>
                     </th>
                 </tr>

@@ -21,10 +21,19 @@ const Wishlist = () => {
         });
 
     const handleRemove = (productId) => {
-        removeWishlist(productId, user.token).then(() => {
+        removeWishlist(productId, user.token).then((res) => {
             loadWishlist();
         });
     };
+
+    // const handleRemove = (productId) => {
+    //     const confirmed = window.confirm('Do you want to remove this item from wishlist?');
+    //     if (confirmed) {
+    //         removeWishlist(productId, user.token).then(() => {
+    //             loadWishlist();
+    //         });
+    //     }
+    // };
 
     useEffect(() => {
         loadWishlist();
@@ -66,7 +75,7 @@ const Wishlist = () => {
                                         </Button>
                                         <Button
                                             onClick={() => {
-                                                handleRemove(p.id);
+                                                handleRemove(p._id);
                                                 handleOpen();
                                             }}
                                             className="rounded-full bg-light-primary text-light-on-primary"

@@ -135,7 +135,7 @@ const ProductCardInCheckout = ({ p }) => {
                 </td>
                 <td className="text-center w-[10%]" style={{verticalAlign:'middle'}}>
                     <IconButton onClick={handleOpen} variant="text" className="hover:bg-light-primary/8 rounded-full">
-                        <CloseIcon />
+                        <CloseIcon className='text-light-primary' />
                     </IconButton>
                 </td>
                 <Dialog size='sm' handler={handleOpen} open={isOpenDialog}>

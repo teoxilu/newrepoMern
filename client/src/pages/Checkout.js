@@ -8,6 +8,7 @@ import {
     DialogBody,
     DialogFooter,
     DialogHeader,
+    IconButton,
     Typography,
 } from '@material-tailwind/react';
 import {
@@ -20,12 +21,14 @@ import {
 } from '~/functions/user';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import numeral from 'numeral';
 import config from '~/config';
 import images from '~/images';
 import transition from '~/utils/transition';
 import { ShoppingCartIcon } from '~/components/Icons';
+import { AnimatePresence, motion } from 'framer-motion';
+import { CouponIcon, CloseIcon } from '~/components/Icons';
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
@@ -40,7 +43,7 @@ const Checkout = () => {
 
     // discount price
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
-    // const [discountError, setDiscountError] = useState('');
+    const [discountError, setDiscountError] = useState('');
 
     const history = useHistory();
     const dispatch = useDispatch();
@@ -55,26 +58,6 @@ const Checkout = () => {
         });
     }, []);
 
-    const emptyCart = () => {
-        // remove from local storage
-        if (typeof window !== 'undefined') {
-            localStorage.removeItem('cart');
-        }
-        // remove from redux
-        dispatch({
-            type: 'ADD_TO_CART',
-            payload: [],
-        });
-        // remove from backend
-        emptyUserCart(user?.token).then((res) => {
-            setProducts([]);
-            setTotal(0);
-            setTotalAfterDiscount(0);
-            setCoupon('');
-            toast.success('Cart is empty. Continue shopping.');
-        });
-    };
-
     const saveAddressToDb = () => {
         // console.log(address);
         saveUserAddress(user?.token, address).then((res) => {
@@ -88,7 +71,6 @@ const Checkout = () => {
     const applyDiscountCoupon = () => {
         // console.log('send coupon to backend', coupon);
         applyCoupon(user?.token, coupon).then((res) => {
-            // console.log('RES ON COUPON APPLIED', res.data);
             if (res.data) {
                 setTotalAfterDiscount(res.data);
                 // update redux coupon applied true/false
@@ -99,7 +81,9 @@ const Checkout = () => {
             }
             // error
             if (res.data.err) {
-                toast.error(res.data.err);
+                setDiscountError(res.data.err);
+                // toast.error(res.data.err);
+
                 // update redux coupon applied true/false
                 dispatch({
                     type: 'COUPON_APPLIED',
@@ -108,38 +92,6 @@ const Checkout = () => {
             }
         });
     };
-
-    const showAddress = () => (
-        <>
-            <ReactQuill theme="snow" value={address} onChange={setAddress} />
-        </>
-    );
-
-    const showProductSummary = () =>
-        products.map((p, i) => (
-            <div key={i}>
-                <p>
-                    {p.product.title} x {p.count} = {p.product.price * p.count}
-                </p>
-            </div>
-        ));
-
-    const showApplyCoupon = () => (
-        <>
-            <input
-                onChange={(e) => {
-                    setCoupon(e.target.value);
-                    // setDiscountError('');
-                }}
-                value={coupon}
-                type="text"
-                className="form-control"
-            />
-            <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
-                Apply
-            </button>
-        </>
-    );
 
     const createCashOrder = () => {
         createCashOrderForUser(user?.token, COD, couponTrueOrFalse).then((res) => {
@@ -175,10 +127,6 @@ const Checkout = () => {
         });
     };
 
-    const pushToPayMent = () => {
-        history.push('/payment');
-    };
-
     useEffect(() => {
         const headerHeight = document.getElementById('header')?.offsetHeight;
         setHeaderHeight(headerHeight);
@@ -201,6 +149,7 @@ const Checkout = () => {
             }, 3000);
         };
     }, [isCheckout]);
+
     return (
         <div className="grid grid-cols-12 grid-flow-row px-40 pt-28 gap-x-6">
             <Dialog
@@ -274,7 +223,7 @@ const Checkout = () => {
                     <p className="text-2xl font-normal">Shipping Address</p>
                     <input
                         type="text"
-                        className="w-1/2 rounded-lg outline-none border border-light-outline py-2 px-3 text-light-on-surface"
+                        className="w-1/2 rounded-lg focus:outline-none border border-light-outline py-2 px-3 text-light-on-surface  focus:border-light-primary focus:shadow"
                         label="Address"
                         placeholder="Address"
                         value={address}
@@ -315,41 +264,97 @@ const Checkout = () => {
                 >
                     <span className="text-xl">Order Summary</span>
                     <div className="flex items-center justify-between">
-                        <span>Subtotal ({products?.length} items)</span>
+                        <span>
+                            Subtotal <b>({products?.length}</b> items)
+                        </span>
                         <span className="font-bold">{numeral(total).format('0,0')} VND</span>
                     </div>
-                    {/* {totalAfterDiscount > 0 && (
-                        <div className="flex items-center justify-between">
-                            <span>Discount</span>
-                            <span className="font-bold">{numeral(totalAfterDiscount).format('0,0')} VND</span>
-                        </div>
-                    )} */}
-                    <div className="flex items-center justify-between space-x-2">
-                        <input
-                            onChange={(e) => {
-                                setCoupon(e.target.value.trim());
-                            }}
-                            value={coupon || ''}
-                            type="text"
-                            className="w-[50%] rounded-lg outline-none border !border-light-outline focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
-                            placeholder="Enter Promo Code"
-                        />
-                        <Button
-                            variant="outlined"
-                            disabled={coupon ? false : true}
-                            className="text-light-tertiary border !border-light-tertiary outline-none hover:bg-light-tertiary/8 rounded-full"
-                        >
-                            Apply
-                        </Button>
+
+                    <div>
+                        <AnimatePresence mode="wait">
+                            {totalAfterDiscount <= 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, transform: 'translateX((-200px)' }}
+                                    animate={{ opacity: 1, transform: 'translateX(0)' }}
+                                    exit={{ opacity: 0, transform: 'translateX(-200px)' }}
+                                    className="flex items-center justify-between space-x-2"
+                                >
+                                    <input
+                                        onChange={(e) => {
+                                            setCoupon(e.target.value.trim());
+                                            setDiscountError('');
+                                        }}
+                                        value={coupon || ''}
+                                        type="text"
+                                        className="w-[50%] h-11 rounded-lg outline-none border !border-light-outline focus-within:border-2 focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
+                                        placeholder="Enter promotion code"
+                                    />
+                                    <Button
+                                        onClick={applyDiscountCoupon}
+                                        variant="outlined"
+                                        disabled={coupon ? false : true}
+                                        className="text-light-tertiary border !border-light-tertiary outline-none hover:bg-light-tertiary/8 rounded-full focus:"
+                                    >
+                                        Apply
+                                    </Button>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <AnimatePresence mode='wait'>
+                            {totalAfterDiscount > 0 && (
+                                <motion.div
+                                    initial={{ opacity: 0, transform: 'translateX((200px)' }}
+                                    animate={{ opacity: 1, transform: 'translateX(0)' }}
+                                    exit={{ opacity: 0, transform: 'translateX(200px)' }}
+                                    className="flex items-center justify-between bg-light-tertiary-container text-light-on-tertiary-container p-2 rounded-lg"
+                                >
+                                    <div className="flex items-center space-x-2">
+                                        <CouponIcon className="!text-light-on-tertiary-container" />
+                                        <p className="uppercase">{coupon}</p>
+                                    </div>
+                                    <IconButton
+                                        variant="text"
+                                        className="hover:bg-light-tertiary-container/8 rounded-full"
+                                        onClick={() => {
+                                            dispatch({
+                                                type: 'COUPON_APPLIED',
+                                                payload: false,
+                                            });
+                                            setCoupon('')
+                                            setTotalAfterDiscount(0);
+                                        }}
+                                    >
+                                        <CloseIcon className="!text-light-on-tertiary-container" />
+                                    </IconButton>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                        <AnimatePresence>
+                            {discountError && (
+                                <motion.p
+                                    initial={{ opacity: 0, transform: 'translateY(-16px)' }}
+                                    animate={{ opacity: 1, transform: 'translateY(0)' }}
+                                    exit={{ opacity: 0, transform: 'translateY(-16px)' }}
+                                    className="text-light-error"
+                                >
+                                    {discountError}
+                                </motion.p>
+                            )}
+                        </AnimatePresence>
                     </div>
                     <hr style={{ background: '#ffffff' }} />
                     <div className="flex flex-col space-y-6">
                         <div className="flex items-center justify-between space-x-2">
                             <span className="text-base font-medium">Order Total</span>
                             {totalAfterDiscount > 0 ? (
-                                <span className="font-bold">{numeral(totalAfterDiscount).format('0,0')} VND</span>
+                                <span className="font-bold text-base text-light-primary">
+                                    {numeral(totalAfterDiscount).format('0,0')} VND
+                                </span>
                             ) : (
-                                <span className="text-base font-bold">{numeral(total).format('0,0')} VND</span>
+                                <span className="text-base font-bold text-light-primary">
+                                    {numeral(total).format('0,0')} VND
+                                </span>
                             )}
                         </div>
                         {COD ? (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import ShowPaymentInfo from '../cards/ShowPaymentInfo';
+import numeral from 'numeral';
 
 const Orders = ({ orders, handleStatusChange }) => {
     const showOrderInTable = (order) => (
@@ -11,7 +12,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                     <th scope="col">Price</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Size</th>
-                    <th scope="col">Count</th>
+                    <th scope="col">Quantity</th>
                 </tr>
             </thead>
 
@@ -22,7 +23,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                             <b>{p.product.title}</b>
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            {p.product.price}
+                            {numeral(p.product.price).format('0,0')}
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
                             {p.product.brand}

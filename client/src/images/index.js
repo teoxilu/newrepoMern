@@ -5,7 +5,7 @@ const images = {
     emailIcon: require('./EmailIcon.png'),
     logoutIcon: require('./Logout.png'),
     heroImage: require('./HeroImage.jpg'),
-    shoeShopIcon:require('./shoe-shop.png'),
+    shoeShopIcon: require('./shoe-shop.png'),
     advertisingShoe: require('./advertisingShoe.jpg'),
     advertisingShoe2: require('./advertisingShoe2.jpg'),
     advertisingShoe3: require('./advertisingShoe3.jpg'),
@@ -16,6 +16,11 @@ const images = {
     salomonLogo: require('./salomonLogo.png'),
     yonexLogo: require('./yonexLogo.png'),
     checkoutImage: require('./checkoutImage.jpg'),
+    banner1: require('./banner1.jpg'),
+    banner2: require('./banner2.jpg'),
+    banner3: require('./banner3.jpg'),
+    banner4: require('./banner4.jpg'),
+    banner5: require('./banner5.jpg'),
 };
 
 export default images;
