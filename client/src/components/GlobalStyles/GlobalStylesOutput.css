@@ -1200,10 +1200,6 @@ h1,
   bottom: 0px;
 }
 
-.bottom-20{
-  bottom: 5rem;
-}
-
 .bottom-4{
   bottom: 1rem;
 }
@@ -1262,10 +1258,6 @@ h1,
 
 .right-2{
   right: 0.5rem;
-}
-
-.right-20{
-  right: 5rem;
 }
 
 .right-3{
@@ -1691,10 +1683,6 @@ h1,
   height: 110px;
 }
 
-.h-\[440px\]{
-  height: 440px;
-}
-
 .h-\[492px\]{
   height: 492px;
 }
@@ -1770,6 +1758,10 @@ h1,
   min-height: 3rem;
 }
 
+.min-h-96{
+  min-height: 24rem;
+}
+
 .min-h-\[100px\]{
   min-height: 100px;
 }
@@ -1788,10 +1780,6 @@ h1,
 
 .min-h-\[48px\]{
   min-height: 48px;
-}
-
-.min-h-96{
-  min-height: 24rem;
 }
 
 .w-0{
@@ -1892,6 +1880,10 @@ h1,
 
 .w-\[25\%\]{
   width: 25%;
+}
+
+.w-\[30\%\]{
+  width: 30%;
 }
 
 .w-\[50\%\]{
@@ -3867,10 +3859,6 @@ h1,
   font-size: 32px;
 }
 
-.text-\[57px\]{
-  font-size: 57px;
-}
-
 .text-base{
   font-size: 1rem;
   line-height: 1.5rem;
@@ -3889,16 +3877,6 @@ h1,
 .text-xs{
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-6xl{
-  font-size: 3.75rem;
-  line-height: 1;
-}
-
-.text-lg{
-  font-size: 1.125rem;
-  line-height: 1.75rem;
 }
 
 .font-bold{
@@ -3959,10 +3937,6 @@ h1,
 
 .leading-\[4\.875\]{
   line-height: 4.875;
-}
-
-.leading-\[64px\]{
-  line-height: 64px;
 }
 
 .leading-none{
@@ -5735,24 +5709,9 @@ h1,
   border-top-color: rgb(244 67 54 / var(--tw-border-opacity));
 }
 
-.focus-within\:border-2:focus-within{
-  border-width: 2px;
-}
-
-.focus-within\:border-light-primary:focus-within{
-  --tw-border-opacity: 1;
-  border-color: rgb(143 0 0 / var(--tw-border-opacity));
-}
-
 .focus-within\:border-light-secondary-container:focus-within{
   --tw-border-opacity: 1;
   border-color: rgb(255 138 120 / var(--tw-border-opacity));
-}
-
-.focus-within\:shadow-xl:focus-within{
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .hover\:scale-105:hover{
@@ -5880,6 +5839,11 @@ h1,
   --tw-bg-opacity: 0.8;
 }
 
+.hover\:\!text-light-primary:hover{
+  --tw-text-opacity: 1 !important;
+  color: rgb(143 0 0 / var(--tw-text-opacity)) !important;
+}
+
 .hover\:text-blue-gray-500:hover{
   --tw-text-opacity: 1;
   color: rgb(96 125 139 / var(--tw-text-opacity));
@@ -5895,14 +5859,14 @@ h1,
   color: rgb(3 169 244 / var(--tw-text-opacity));
 }
 
+.hover\:text-light-on-primary:hover{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
 .hover\:text-light-on-secondary-container:hover{
   --tw-text-opacity: 1;
   color: rgb(74 0 0 / var(--tw-text-opacity));
-}
-
-.hover\:text-light-on-tertiary-container:hover{
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:text-light-primary:hover{
@@ -6205,6 +6169,11 @@ h1,
 .focus\:text-blue-gray-900:focus{
   --tw-text-opacity: 1;
   color: rgb(38 50 56 / var(--tw-text-opacity));
+}
+
+.focus\:text-light-on-surface:focus{
+  --tw-text-opacity: 1;
+  color: rgb(40 23 20 / var(--tw-text-opacity));
 }
 
 .focus\:opacity-\[0\.85\]:focus{

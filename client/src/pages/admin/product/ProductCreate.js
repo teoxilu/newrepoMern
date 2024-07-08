@@ -30,6 +30,8 @@ const ProductCreate = () => {
     const [showSub, setShowSub] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const isEnable = values?.title.length > 0 && values?.description.length > 0 && values?.price.length > 0 && values?.quantity.length > 0 && values?.category.length>0 && values?.size.length>0 && values?.brand.length>0 ;
+
     //redux
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -95,6 +97,7 @@ const ProductCreate = () => {
                         handleCategoryChange={handleCategoryChange}
                         subOptions={subOptions}
                         showSub={showSub}
+                        isEnable={isEnable}
                     />
                 </div>
             </div>

@@ -103,7 +103,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           ))}
       </div>
       <div className="row">
-        <label className="btn btn-primary btn-raised mt-3">
+        <label className="btn border-2 border-light-primary text-light-primary hover:bg-light-primary/8 hover:text-light-primary rounded-lg">
           Choose File
           <input
             type="file"

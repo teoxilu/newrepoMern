@@ -223,7 +223,7 @@ const Checkout = () => {
                     <p className="text-2xl font-normal">Shipping Address</p>
                     <input
                         type="text"
-                        className="w-1/2 rounded-lg focus:outline-none border border-light-outline py-2 px-3 text-light-on-surface  focus:border-light-primary focus:shadow"
+                        className="w-1/2 focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
                         label="Address"
                         placeholder="Address"
                         value={address}
@@ -286,7 +286,7 @@ const Checkout = () => {
                                         }}
                                         value={coupon || ''}
                                         type="text"
-                                        className="w-[50%] h-11 rounded-lg outline-none border !border-light-outline focus-within:border-2 focus-within:border-light-primary focus-within:shadow-xl p-2 text-light-on-surface"
+                                        className="w-[50%] h-11 focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
                                         placeholder="Enter promotion code"
                                     />
                                     <Button
@@ -301,7 +301,7 @@ const Checkout = () => {
                             )}
                         </AnimatePresence>
 
-                        <AnimatePresence mode='wait'>
+                        <AnimatePresence mode="wait">
                             {totalAfterDiscount > 0 && (
                                 <motion.div
                                     initial={{ opacity: 0, transform: 'translateX((200px)' }}
@@ -321,7 +321,7 @@ const Checkout = () => {
                                                 type: 'COUPON_APPLIED',
                                                 payload: false,
                                             });
-                                            setCoupon('')
+                                            setCoupon('');
                                             setTotalAfterDiscount(0);
                                         }}
                                     >

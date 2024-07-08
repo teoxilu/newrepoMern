@@ -145,7 +145,7 @@ const ProductUpdateForm = ({
 
       <br />
 
-      <button className="btn btn-ouline-info">Save</button>
+      <button type="submit" className="btn bg-light-primary text-light-on-primary rounded-full">Save</button>
     </form>
   );
 };
