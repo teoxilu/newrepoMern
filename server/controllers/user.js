@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
+const sendConfirmationEmail = require('../controllers/orderController')
 const uniqueid = require("uniqueid");
 
 exports.userCart = async (req, res) => {
@@ -148,6 +149,8 @@ exports.createOrder = async (req, res) => {
   let updated = await Product.bulkWrite(bulkOption, {});
   console.log("PRODUCT QUANTITY-- AND SOLD++", updated);
 
+  // await sendConfirmationEmail(user.email, newOrder);
+
   console.log("NEW ORDER SAVED", newOrder);
   res.json({ ok: true });
 };
@@ -220,7 +223,7 @@ exports.createCashOrder = async (req, res) => {
       amount: finalAmount,
       currency: "vnd",
       status: "Cash On Delivery",
-      created: Date.now(),
+      created: Date.now()/1000,
       payment_method_types: ["cash"],
     },
     orderedBy: user._id,
@@ -240,6 +243,9 @@ exports.createCashOrder = async (req, res) => {
   let updated = await Product.bulkWrite(bulkOption, {});
   console.log("PRODUCT QUANTITY-- AND SOLD++", updated);
 
+  // await sendConfirmationEmail(user.email, newOrder);
+
   console.log("NEW ORDER SAVED", newOrder);
+
   res.json({ ok: true });
 };

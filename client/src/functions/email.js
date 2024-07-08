@@ -8,7 +8,7 @@ export const sendConfirmationEmail = async (email, orderInfo, authtoken) => {
             { email, orderInfo },
             {
                 headers: {
-                    Authorization: `Bearer ${authtoken}`, 
+                    authtoken, 
                 },
             }
         );

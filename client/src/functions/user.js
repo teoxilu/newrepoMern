@@ -58,6 +58,37 @@ export const createOrder = async (stripeResponse, authtoken) =>
     }
   );
 
+  export const createGhnOrder = async (orderData, authtoken) => 
+    await axios.post(
+      `${process.env.REACT_APP_API}/create-ghn-order`, 
+      orderData, 
+      {
+        headers: {
+          authtoken,
+        },
+      }
+    );
+
+    export const trackOrder = async (orderCode, authtoken) => 
+      await axios.get(
+        `${process.env.REACT_APP_API}/track-order/${orderCode}`, 
+        {
+          headers: {
+            authtoken,
+          },
+        }
+      );
+
+      export const getGHNAddress = async (addressId, authtoken) => 
+        await axios.get(
+          `${process.env.REACT_APP_API}/address/${addressId}`, 
+          {
+            headers: {
+              authtoken,
+            },
+          }
+        );
+
 export const getUserOrders = async (authtoken) =>
   await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
     headers: {

@@ -18,7 +18,9 @@ import {
     applyCoupon,
     createCashOrderForUser,
     getUserOrders,
+    createGhnOrder
 } from '~/functions/user';
+import {sendConfirmationEmail} from '~/functions/email'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Link, useHistory } from 'react-router-dom';
@@ -118,11 +120,27 @@ const Checkout = () => {
                 // mepty cart from backend
                 emptyUserCart(user?.token);
 
+                // Create GHN order
+                const orderData = {
+                    products,
+                    address,
+                    total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
+                };
+                createGhnOrder(orderData, user?.token).then((ghnRes) => {
+                    if (ghnRes.data.success) {
+                        toast.success('GHN order created successfully');
+                    } else {
+                        toast.error('GHN order creation failed');
+                    }
+                });
+
                 // redirect
-                // setTimeout(async () => {
+                setTimeout(async () => {
                 getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                 setIsOpenDialog(true);
-                // }, 1000);
+                // sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                
+                }, 1000);
             }
         });
     };
@@ -394,7 +412,7 @@ const Checkout = () => {
                                 </svg>
                                 <p id="label-checkout">Place Order</p>
                                 <p id="label-success" className="opacity-0 translate-y-4 absolute left-[50% -12px]">
-                                    Order Success
+                                    Order Succeeded
                                 </p>
                             </Button>
                         ) : (
