@@ -52,7 +52,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                             <div className="col-md-8">
                                 <select
                                     onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                                    className="form-control"
+                                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface focus:text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
                                     defaultValue={order.orderStatus}
                                     name="status"
                                 >

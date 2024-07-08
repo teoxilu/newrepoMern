@@ -52,16 +52,16 @@ const Wishlist = () => {
                         {wishlist?.map((p) => (
                             <div
                                 key={p._id}
-                                className="flex items-center justify-between bg-light-tertiary-container text-light-on-tertiary-container/85 px-2 py-2 rounded-lg"
+                                className="flex items-center justify-between bg-light-surface-container-high text-light-on-surface-variant px-2 py-2 rounded-lg"
                             >
                                 <Link
                                     to={`/product/${p.slug}`}
-                                    className="hover:text-light-on-tertiary-container transition-opacity"
+                                    className="hover:text-light-primary transition-colors"
                                 >
                                     {p.title}
                                 </Link>
                                 <IconButton onClick={handleOpen} variant="text" className="rounded-full">
-                                    <DeleteOutlined className="text-light-on-tertiary-container" />
+                                    <DeleteOutlined className="text-light-primary" />
                                 </IconButton>
                                 <Dialog open={open} handler={handleOpen}>
                                     <DialogHeader>Do you want to remove this item from wishlist?</DialogHeader>

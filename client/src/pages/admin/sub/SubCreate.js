@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -19,6 +19,9 @@ const SubCreate = () => {
     const [subs, setSubs] = useState([]);
     //step 1
     const [keyword, setKeyword] = useState('');
+
+    const categoryRef = useRef();
+    const isEnabled = categoryRef.current?.value !== 'Please select'
 
     useEffect(() => {
         loadCategories();
@@ -89,7 +92,12 @@ const SubCreate = () => {
 
                     <div className="form-group mt-4">
                         <label>Category</label>
-                        <select name="category" className="form-control" onChange={(e) => setCategory(e.target.value)}>
+                        <select
+                            ref={categoryRef}
+                            name="category"
+                            className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
                             <option>Please select</option>
                             {categories.length > 0 &&
                                 categories.map((c) => (
@@ -100,7 +108,7 @@ const SubCreate = () => {
                         </select>
                     </div>
 
-                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} isFromSubCategory={true} isEnabled={isEnabled} />
                     {/* step 2 & 3 */}
                     <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
