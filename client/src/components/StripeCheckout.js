@@ -103,7 +103,7 @@ const StripeCheckout = () => {
 
     const handleChange = async (e) => {
         // listen for changes in the card element
-        // and display any errors as the custoemr types their card details
+        // and display any errors as the customer types their card details
         setDisabled(e.empty); // disable pay button if errors
         setError(e.error ? e.error.message : ''); // show error message
     };

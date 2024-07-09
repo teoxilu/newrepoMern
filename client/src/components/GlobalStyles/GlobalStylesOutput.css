@@ -989,6 +989,11 @@ h1,
   transform-origin: top;
 }
 
+.required:after {
+  content:" *";
+  color: #ba1a1a;
+}
+
 *, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -3907,6 +3912,10 @@ h1,
   text-transform: lowercase;
 }
 
+.capitalize{
+  text-transform: capitalize;
+}
+
 .italic{
   font-style: italic;
 }
@@ -5837,11 +5846,6 @@ h1,
 
 .hover\:bg-opacity-80:hover{
   --tw-bg-opacity: 0.8;
-}
-
-.hover\:\!text-light-primary:hover{
-  --tw-text-opacity: 1 !important;
-  color: rgb(143 0 0 / var(--tw-text-opacity)) !important;
 }
 
 .hover\:text-blue-gray-500:hover{

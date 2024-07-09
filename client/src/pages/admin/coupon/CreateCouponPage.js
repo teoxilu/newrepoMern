@@ -70,7 +70,7 @@ const CreateCouponPage = () => {
 
                     <form onSubmit={handleSubmit} className="mt-4">
                         <div className="form-group">
-                            <label className="text-muted">Name</label>
+                            <label className="text-muted required">Name</label>
                             <input
                                 type="text"
                                 className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
@@ -82,7 +82,7 @@ const CreateCouponPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label className="text-muted">Discount %</label>
+                            <label className="text-muted required">Discount (%)</label>
                             <input
                                 type="number"
                                 className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
@@ -93,7 +93,7 @@ const CreateCouponPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label className="text-muted">Expiry</label>
+                            <label className="text-muted required">Expiry</label>
                             <br />
                             <DatePicker
                                 className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
