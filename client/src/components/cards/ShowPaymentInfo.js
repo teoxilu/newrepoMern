@@ -2,16 +2,17 @@ import { Chip } from '@material-tailwind/react';
 import numeral from 'numeral';
 import React from 'react';
 
-const ShowPaymentInfo = ({ order, showStatus = true }) => (
+const ShowPaymentInfo = ({order, showStatus = true }) => (
     <div className="p-2 flex flex-col justify-center items-start space-y-2">
         <div className="flex items-center space-x-5">
             <p>
-                <span className="text-light-on-surface-variant">Order Id:</span> <b>{order._id}</b>
+                <span className="text-light-on-surface-variant">Order Id:</span> <b>{order._id.slice(0,8)}</b>
             </p>
             <p>
                 <span className="text-light-on-surface-variant">Ordered on:</span>{' '}
                 <b>{new Date(order.paymentIntent.created * 1000).toLocaleString()}</b>
             </p>
+          
         </div>
         <div className="flex items-center space-x-5">
             <p>

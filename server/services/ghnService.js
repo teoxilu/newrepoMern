@@ -2,7 +2,7 @@
 require('dotenv').config();
 const axios = require('axios');
 
-const GHN_API_URL = 'https://online-gateway.ghn.vn/shiip/public-api/v2';
+const GHN_API_URL = 'https://dev-online-gateway.ghn.vn/shiip/public-api/v2';
 
 const ghnApi = axios.create({
     baseURL: GHN_API_URL,

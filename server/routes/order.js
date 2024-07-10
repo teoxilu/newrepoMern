@@ -10,8 +10,8 @@ const {
 const { authCheck } = require("../middlewares/auth");
 
 router.post("/send-confirmation-email", authCheck, sendConfirmationEmail);
-router.post("/create-ghn-order", authCheck, createGhnOrder);
-router.get("/track-order/:orderCode", authCheck, trackOrder);
-router.get("/address/:addressId", authCheck, getGHNAddress);
+// router.post("/create-ghn-order", authCheck, createGhnOrder);
+// router.get("/track-order/:orderCode", authCheck, trackOrder);
+// router.get("/address/:addressId", authCheck, getGHNAddress);
 
 module.exports = router;

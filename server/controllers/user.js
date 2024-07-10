@@ -84,6 +84,15 @@ exports.saveAddress = async (req, res) => {
   res.json({ ok: true });
 };
 
+exports.savePhone = async (req, res) => {
+  const userPhone = await User.findOneAndUpdate(
+    { email: req.user.email },
+    { phone: req.body.phone }
+  ).exec();
+
+  res.json({ ok: true });
+};
+
 exports.applyCouponToUserCart = async (req, res) => {
   const { coupon } = req.body;
   console.log("COUPON", coupon);
@@ -92,6 +101,13 @@ exports.applyCouponToUserCart = async (req, res) => {
   if (validCoupon === null) {
     return res.json({
       err: "Invalid coupon",
+    });
+  }
+
+  // Check if the coupon is expired
+  if (validCoupon.isExpired()) {
+    return res.json({
+      err: "Coupon is expired",
     });
   }
   console.log("VALID COUPON", validCoupon);

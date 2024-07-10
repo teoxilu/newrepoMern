@@ -11,6 +11,7 @@ import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Typography } fr
 import numeral from 'numeral';
 import config from '~/config';
 import images from '~/images';
+// import { sendConfirmationEmail } from '~/';
 
 const StripeCheckout = () => {
     const dispatch = useDispatch();
@@ -90,6 +91,7 @@ const StripeCheckout = () => {
                     setTimeout(async () => {
                         await getUserOrders(user?.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                         setIsOpenDialog(true);
+                        // sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
                     }, 1000);
                 }
             });

@@ -15,10 +15,13 @@ import {
     getUserCart,
     emptyUserCart,
     saveUserAddress,
+    saveUserPhone,
     applyCoupon,
     createCashOrderForUser,
     getUserOrders,
-    createGhnOrder
+    createGhnOrder,
+    getWardGhnOrder,
+    getDistrictGhnOrder,
 } from '~/functions/user';
 import {sendConfirmationEmail} from '~/functions/email'
 import ReactQuill from 'react-quill';
@@ -31,12 +34,15 @@ import transition from '~/utils/transition';
 import { ShoppingCartIcon } from '~/components/Icons';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CouponIcon, CloseIcon } from '~/components/Icons';
+// import { saveUserPhone } from '~/';
 
 const Checkout = () => {
     const [products, setProducts] = useState([]);
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState('');
     const [addressSaved, setAddressSaved] = useState(false);
+    const [phone, setPhone] = useState('');
+    const [phoneSaved, setPhoneSaved] = useState(false);
     const [isOpenDialog, setIsOpenDialog] = useState(false);
     const [coupon, setCoupon] = useState('');
     const [headerHeight, setHeaderHeight] = useState(null);
@@ -66,6 +72,16 @@ const Checkout = () => {
             if (res.data.ok) {
                 setAddressSaved(true);
                 toast.success('Address saved');
+            }
+        });
+    };
+
+    const savePhoneToDb = () => {
+        // console.log(phone);
+        saveUserPhone(user?.token, phone).then((res) => {
+            if (res.data.ok) {
+                setPhoneSaved(true);
+                toast.success('Phone number saved');
             }
         });
     };
@@ -120,30 +136,58 @@ const Checkout = () => {
                 // mepty cart from backend
                 emptyUserCart(user?.token);
 
+
+                
+                
+
+                // redirect
+                setTimeout(async () => {
+                getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
+                setIsOpenDialog(true);
+                sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+
                 // Create GHN order
                 const orderData = {
-                    products,
-                    address,
-                    total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
+                    items: [
+                             {
+                                 "name":orderInfo.products.map(),                   
+                                 "quantity": orderInfo.products.count,
+                                 "price": totalAfterDiscount,
+                                 "weight": 500,
+                             }
+                             
+                         ],
+                    to_name: user.name, // Make sure to get the user's name
+                    to_address: addressSaved, // Ensure address is correctly set
+                    to_phone: phoneSaved, // Ensure phone is correctly set
+                    to_ward_code: getWardGhnOrder(),
+                    to_district_id: getDistrictGhnOrder(),
+                    weight: "300",
+                    length: "20",
+                    width: "10",
+                    height: "10",
+                    service_type_id: 1,
+                    service_id: 1,
+                    payment_type_id: 1,
+
+                    // Weight: 200, // Example weight, adjust as needed
+                    required_note: "CHOXEMHANGKHONGTHU", // or any required note per your GHN settings
+                    // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
                 };
-                createGhnOrder(orderData, user?.token).then((ghnRes) => {
+                createGhnOrder(orderData).then((ghnRes) => {
                     if (ghnRes.data.success) {
                         toast.success('GHN order created successfully');
                     } else {
                         toast.error('GHN order creation failed');
                     }
                 });
-
-                // redirect
-                setTimeout(async () => {
-                getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
-                setIsOpenDialog(true);
-                // sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
                 
                 }, 1000);
             }
         });
     };
+
+    
 
     useEffect(() => {
         const headerHeight = document.getElementById('header')?.offsetHeight;
@@ -254,6 +298,28 @@ const Checkout = () => {
                         Please enter your address details
                     </Typography>
                 </div>
+
+                <br/>
+                {/* Phone container */}
+
+                <div>
+                    <p className="text-2xl font-normal">Phone Number</p>
+                    <input
+                        type="text"
+                        className="w-1/2 focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                        label="Phone number"
+                        placeholder="Phone number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                    />
+                    <Typography
+                        variant="small"
+                        className="mt-2 flex items-center text-xs gap-1 font-normal text-light-on-surface"
+                    >
+                        Please enter your phone number
+                    </Typography>
+                </div>
+
                 {/* Product Container */}
                 <div className="flex flex-col space-y-2">
                     <p className="text-2xl font-normal">Order Details</p>
@@ -378,7 +444,7 @@ const Checkout = () => {
                         {COD ? (
                             <Button
                                 id="btn"
-                                disabled={products.length > 0 && !!address.length > 0 ? false : true}
+                                disabled={products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true}
                                 className="flex items-center justify-center space-x-2 rounded-full bg-light-primary text-light-on-primary mt-28"
                                 onClick={() => {
                                     // setIsCheckout(true);
@@ -418,9 +484,10 @@ const Checkout = () => {
                         ) : (
                             <Button
                                 className="rounded-full bg-light-primary text-light-on-primary"
-                                disabled={products.length > 0 && !!address.length > 0 ? false : true}
+                                disabled={products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true}
                                 onClick={() => {
                                     saveAddressToDb();
+                                    savePhoneToDb();
                                     history.push('/payment');
                                 }}
                             >
