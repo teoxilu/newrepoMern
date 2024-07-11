@@ -23,7 +23,7 @@ import {
     getWardGhnOrder,
     getDistrictGhnOrder,
 } from '~/functions/user';
-import {sendConfirmationEmail} from '~/functions/email'
+import { sendConfirmationEmail } from '~/functions/email';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Link, useHistory } from 'react-router-dom';
@@ -58,19 +58,18 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const { user, COD } = useSelector((state) => ({ ...state }));
     const couponTrueOrFalse = useSelector((state) => state.coupon);
-    localStorage.setItem('authToken', user?.token);
-    const authToken = localStorage.getItem('authToken');
+
     // const isMounted = useRef(false);
-    
 
     useEffect(() => {
-
-        getUserCart(authToken).then((res) => {
-            console.log(authToken);
-            console.log("user cart res", JSON.stringify(res.data, null, 4));
-            setProducts(res.data.products);
-            setTotal(res.data.cartTotal);
-        });
+        if (user) {
+            getUserCart(user?.token).then((res) => {
+                // console.log(authToken);
+                // console.log('user cart res', JSON.stringify(res.data, null, 4));
+                setProducts(res.data.products);
+                setTotal(res.data.cartTotal);
+            });
+        }
     }, [user]);
 
     const saveAddressToDb = () => {
@@ -143,58 +142,50 @@ const Checkout = () => {
                 // mepty cart from backend
                 emptyUserCart(user?.token);
 
-
-                
-                
-
                 // redirect
                 setTimeout(async () => {
-                getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
-                setIsOpenDialog(true);
-                sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                    getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
+                    setIsOpenDialog(true);
+                    sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
 
-                // Create GHN order
-                const orderData = {
-                    items: [
-                             {
-                                 "name":orderInfo.products.product.title,                   
-                                 "quantity": orderInfo.products.count,
-                                 "price": totalAfterDiscount,
-                                 "weight": 500,
-                             }
-                             
-                         ],
-                    to_name: user.name, // Make sure to get the user's name
-                    to_address: user.address, // Ensure address is correctly set
-                    to_phone: user.phone, // Ensure phone is correctly set
-                    to_ward_code: getWardGhnOrder(),
-                    to_district_id: getDistrictGhnOrder(),
-                    weight: "300",
-                    length: "20",
-                    width: "10",
-                    height: "10",
-                    service_type_id: 1,
-                    service_id: 1,
-                    payment_type_id: 1,
+                    // Create GHN order
+                    const orderData = {
+                        items: [
+                            {
+                                name: orderInfo.products.product.title,
+                                quantity: orderInfo.products.count,
+                                price: totalAfterDiscount,
+                                weight: 500,
+                            },
+                        ],
+                        to_name: user.name, // Make sure to get the user's name
+                        to_address: user.address, // Ensure address is correctly set
+                        to_phone: user.phone, // Ensure phone is correctly set
+                        to_ward_code: getWardGhnOrder(),
+                        to_district_id: getDistrictGhnOrder(),
+                        weight: '300',
+                        length: '20',
+                        width: '10',
+                        height: '10',
+                        service_type_id: 1,
+                        service_id: 1,
+                        payment_type_id: 1,
 
-                    // Weight: 200, // Example weight, adjust as needed
-                    required_note: "CHOXEMHANGKHONGTHU", // or any required note per your GHN settings
-                    // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
-                };
-                createGhnOrder(orderData).then((ghnRes) => {
-                    if (ghnRes.data.success) {
-                        toast.success('GHN order created successfully');
-                    } else {
-                        toast.error('GHN order creation failed');
-                    }
-                });
-                
+                        // Weight: 200, // Example weight, adjust as needed
+                        required_note: 'CHOXEMHANGKHONGTHU', // or any required note per your GHN settings
+                        // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
+                    };
+                    createGhnOrder(orderData).then((ghnRes) => {
+                        if (ghnRes.data.success) {
+                            toast.success('GHN order created successfully');
+                        } else {
+                            toast.error('GHN order creation failed');
+                        }
+                    });
                 }, 1000);
             }
         });
     };
-
-    
 
     useEffect(() => {
         const headerHeight = document.getElementById('header')?.offsetHeight;
@@ -306,7 +297,7 @@ const Checkout = () => {
                     </Typography>
                 </div>
 
-                <br/>
+                <br />
                 {/* Phone container */}
 
                 <div>
@@ -451,7 +442,9 @@ const Checkout = () => {
                         {COD ? (
                             <Button
                                 id="btn"
-                                disabled={products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true}
+                                disabled={
+                                    products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true
+                                }
                                 className="flex items-center justify-center space-x-2 rounded-full bg-light-primary text-light-on-primary mt-28"
                                 onClick={() => {
                                     // setIsCheckout(true);
@@ -491,7 +484,9 @@ const Checkout = () => {
                         ) : (
                             <Button
                                 className="rounded-full bg-light-primary text-light-on-primary"
-                                disabled={products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true}
+                                disabled={
+                                    products.length > 0 && !!address.length > 0 && phone.length > 8 ? false : true
+                                }
                                 onClick={() => {
                                     saveAddressToDb();
                                     savePhoneToDb();
