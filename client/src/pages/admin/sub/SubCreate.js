@@ -91,7 +91,7 @@ const SubCreate = () => {
                     <hr className="text-light-outline-variant" />
 
                     <div className="form-group mt-4">
-                        <label>Category</label>
+                        <label className='required'>Category</label>
                         <select
                             ref={categoryRef}
                             name="category"

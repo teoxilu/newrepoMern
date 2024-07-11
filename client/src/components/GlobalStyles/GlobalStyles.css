@@ -164,4 +164,9 @@
         background: linear-gradient( #ff8a78,#ffffff);
         transform-origin: top;
     }
+
+    .required:after {
+        content:" *";
+        color: #ba1a1a;
+    }
 }

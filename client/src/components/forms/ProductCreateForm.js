@@ -1,6 +1,7 @@
 import React from 'react';
 import { Select } from 'antd';
 import { Button } from '@material-tailwind/react';
+import CustomInput from '~/components/CustomInput';
 
 const { Option } = Select;
 
@@ -20,61 +21,40 @@ const ProductCreateForm = ({
     return (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
-                <label>Title</label>
-                <input
-                    required
-                    type="text"
-                    name="title"
-                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
-                    value={title}
-                    onChange={handleChange}
-                    placeholder='Type title'
-                    
-                />
+                <CustomInput title="title" value={title} onChange={handleChange} placeholder="Enter title" isRequired />
             </div>
 
             <div className="form-group">
-                <label>Description</label>
-                <input
-                    required
-                    type="text"
-                    name="description"
-                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                <CustomInput
+                    title="description"
                     value={description}
                     onChange={handleChange}
-                    placeholder='Type description'
+                    placeholder="Enter description"
+                    isRequired
                 />
             </div>
 
             <div className="form-group">
-                <label>Price</label>
-                <input
-                    required
-                    type="number"
-                    name="price"
-                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
-                    value={price}
-                    onChange={handleChange}
-                    placeholder='Type price'
-                />
+                <CustomInput title="price" value={price} onChange={handleChange} placeholder="Enter price" isRequired />
             </div>
 
             <div className="form-group">
-                <label>Quantity</label>
-                <input
-                    required
-                    type="number"
-                    name="quantity"
-                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                <CustomInput
+                    title="quantity"
                     value={quantity}
                     onChange={handleChange}
-                    placeholder='Type quantity'
+                    placeholder="Enter quantity"
+                    isRequired
                 />
             </div>
 
             <div className="form-group">
-                <label>Size</label>
-                <select name="size" className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline" onChange={handleChange}>
+                <label className='required'>Size</label>
+                <select
+                    name="size"
+                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                    onChange={handleChange}
+                >
                     <option>Select Size</option>
                     {sizes.map((c) => (
                         <option key={c} value={c}>
@@ -85,8 +65,12 @@ const ProductCreateForm = ({
             </div>
 
             <div className="form-group">
-                <label>Brand</label>
-                <select name="brand" className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline" onChange={handleChange}>
+                <label className='required'>Brand</label>
+                <select
+                    name="brand"
+                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                    onChange={handleChange}
+                >
                     <option>Select Brand</option>
                     {brands.map((b) => (
                         <option key={b} value={b}>
@@ -97,8 +81,12 @@ const ProductCreateForm = ({
             </div>
 
             <div className="form-group">
-                <label>Category</label>
-                <select name="category" className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline" onChange={handleCategoryChange}>
+                <label className='required'>Category</label>
+                <select
+                    name="category"
+                    className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                    onChange={handleCategoryChange}
+                >
                     <option>Please select</option>
                     {categories.length > 0 &&
                         categories.map((c) => (
@@ -117,7 +105,7 @@ const ProductCreateForm = ({
                         style={{ width: '100%' }}
                         placeholder="Please select"
                         value={subs}
-                        onChange={(value) => setValues({ ...values, subs: value })} 
+                        onChange={(value) => setValues({ ...values, subs: value })}
                     >
                         {subOptions.length &&
                             subOptions.map((s) => (

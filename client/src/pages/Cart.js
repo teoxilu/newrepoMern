@@ -103,7 +103,7 @@ const Cart = () => {
                                 variant="small"
                                 className="font-normal leading-none opacity-70 text-light-on-surface"
                             >
-                                Count
+                                Quantity
                             </Typography>
                         </th>
                         <th scope="col" className="!bg-light-surface-container-lowest">

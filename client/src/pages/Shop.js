@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Menu, Slider, Checkbox, Radio } from 'antd';
-import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
-import { Typography } from '@material-tailwind/react';
-
 import { getProductsByCount, fetchProductsByFilter } from '../functions/product';
 import { getCategories } from '../functions/category';
-import ProductCard from '~/components/cards/ProductCard';
 import { getSubs } from '../functions/sub';
+import { useSelector, useDispatch } from 'react-redux';
+import ProductCard from '~/components/cards/ProductCard';
+import { Menu, Slider, Checkbox, Radio } from 'antd';
+import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/icons';
 import Star from '../components/forms/Star';
+import { Typography } from '@material-tailwind/react';
 import { useDebounce } from '~/hooks';
-import LoadingCard from '~/components/cards/LoadingCard';
-import transition from '~/utils/transition';
-
 const { SubMenu, ItemGroup } = Menu;
 
 const Shop = () => {
@@ -72,7 +68,7 @@ const Shop = () => {
 
     const fetchProducts = (arg) => {
         fetchProductsByFilter(arg).then((res) => {
-            setFilteredItem(res.data)
+            setFilteredItem(res.data);
             setProducts(res.data);
         });
     };
@@ -521,20 +517,22 @@ const Shop = () => {
             </div>
 
             <div className="col-span-9">
-                {arrayItem.length > 0 ? (
+                {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
+
+                {arrayItem.length < 1 ? (
+                    <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
+                ) : (
                     <div className="grid grid-cols-3">
                         {arrayItem.map((p) => (
                             <div key={p._id} className="col-md-4 mt-3">
-                                {loading ? <LoadingCard /> : <ProductCard product={p} />}
+                                <ProductCard product={p} />
                             </div>
                         ))}
                     </div>
-                ) : (
-                    <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
                 )}
             </div>
         </div>
     );
 };
 
-export default transition(Shop);
+export default Shop;
