@@ -4,10 +4,12 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Button, Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
-const ForgotPassword = ({ history }) => {
+const ForgotPassword = ({  }) => {
     const [email, setEmail] = useState();
     const [loading, setLoading] = useState(false);
+    const history = useHistory()
 
     const { user } = useSelector((state) => ({ ...state }));
 

@@ -48,6 +48,7 @@ const Checkout = () => {
     const [headerHeight, setHeaderHeight] = useState(null);
     const [orderInfo, setOrderInfo] = useState(null);
     const [isCheckout, setIsCheckout] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     // discount price
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
@@ -57,14 +58,20 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const { user, COD } = useSelector((state) => ({ ...state }));
     const couponTrueOrFalse = useSelector((state) => state.coupon);
+    localStorage.setItem('authToken', user?.token);
+    const authToken = localStorage.getItem('authToken');
+    // const isMounted = useRef(false);
+    
 
     useEffect(() => {
-        getUserCart(user?.token).then((res) => {
-            // console.log("user cart res", JSON.stringify(res.data, null, 4));
+
+        getUserCart(authToken).then((res) => {
+            console.log(authToken);
+            console.log("user cart res", JSON.stringify(res.data, null, 4));
             setProducts(res.data.products);
             setTotal(res.data.cartTotal);
         });
-    }, []);
+    }, [user]);
 
     const saveAddressToDb = () => {
         // console.log(address);
@@ -150,7 +157,7 @@ const Checkout = () => {
                 const orderData = {
                     items: [
                              {
-                                 "name":orderInfo.products.map(),                   
+                                 "name":orderInfo.products.product.title,                   
                                  "quantity": orderInfo.products.count,
                                  "price": totalAfterDiscount,
                                  "weight": 500,
@@ -158,8 +165,8 @@ const Checkout = () => {
                              
                          ],
                     to_name: user.name, // Make sure to get the user's name
-                    to_address: addressSaved, // Ensure address is correctly set
-                    to_phone: phoneSaved, // Ensure phone is correctly set
+                    to_address: user.address, // Ensure address is correctly set
+                    to_phone: user.phone, // Ensure phone is correctly set
                     to_ward_code: getWardGhnOrder(),
                     to_district_id: getDistrictGhnOrder(),
                     weight: "300",

@@ -4,14 +4,17 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
+import {useHistory} from 'react-router-dom'; 
 
-const Register = ({ history }) => {
+
+const Register = () => {
     const [email, setEmail] = useState('');
     const { user } = useSelector((state) => ({ ...state }));
+    const history = useHistory()
 
     const screenWidth = window.innerWidth;
     useEffect(() => {
-        if (user && user.token) history.push('/');
+        if (user && user.token) history.push("/");
     }, [user, history]);
 
     const handleSubmit = async (e) => {

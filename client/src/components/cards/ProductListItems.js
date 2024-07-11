@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ProductListItems = ({ product }) => {
     const { price, category, subs, brand, quantity, sold } = product;
-    const sizes = ['37', '38', '39', '40', '41', '42', '42.5', '43', '44', '40.5', '41.5', '43.5', '36'];
+    // const sizes = ['37', '38', '39', '40', '41', '42', '42.5', '43', '44', '40.5', '41.5', '43.5', '36'];
     return (
         <ul className="list-group text-light-on-surface rounded-lg border outline-none">
             <li className="list-group-item">
