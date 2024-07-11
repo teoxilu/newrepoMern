@@ -42,7 +42,7 @@ const CreateCouponPage = lazy(() => import('~/pages/admin/coupon/CreateCouponPag
 const Payment = lazy(() => import('~/pages/Payment'));
 const SubUpdate = lazy(() => import('~/pages/admin/sub/SubUpdate'));
 const NotFoundPage = lazy(() => import('~/pages/NotFoundPage'));
-const Test = lazy(() => import('~/pages/Test'));
+// const Test = lazy(() => import('~/pages/Test'));
 
 const contextClass = {
     success: 'bg-gradient-to-r from-green-600 from-75% to-light-tertiary',
@@ -143,7 +143,7 @@ const App = () => {
                             <Route exact path="/cart" component={Cart} />
                             <Route exact path="/checkout" component={Checkout} />
                             <Route exact path="/payment" component={Payment} />
-                            <Route exact path="/test" component={Test} />
+                            {/* <Route exact path="/test" component={Test} /> */}
                             <Route exact path="*" component={NotFoundPage} />
                         </Switch>
                     </AnimatePresence>
