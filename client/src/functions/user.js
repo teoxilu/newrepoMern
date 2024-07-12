@@ -72,12 +72,12 @@ export const createOrder = async (stripeResponse, authtoken) =>
 export const createGhnOrder = async (orderData) =>
     await axios.post(
         'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create',
-        { orderData },
+         orderData ,
         {
             headers: {
                 'Content-Type': 'application/json',
-                ShopId: process.env.GHN_SHOP_ID,
-                Token: process.env.GHN_API_KEY,
+                'ShopId': process.env.GHN_SHOP_ID,
+                'Token': process.env.GHN_API_KEY,
             },
         },
     );

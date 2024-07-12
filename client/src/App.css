@@ -28,6 +28,15 @@
   color: #61dafb;
 }
 
+.language-buttons {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  z-index: 1000;
+  display: flex;
+  gap: 10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

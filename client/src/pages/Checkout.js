@@ -20,8 +20,6 @@ import {
     createCashOrderForUser,
     getUserOrders,
     createGhnOrder,
-    getWardGhnOrder,
-    getDistrictGhnOrder,
     getUserLatestOrder,
 } from '~/functions/user';
 import { sendConfirmationEmail } from '~/functions/email';
@@ -145,44 +143,63 @@ const Checkout = () => {
 
                 // redirect
                 setTimeout(async () => {
-                    getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
-                    setIsOpenDialog(true);
-                    sendConfirmationEmail(user.email, orderInfo, user.token);
-
-                    // Create GHN order
+                    getUserOrders(user.token).then((res) => {
+                        setOrderInfo(res.data[res.data.length - 1]);
+                        setIsOpenDialog(true);
+                        console.log(products);
+                        sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                        const tempOrder = res.data[res.data.length-1];
+                        
+                        
+                        // Create GHN order
                     const orderData = {
-                        items: [
+                        "token": `${process.env.GHN_API_KEY}`,
+                        "shop_id": `${process.env.GHN_SHOP_ID}`,
+                        "items": [
                             {
-                                name: orderInfo.products.product.title,
-                                quantity: orderInfo.products.count,
-                                price: totalAfterDiscount,
-                                weight: 500,
+                                "name": "Shoes",
+                                "quantity": tempOrder.products[0].count,
+                                "price": totalAfterDiscount,
+                                "weight": 500,
                             },
                         ],
-                        to_name: user.name, // Make sure to get the user's name
-                        to_address: user.address, // Ensure address is correctly set
-                        to_phone: user.phone, // Ensure phone is correctly set
-                        to_ward_code: getWardGhnOrder(),
-                        to_district_id: getDistrictGhnOrder(),
-                        weight: '300',
-                        length: '20',
-                        width: '10',
-                        height: '10',
-                        service_type_id: 1,
-                        service_id: 1,
-                        payment_type_id: 1,
+                        "from_name": "2HS",
+                        "from_phone": "0338778921",
+                        "from_address": "Chau Thoi",
+                        "from_ward_name": "Di An",
+                        "from_district_name": "Binh An",
+                        "from_provice_name": "Binh Duong",
+                        
+
+                        "to_name": user.name, // Make sure to get the user's name
+                        "to_address": user.address, // Ensure address is correctly set
+                        "to_phone": user.phone, // Ensure phone is correctly set
+                        "to_ward_code": 510101 ,
+                        "to_district_id": 1566,
+                        "weight": 300,
+                        "length": 20,
+                        "width": 10,
+                        "height": 10,
+                        "service_type_id": 1,
+                        "service_id": 1,
+                        "payment_type_id": 1,
 
                         // Weight: 200, // Example weight, adjust as needed
-                        required_note: 'CHOXEMHANGKHONGTHU', // or any required note per your GHN settings
+                        "required_note": "CHOXEMHANGKHONGTHU", // or any required note per your GHN settings
                         // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
                     };
                     createGhnOrder(orderData).then((ghnRes) => {
+                        console.log("hello");
                         if (ghnRes.data.success) {
                             toast.success('GHN order created successfully');
                         } else {
                             toast.error('GHN order creation failed');
+                            console.log("hello");
                         }
                     });
+                    });
+
+                    
                 }, 1000);
             }
         });

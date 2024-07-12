@@ -7,9 +7,11 @@ import { lazy } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { initGA, logPageView } from './components/analytics/analytics';
+import './i18n.js'; // Import the i18n configuration
 // import ChatBot from './components/chat/ChatBot';
 // import ChatComponent from './components/chat/ChatComponent.js';
-import {AnimatePresence} from 'framer-motion'
+import {AnimatePresence} from 'framer-motion';
+
 
 import { currentUser } from './functions/auth';
 import ScrollToTop from '~/utils/scrollToTop';

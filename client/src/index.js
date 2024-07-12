@@ -8,6 +8,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import rootReducer from "./reducers";
 import 'antd/dist/antd.min.css';
 import GlobalStyles from "~/components/GlobalStyles";
+import './i18n'; // Import the i18n configuration
 
 //store
 const store = createStore(rootReducer, composeWithDevTools());
