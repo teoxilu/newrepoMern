@@ -22,6 +22,7 @@ import {
     createGhnOrder,
     getWardGhnOrder,
     getDistrictGhnOrder,
+    getUserLatestOrder,
 } from '~/functions/user';
 import { sendConfirmationEmail } from '~/functions/email';
 import ReactQuill from 'react-quill';
@@ -146,7 +147,7 @@ const Checkout = () => {
                 setTimeout(async () => {
                     getUserOrders(user.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
                     setIsOpenDialog(true);
-                    sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                    sendConfirmationEmail(user.email, orderInfo, user.token);
 
                     // Create GHN order
                     const orderData = {

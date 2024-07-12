@@ -18,6 +18,7 @@ const {
   removeFromWishlist,
   createCashOrder,
   savePhone,
+  getLatestOrder,
 } = require("../controllers/user");
 
 router.post("/user/cart", authCheck, userCart); // save cart
@@ -29,6 +30,7 @@ router.post("/user/phone", authCheck, savePhone)
 router.post("/user/order", authCheck, createOrder); // stripe
 router.post("/user/cash-order", authCheck, createCashOrder); // cod
 router.get("/user/orders", authCheck, orders);
+router.get("/user/latest-order", authCheck, getLatestOrder)
 
 // coupon
 router.post("/user/cart/coupon", authCheck, applyCouponToUserCart);

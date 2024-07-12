@@ -70,14 +70,17 @@ export const createOrder = async (stripeResponse, authtoken) =>
     );
 
 export const createGhnOrder = async (orderData) =>
-    await axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create', {orderData}, {
-        headers: {
-            'Content-Type': 'application/json',
-            ShopId: process.env.GHN_SHOP_ID,
-            Token: process.env.GHN_API_KEY,
+    await axios.post(
+        'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create',
+        { orderData },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                ShopId: process.env.GHN_SHOP_ID,
+                Token: process.env.GHN_API_KEY,
+            },
         },
-    });
-
+    );
 
 export const getDistrictGhnOrder = async () => {
     const requestData = {
@@ -93,7 +96,7 @@ export const getDistrictGhnOrder = async () => {
                     'Content-Type': 'application/json',
                     Token: process.env.GHN_API_KEY,
                 },
-            }
+            },
         );
 
         return response.data; // Assuming the response contains the data you need
@@ -117,7 +120,7 @@ export const getWardGhnOrder = async () => {
                     'Content-Type': 'application/json',
                     Token: process.env.GHN_API_KEY,
                 },
-            }
+            },
         );
 
         return response.data; // Assuming the response contains the ward data you need
@@ -126,7 +129,6 @@ export const getWardGhnOrder = async () => {
         throw error; // Handle the error appropriately in your application
     }
 };
-
 
 export const trackOrder = async (orderCode, authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/track-order/${orderCode}`, {
@@ -144,6 +146,13 @@ export const getGHNAddress = async (addressId, authtoken) =>
 
 export const getUserOrders = async (authtoken) =>
     await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
+        headers: {
+            authtoken,
+        },
+    });
+
+export const getUserLatestOrder = async (authtoken) =>
+    await axios.get(`${process.env.REACT_APP_API}/user/latest-order`, {
         headers: {
             authtoken,
         },

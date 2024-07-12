@@ -3,7 +3,7 @@ const Product = require("../models/product");
 const Cart = require("../models/cart");
 const Coupon = require("../models/coupon");
 const Order = require("../models/order");
-const sendConfirmationEmail = require('../controllers/orderController')
+const sendConfirmationEmail = require("../controllers/orderController");
 const uniqueid = require("uniqueid");
 
 exports.userCart = async (req, res) => {
@@ -181,6 +181,22 @@ exports.orders = async (req, res) => {
   res.json(userOrders);
 };
 
+exports.getLatestOrder = async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.user.email }).exec();
+
+    let latestOrder = await Order.findOne({ orderedBy: user._id })
+      .populate("products.product")
+      .sort({ createdAt: -1 }) 
+      .exec();
+
+    res.json(latestOrder);
+  } catch (error) {
+    console.error("Error fetching latest order:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
 // addToWishlist wishlist removeFromWishlist
 exports.addToWishlist = async (req, res) => {
   const { productId } = req.body;
@@ -239,7 +255,7 @@ exports.createCashOrder = async (req, res) => {
       amount: finalAmount,
       currency: "vnd",
       status: "Cash On Delivery",
-      created: Date.now()/1000,
+      created: Date.now() / 1000,
       payment_method_types: ["cash"],
     },
     orderedBy: user._id,

@@ -20,7 +20,7 @@ const sendPaymentConfirmationEmail = async (email, orderInfo) => {
             to: email,
             subject: 'Order Confirmation',
             text: `Your order has been confirmed.`,
-            html: `<b>Your order has been confirmed.</b><br><br>Click <a href="http://localhost:3000/newrepoMern/user/history">here</a> to view order history.`
+            html: `<div><b>Your order has been confirmed.</b></div><br><br> ${orderInfo}`
         });
 
         console.log('Message sent: %s', info.messageId);
