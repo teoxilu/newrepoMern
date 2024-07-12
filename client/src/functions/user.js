@@ -58,6 +58,17 @@ export const applyCoupon = async (authtoken, coupon) =>
         },
     );
 
+    export const updateOrder = async (authtoken, orderId, newGhnId) =>
+        await axios.put(
+            `${process.env.REACT_APP_API}/update-order/${orderId}`,
+            { newGhnId },
+            {
+                headers: {
+                    authtoken,
+                },
+            },
+        );
+
 export const createOrder = async (stripeResponse, authtoken) =>
     await axios.post(
         `${process.env.REACT_APP_API}/user/order`,

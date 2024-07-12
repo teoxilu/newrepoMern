@@ -21,6 +21,7 @@ import {
     getUserOrders,
     createGhnOrder,
     getUserLatestOrder,
+    updateOrder
 } from '~/functions/user';
 import { sendConfirmationEmail } from '~/functions/email';
 import ReactQuill from 'react-quill';
@@ -148,56 +149,57 @@ const Checkout = () => {
                         setIsOpenDialog(true);
                         console.log(products);
                         sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
-                        const tempOrder = res.data[res.data.length-1];
-                        
-                        
+                        const tempOrder = res.data[res.data.length - 1];
+                        console.log('Total after discount:', totalAfterDiscount);
+                        console.log('Total:', total);
+
                         // Create GHN order
-                    const orderData = {
-                        "items": [
-                            {
-                                "name": "Shoes",
-                                "quantity": tempOrder.products[0].count,
-                                "price": totalAfterDiscount,
-                                "weight": 500,
-                            },
-                        ],
-                        "from_name": "2HS",
-                        "from_phone": "0338778921",
-                        "from_address": "Chau Thoi",
-                        "from_ward_name": "Di An",
-                        "from_district_name": "Binh An",
-                        "from_provice_name": "Binh Duong",
-                        
+                        const orderData = {
+                            items: [
+                                {
+                                    name: 'Shoes',
+                                    quantity: tempOrder.products[0].count,
+                                    price: total,
+                                    weight: 500,
+                                },
+                            ],
+                            from_name: '2HS',
+                            from_phone: '0338778921',
+                            from_address: 'Binh An',
+                            from_ward_name: 'Phường Bình An',
+                            from_district_name: 'Thành phố Dĩ An',
+                            from_province_name: 'Binh Duong',
 
-                        "to_name": user.name, // Make sure to get the user's name
-                        "to_address": address, // Ensure address is correctly set
-                        "to_phone": phone, // Ensure phone is correctly set
-                        "to_ward_code": 510101 ,
-                        "to_district_id": 1566,
-                        "weight": 300,
-                        "length": 20,
-                        "width": 10,
-                        "height": 10,
-                        "service_type_id": 1,
-                        "service_id": 1,
-                        "payment_type_id": 1,
+                            to_name: user.name, // Make sure to get the user's name
+                            to_address: address, // Ensure address is correctly set
+                            to_phone: phone, // Ensure phone is correctly set
+                            to_ward_code: '440502',
+                            to_district_id: 1540,
+                            weight: 300,
+                            length: 20,
+                            width: 10,
+                            height: 10,
+                            service_type_id: 2,
+                            service_id: 3,
+                            payment_type_id: 1,
+                            // Weight: 200, // Example weight, adjust as needed
+                            required_note: 'CHOXEMHANGKHONGTHU', // or any required note per your GHN settings
+                            // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
+                        };
+                        createGhnOrder(orderData).then((ghnRes) => {
+                            console.log('hello');
+                            updateOrder(user.token, tempOrder._id, ghnRes.data.data.order_code).then((resp) => {
+                                console.log(resp);
+                            });
 
-                        // Weight: 200, // Example weight, adjust as needed
-                        "required_note": "CHOXEMHANGKHONGTHU", // or any required note per your GHN settings
-                        // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
-                    };
-                    createGhnOrder(orderData).then((ghnRes) => {
-                        console.log("hello");
-                        if (ghnRes.data.success) {
-                            toast.success('GHN order created successfully');
-                        } else {
-                            toast.error('GHN order creation failed');
-                            console.log("hello");
-                        }
+                            if (ghnRes.data) {
+                                toast.success('GHN order created successfully');
+                            } else {
+                                toast.error('GHN order creation failed');
+                                console.log('hello');
+                            }
+                        });
                     });
-                    });
-
-                    
                 }, 1000);
             }
         });

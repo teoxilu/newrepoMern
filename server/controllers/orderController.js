@@ -2,11 +2,26 @@
 const { sendPaymentConfirmationEmail } = require('./mailer');
 // const { createGHNOrder, getGHNOrderStatus, getAddress } = require('../services/ghnService');
 
-const sendConfirmationEmail = (req, res) => {
+const sendConfirmationEmail = async (req, res) => {
     const { email, order } = req.body;
-    sendPaymentConfirmationEmail(email, order);
-    res.status(200).send('Email sent successfully');
+
+    if (!email || !order) {
+        return res.status(400).json({ message: 'Email and order information are required' });
+    }
+
+    try {
+        await sendPaymentConfirmationEmail(email, order);
+        res.status(200).send('Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Error sending email');
+    }
 };
+
+
+
+
+
 
 // const createGhnOrder = async (req, res) => {
 //     // Extracting order data from request body

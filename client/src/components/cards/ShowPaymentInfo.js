@@ -25,6 +25,10 @@ const ShowPaymentInfo = ({order, showStatus = true }) => (
                     {numeral(order.paymentIntent.amount).format('0,0')} {order.paymentIntent.currency.toUpperCase()}
                 </b>
             </p>
+            <p>
+                <span className="text-light-on-surface-variant">GHN ID for Tracking:</span>{' '}
+                <b>{order.ghnID}</b>
+            </p>
         </div>
         <div>
             {showStatus && (
@@ -34,6 +38,7 @@ const ShowPaymentInfo = ({order, showStatus = true }) => (
                     value={`STATUS: ${order.orderStatus}`}
                 />
             )}
+            
         </div>
         {/* <p>
       <span>Order Id: {order._id}</span>

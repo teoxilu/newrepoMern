@@ -1,12 +1,12 @@
-const puppeteer = require('puppeteer');
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
+const { pdf } = require("@react-pdf/renderer");
+const Invoice = require("../controllers/clientComponents/Invoice");
 
-const generatePdf = async (html) => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.setContent(html);
-  const pdf = await page.pdf({ format: 'A4' });
-  await browser.close();
-  return pdf;
+const generatePdf = async (order) => {
+  const document = <Invoice order={order} />;
+  const pdfBuffer = await pdf(document).toBuffer();
+  return pdfBuffer;
 };
 
 module.exports = generatePdf;

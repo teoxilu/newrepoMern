@@ -25,16 +25,20 @@ exports.userCart = async (req, res) => {
   for (let i = 0; i < cart.length; i++) {
     let object = {};
 
-    object.product = cart[i]._id;
-    object.count = cart[i].count;
-    object.size = cart[i].size;
-    // get price for creating total
     let productFromDb = await Product.findById(cart[i]._id)
       .select("price")
       .exec();
-    object.price = productFromDb.price;
 
-    products.push(object);
+    if (productFromDb) {
+      object.product = cart[i]._id;
+      object.count = cart[i].count;
+      object.size = cart[i].size;
+      object.price = productFromDb.price;
+
+      products.push(object);
+    } else {
+      console.log(`Product with id ${cart[i]._id} not found`);
+    }
   }
 
   // console.log('products', products)
@@ -83,6 +87,21 @@ exports.saveAddress = async (req, res) => {
 
   res.json({ ok: true });
 };
+
+exports.updateOrder = async (req, res) => {
+  const { orderId } = req.params; // Existing orderId from request params
+  const { newGhnId } = req.body; // New orderId from request body
+
+  const updatedOrder = await Order.findOneAndUpdate(
+    { _id: orderId },
+    { ghnID: newGhnId },
+    { new: true }
+  ).exec();
+
+  res.json({ ok: true, order: updatedOrder });
+};
+
+
 
 exports.savePhone = async (req, res) => {
   const userPhone = await User.findOneAndUpdate(
@@ -187,7 +206,7 @@ exports.getLatestOrder = async (req, res) => {
 
     let latestOrder = await Order.findOne({ orderedBy: user._id })
       .populate("products.product")
-      .sort({ createdAt: -1 }) 
+      .sort({ createdAt: -1 })
       .exec();
 
     res.json(latestOrder);
