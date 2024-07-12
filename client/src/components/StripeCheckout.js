@@ -5,17 +5,22 @@ import { createPaymentIntent } from '../functions/stripe';
 import { Link, useHistory } from 'react-router-dom';
 import { Card } from 'antd';
 import { DollarOutlined, CheckOutlined, SwapOutlined } from '@ant-design/icons';
-import { createOrder, emptyUserCart, getUserOrders } from '../functions/user';
+import { createOrder, emptyUserCart, getUserOrders, createGhnOrder, updateOrder } from '../functions/user';
 import spongepay from '../images/spongepay.jpg';
 import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
 import config from '~/config';
 import images from '~/images';
 import { sendConfirmationEmail } from '../functions/email';
+import { toast } from 'react-toastify';
 
 const StripeCheckout = () => {
     const dispatch = useDispatch();
     const { user, coupon } = useSelector((state) => ({ ...state }));
+    const [address, setAddress] = useState('');
+    const [phone, setPhone] = useState('');
+    const [products, setProducts] = useState([]);
+    const [total, setTotal] = useState(0);
 
     const [orderInfo, setOrderInfo] = useState(null);
     const [isOpenDialog, setIsOpenDialog] = useState(false);
@@ -46,6 +51,39 @@ const StripeCheckout = () => {
             setPayable(res.data.payable);
         });
     }, []);
+
+    useEffect(() => {
+        // Lấy address và phone từ localStorage
+        const storedAddress = localStorage.getItem('address');
+        const storedPhone = localStorage.getItem('phone');
+        const storedProducts = localStorage.getItem('products');
+        const storedTotal = localStorage.getItem('total');
+
+        if (storedAddress) {
+            setAddress(storedAddress);
+        }
+
+        if (storedPhone) {
+            setPhone(storedPhone);
+        }
+
+        if (storedProducts) {
+            setProducts(storedProducts);
+        }
+
+        if (storedTotal) {
+            setTotal(storedTotal);
+        }
+    }, []);
+
+    const handleOrderCompletion = () => {
+        // Xóa address và phone khỏi localStorage
+        localStorage.removeItem('address');
+        localStorage.removeItem('phone');
+        localStorage.removeItem('products');
+        localStorage.removeItem('total');
+        
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -89,11 +127,65 @@ const StripeCheckout = () => {
 
                     // Open dialog
                     setTimeout(async () => {
-                        await getUserOrders(user?.token).then((res) => setOrderInfo(res.data[res.data.length - 1]));
-                        setIsOpenDialog(true);
-                        sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                        getUserOrders(user.token).then((res) => {
+                            setOrderInfo(res.data[res.data.length - 1]);
+                            setIsOpenDialog(true);
+                            console.log(products);
+                            sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+                            const tempOrder = res.data[res.data.length - 1];
+                            console.log('Total after discount:', totalAfterDiscount);
+                            console.log('Total:', total);
+    
+                            // Create GHN order
+                            const orderData = {
+                                items: [
+                                    {
+                                        name: 'Shoes',
+                                        quantity: tempOrder.products[0].count,
+                                        price: Number(total),
+                                        weight: 500,
+                                    },
+                                ],
+                                from_name: '2HS',
+                                from_phone: '0338778921',
+                                from_address: 'Binh An',
+                                from_ward_name: 'Phường Bình An',
+                                from_district_name: 'Thành phố Dĩ An',
+                                from_province_name: 'Binh Duong',
+    
+                                to_name: user.name, // Make sure to get the user's name
+                                to_address: address, // Ensure address is correctly set
+                                to_phone: phone, // Ensure phone is correctly set
+                                to_ward_code: '440502',
+                                to_district_id: 1540,
+                                weight: 300,
+                                length: 20,
+                                width: 10,
+                                height: 10,
+                                service_type_id: 2,
+                                service_id: 3,
+                                payment_type_id: 1,
+                                // Weight: 200, // Example weight, adjust as needed
+                                required_note: 'CHOXEMHANGKHONGTHU', // or any required note per your GHN settings
+                                // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
+                            };
+                            createGhnOrder(orderData).then((ghnRes) => {
+                                console.log('hello');
+                                updateOrder(user.token, tempOrder._id, ghnRes.data.data.order_code).then((resp) => {
+                                    console.log(resp);
+                                });
+    
+                                if (ghnRes.data) {
+                                    toast.success('GHN order created successfully');
+                                } else {
+                                    toast.error('GHN order creation failed');
+                                    console.log('hello');
+                                }
+                            });
+                        });
                     }, 1000);
                 }
+                handleOrderCompletion();
             });
             // empty user cart from redux store and local storage
             console.log(JSON.stringify(payload, null, 4));

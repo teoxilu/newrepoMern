@@ -92,6 +92,21 @@ const Checkout = () => {
         });
     };
 
+    const handleCheckout = () => {
+        // Lưu address và phone vào localStorage
+        localStorage.setItem('address', address);
+        localStorage.setItem('phone', phone);
+        localStorage.setItem('products',products);
+        localStorage.setItem('total', total);
+    
+        // Tiến hành lưu address và phone vào cơ sở dữ liệu
+        saveAddressToDb();
+        savePhoneToDb();
+    
+        // Chuyển hướng đến trang thanh toán
+        history.push('/payment');
+    };
+
     const applyDiscountCoupon = () => {
         // console.log('send coupon to backend', coupon);
         applyCoupon(user?.token, coupon).then((res) => {
@@ -508,7 +523,7 @@ const Checkout = () => {
                                 onClick={() => {
                                     saveAddressToDb();
                                     savePhoneToDb();
-                                    history.push('/payment');
+                                    handleCheckout();
                                 }}
                             >
                                 Check out with Stripe
