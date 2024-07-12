@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Typography } from '@material-tailwind/react';
+
 import { getSub } from '../../functions/sub';
 import ProductCard from '../../components/cards/ProductCard';
-import { Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
 
-const SubHome = ({ match }) => {
+const SubHome = () => {
     const [sub, setSub] = useState({});
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { slug } = match.params;
+    const { slug } = useParams();
 
     useEffect(() => {
         setLoading(true);

@@ -3147,6 +3147,10 @@ h1,
   background-color: rgb(143 0 0 / var(--tw-bg-opacity));
 }
 
+.bg-light-primary\/8{
+  background-color: rgb(143 0 0 / .08);
+}
+
 .bg-light-secondary-container{
   --tw-bg-opacity: 1;
   background-color: rgb(255 138 120 / var(--tw-bg-opacity));
@@ -4678,6 +4682,11 @@ h1,
   outline-width: 0px;
 }
 
+.blur{
+  --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .filter{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -4755,6 +4764,11 @@ h1,
 
 .\[-webkit-appearance\:none\]{
   -webkit-appearance: none;
+}
+
+.\*\:text-light-primary > *{
+  --tw-text-opacity: 1;
+  color: rgb(143 0 0 / var(--tw-text-opacity));
 }
 
 .placeholder\:\!text-light-on-surface-variant\/80::placeholder{
@@ -5792,6 +5806,10 @@ h1,
   background-color: rgb(255 255 255 / .08);
 }
 
+.hover\:bg-light-primary\/50:hover{
+  background-color: rgb(143 0 0 / 0.5);
+}
+
 .hover\:bg-light-primary\/8:hover{
   background-color: rgb(143 0 0 / .08);
 }
@@ -5842,6 +5860,11 @@ h1,
 
 .hover\:bg-yellow-500\/10:hover{
   background-color: rgb(255 235 59 / 0.1);
+}
+
+.hover\:bg-light-primary:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(143 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-80:hover{
@@ -6000,6 +6023,11 @@ h1,
 .hover\:shadow-yellow-500\/40:hover{
   --tw-shadow-color: rgb(255 235 59 / 0.4);
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+.\*\:hover\:text-light-on-primary:hover > *{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .hover\:before\:opacity-10:hover::before{
@@ -6279,6 +6307,11 @@ h1,
 .focus\:ring-light-green-200:focus{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(197 225 165 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-light-primary:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(143 0 0 / var(--tw-ring-opacity));
 }
 
 .focus\:ring-lime-200:focus{
