@@ -153,8 +153,6 @@ const Checkout = () => {
                         
                         // Create GHN order
                     const orderData = {
-                        "token": `${process.env.GHN_API_KEY}`,
-                        "shop_id": `${process.env.GHN_SHOP_ID}`,
                         "items": [
                             {
                                 "name": "Shoes",
@@ -172,8 +170,8 @@ const Checkout = () => {
                         
 
                         "to_name": user.name, // Make sure to get the user's name
-                        "to_address": user.address, // Ensure address is correctly set
-                        "to_phone": user.phone, // Ensure phone is correctly set
+                        "to_address": address, // Ensure address is correctly set
+                        "to_phone": phone, // Ensure phone is correctly set
                         "to_ward_code": 510101 ,
                         "to_district_id": 1566,
                         "weight": 300,

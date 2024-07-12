@@ -76,8 +76,8 @@ export const createGhnOrder = async (orderData) =>
         {
             headers: {
                 'Content-Type': 'application/json',
-                'ShopId': process.env.GHN_SHOP_ID,
-                'Token': process.env.GHN_API_KEY,
+                'ShopId': process.env.REACT_APP_GHN_SHOP_ID,
+                'Token': process.env.REACT_APP_GHN_API_KEY,
             },
         },
     );
