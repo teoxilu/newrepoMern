@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getCategory } from '../../functions/category';
-import ProductCard from '../../components/cards/ProductCard';
 import { Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
+import { useParams } from 'react-router-dom';
 
-const CategoryHome = ({ match }) => {
+import { getCategory } from '../../functions/category';
+import ProductCard from '../../components/cards/ProductCard';
+const CategoryHome = () => {
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const { slug } = match.params;
+    const { slug } = useParams();
 
     useEffect(() => {
         setLoading(true);

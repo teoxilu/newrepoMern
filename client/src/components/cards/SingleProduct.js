@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Card } from 'antd';
-import { HeartOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { HeartOutlined, ShoppingCartOutlined, HeartFilled } from '@ant-design/icons';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import unknown from '../../images/unknown.jpg';
@@ -12,23 +12,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
-import { addToWishlist } from '../../functions/user';
+import { addToWishlist, getWishlist, removeWishlist } from '../../functions/user';
 
 import config from '~/config';
 import { Button } from '@material-tailwind/react';
 
-
 //children component of Product page
 const SingleProduct = ({ product, onStarClick, star }) => {
+    const { user, cart } = useSelector((state) => ({ ...state }));
+
+    const [userWishList, setUserWishList] = useState(() => {
+        let result = [];
+        getWishlist(user?.token).then((res) => {
+            result.push(res.data.wishlist);
+        });
+        return result;
+    });
+    const [isAddToWishList, setIsAddToWishList] = useState(false);
+
     const { _id, title, images, description, slug, price } = product;
-    const [tooltip, setTooltip] = useState('Click to add');
+
+    const addWishListRef = useRef();
+    const removeWishListRef = useRef();
 
     //redux
-    const { user, cart } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
 
     let history = useHistory();
-    
 
     const handleAddToCart = () => {
         //create cart array
@@ -48,9 +58,6 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             //save to localstorage
             localStorage.setItem('cart', JSON.stringify(unique));
 
-            //show Tooltip
-            setTooltip('Added!');
-
             //add to redux state
             dispatch({
                 type: 'ADD_TO_CART',
@@ -65,18 +72,49 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         }
     };
 
+    var result = [];
+    console.log(typeof result);
+    const isProductInWishList = () => {
+        const result = userWishList.find((wishlist) => {
+            return wishlist._id === product._id;
+        });
+        setIsAddToWishList(result === undefined ? false : true);
+    };
+
+    const loadWishlist = () =>
+        getWishlist(user?.token).then((res) => {
+            setUserWishList(res.data.wishlist);
+        });
+
     const handleAddToWishlist = (e) => {
         e.preventDefault();
-        if (user && user.token) {
-            addToWishlist(product?._id, user.token).then((res) => {
-                // console.log('ADDED TO WISHLIST', res.data);
+        if (user && user?.token) {
+            addToWishlist(product?._id, user?.token).then(() => {
+                loadWishlist();
                 toast.success('Added to wishlist');
+                addWishListRef.current.blur();
             });
         } else {
             toast.error('Please log in first.');
             history.push('/login');
         }
     };
+
+    const handleRemove = (productId) => {
+        removeWishlist(productId, user.token).then(() => {
+            loadWishlist();
+            toast.success('Removed item from wishlist successfully');
+            removeWishListRef.current.blur();
+        });
+    };
+
+    useEffect(() => {
+        loadWishlist();
+    }, []);
+
+    useEffect(() => {
+        isProductInWishList();
+    }, [userWishList]);
 
     return (
         <>
@@ -97,8 +135,6 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                     ) : (
                         <Card cover={<img src={unknown} className="mb-3 card-image" alt="fallback" />}></Card>
                     )}
-
-                  
                 </div>
 
                 <div className="col-span-5 text-light-on-surface">
@@ -114,19 +150,42 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                         className="rounded-lg border "
                         actions={[
                             <Button
-                                // fullWidth
                                 onClick={handleAddToCart}
-                                disabled = {product.quantity < 1}
+                                disabled={product.quantity < 1}
                                 className="text-light-on-primary bg-light-primary rounded-lg "
                             >
                                 {product.quantity < 1 ? (
-                                    <div><ShoppingCartOutlined className="text-light-on-primary" /> <br /> Out of stock</div>
-                                ): (<div><ShoppingCartOutlined className="text-light-on-primary" /> <br /> Add To Cart</div>)}
-                                
+                                    <div>
+                                        <ShoppingCartOutlined className="text-light-on-primary" /> <br /> Out of stock
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <ShoppingCartOutlined className="text-light-on-primary" /> <br /> Add To Cart
+                                    </div>
+                                )}
                             </Button>,
-                            <Button variant="outlined" onClick={handleAddToWishlist} className="text-light-primary border-light-primary hover:bg-light-primary/8">
-                                <HeartOutlined className="text-light-primary rounded-lg" /> <br /> Add to Wishlist
-                            </Button>,
+                            isAddToWishList ? (
+                                <Button
+                                    ref={removeWishListRef}
+                                    variant="outlined"
+                                    ripple
+                                    onClick={() => handleRemove(product._id)}
+                                    className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary bg-light-primary/8 hover:bg-light-primary *:hover:text-light-on-primary"
+                                >
+                                    <HeartFilled className="rounded-lg" />
+                                    <br /> <p>Remove</p>
+                                </Button>
+                            ) : (
+                                <Button
+                                    ref={addWishListRef}
+                                    variant="outlined"
+                                    ripple
+                                    onClick={handleAddToWishlist}
+                                    className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary hover:bg-light-primary/8"
+                                >
+                                    <HeartOutlined className="rounded-lg" /> <br /> <p>Add to Wishlist</p>
+                                </Button>
+                            ),
                             <RatingModal>
                                 <StarRating
                                     name={_id}

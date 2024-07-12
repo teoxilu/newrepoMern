@@ -11,12 +11,9 @@ const Wishlist = () => {
 
     const loadWishlist = () =>
         getWishlist(user.token).then((res) => {
-            // console.log(res);
             setWishlist(res.data.wishlist);
         });
-    console.log(wishlist);
     const handleRemove = (productId) => {
-        console.log(productId)
         removeWishlist(productId, user.token).then((res) => {
             loadWishlist();
         });
