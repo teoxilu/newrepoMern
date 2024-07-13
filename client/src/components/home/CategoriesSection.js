@@ -15,7 +15,7 @@ const categorySections = [
         img: images.advertisingShoe,
         title: 'Hot trend',
         icon: <FireIcon />,
-        bgColor: 'bg-light-surface-container-high',
+        bgColor: 'from-light-surface-container-high',
         textColor: {
             fromColor: {
                 color: '#6F0D0D',
@@ -30,7 +30,7 @@ const categorySections = [
         img: images.advertisingShoe2,
         title: 'Best Seller',
         icon: <BestIcon />,
-        bgColor: 'bg-light-surface-container-highest',
+        bgColor: 'from-light-surface-container-highest',
         textColor: {
             fromColor: {
                 color: '#3F4017',
@@ -45,7 +45,7 @@ const categorySections = [
         img: images.advertisingShoe3,
         title: 'Top Pick',
         icon: <TopPickIcon />,
-        bgColor: 'bg-light-surface-container-medium',
+        bgColor: 'from-light-surface-container-medium',
         textColor: {
             fromColor: {
                 color: '#8f0000',
@@ -60,7 +60,7 @@ const categorySections = [
         img: images.advertisingShoe4,
         title: 'Best Rating',
         icon: <HeartIcon />,
-        bgColor: 'bg-light-surface-container-low',
+        bgColor: 'from-light-surface-container-low',
         textColor: {
             fromColor: {
                 color: '#074E58',
@@ -138,15 +138,6 @@ const CategoriesSection = () =>{
                     </motion.Typography>
                 </AnimatePresence>
 
-                {/* <Pagination
-                    responsive
-                    current={page}
-                    total={Math.ceil((productsCount / 3) * 10)}
-                    onChange={(value) => {
-                        setPage(value);
-                        // setIndexSection(page - 1);
-                    }}
-                /> */}
                 <Tabs value={categorySections[0].id}>
                     <TabsHeader
                         className="flex items-center space-x-2 bg-transparent rounded-none border-b border-light-outline-variant p-0"

@@ -2,7 +2,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { AnimatePresence, motion } from 'framer-motion';
-function CustomSlider({ children }) {
+function CustomSlider({ children, customSettings }) {
     const settings = {
         infinite: true,
         speed: 500,
@@ -18,7 +18,7 @@ function CustomSlider({ children }) {
         arrows: false,
     };
     return (
-        <AnimatePresence mode='wait'>
+        <AnimatePresence mode="wait">
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -26,7 +26,7 @@ function CustomSlider({ children }) {
                 layout
                 className="slider-container transition-opacity"
             >
-                <Slider className="flex h-auto" {...settings}>
+                <Slider className="flex h-auto" {...(customSettings ? { ...customSettings } : { ...settings })}>
                     {children}
                 </Slider>
             </motion.div>

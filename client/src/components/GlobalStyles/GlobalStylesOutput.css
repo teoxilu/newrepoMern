@@ -975,7 +975,7 @@ h1,
   left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient( #ff8a78,#ffffff);
+  background: linear-gradient(#ff8a78, #ffffff);
   transform-origin: bottom;
 }
 
@@ -985,13 +985,31 @@ h1,
   left: 0;
   width: 100%;
   height: 100vh;
-  background: linear-gradient( #ff8a78,#ffffff);
+  background: linear-gradient(#ff8a78, #ffffff);
   transform-origin: top;
 }
 
 .required:after {
-  content:" *";
+  content: ' *';
   color: #ba1a1a;
+}
+
+.slick-prev:before,
+    .slick-next:before {
+  color: #281714 !important;
+  /* width: 24px;
+        height: 24px;
+        padding: 8px;
+        border-radius: 9999px;
+        background-color: #e1e3dd; */
+}
+
+.slick-prev:before {
+  content: '\f053';
+}
+
+.slick-next:before {
+  content: '\f054';
 }
 
 *, ::before, ::after{
@@ -3106,11 +3124,6 @@ h1,
   background-color: rgb(63 81 181 / 0.2);
 }
 
-.bg-light-background{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 248 246 / var(--tw-bg-opacity));
-}
-
 .bg-light-blue-500{
   --tw-bg-opacity: 1;
   background-color: rgb(3 169 244 / var(--tw-bg-opacity));
@@ -3164,11 +3177,6 @@ h1,
 .bg-light-surface-container-high{
   --tw-bg-opacity: 1;
   background-color: rgb(255 226 221 / var(--tw-bg-opacity));
-}
-
-.bg-light-surface-container-highest{
-  --tw-bg-opacity: 1;
-  background-color: rgb(252 219 214 / var(--tw-bg-opacity));
 }
 
 .bg-light-surface-container-low{
@@ -3385,6 +3393,12 @@ h1,
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-light-background{
+  --tw-gradient-from: #fff8f6 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 248 246 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-light-blue-600{
   --tw-gradient-from: #039be5 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(3 155 229 / 0) var(--tw-gradient-to-position);
@@ -3400,6 +3414,30 @@ h1,
 .from-light-secondary{
   --tw-gradient-from: #a7382a var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(167 56 42 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-light-surface-container-high{
+  --tw-gradient-from: #ffe2dd var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 226 221 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-light-surface-container-highest{
+  --tw-gradient-from: #fcdbd6 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(252 219 214 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-light-surface-container-low{
+  --tw-gradient-from: #fff0ee var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 240 238 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-light-surface-container-medium{
+  --tw-gradient-from: #ffe9e6 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 233 230 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -3523,6 +3561,10 @@ h1,
 
 .to-light-primary{
   --tw-gradient-to: #8f0000 var(--tw-gradient-to-position);
+}
+
+.to-light-surface-container-lowest{
+  --tw-gradient-to: #ffffff var(--tw-gradient-to-position);
 }
 
 .to-light-tertiary{
@@ -5806,8 +5848,9 @@ h1,
   background-color: rgb(255 255 255 / .08);
 }
 
-.hover\:bg-light-primary\/50:hover{
-  background-color: rgb(143 0 0 / 0.5);
+.hover\:bg-light-primary:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(143 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-light-primary\/8:hover{
@@ -5860,11 +5903,6 @@ h1,
 
 .hover\:bg-yellow-500\/10:hover{
   background-color: rgb(255 235 59 / 0.1);
-}
-
-.hover\:bg-light-primary:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(143 0 0 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-opacity-80:hover{

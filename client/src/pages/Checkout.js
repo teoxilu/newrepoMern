@@ -120,8 +120,8 @@ const Checkout = () => {
             }
             // error
             if (res.data.err) {
+                setTotalAfterDiscount(0);
                 setDiscountError(res.data.err);
-                // toast.error(res.data.err);
 
                 // update redux coupon applied true/false
                 dispatch({
@@ -385,10 +385,10 @@ const Checkout = () => {
                         <span className="font-bold">{numeral(total).format('0,0')} VND</span>
                     </div>
 
-                    <div>
+                    <div className="flex-col space-y-2">
                         <AnimatePresence mode="wait">
                             {totalAfterDiscount <= 0 && (
-                                <motion.div
+                                <div
                                     initial={{ opacity: 0, transform: 'translateX((-200px)' }}
                                     animate={{ opacity: 1, transform: 'translateX(0)' }}
                                     exit={{ opacity: 0, transform: 'translateX(-200px)' }}
@@ -412,7 +412,7 @@ const Checkout = () => {
                                     >
                                         Apply
                                     </Button>
-                                </motion.div>
+                                </div>
                             )}
                         </AnimatePresence>
 
@@ -445,6 +445,7 @@ const Checkout = () => {
                                 </motion.div>
                             )}
                         </AnimatePresence>
+
                         <AnimatePresence>
                             {discountError && (
                                 <motion.p

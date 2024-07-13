@@ -10,9 +10,7 @@ import _ from 'lodash';
 import { showAverage } from '../../functions/rating';
 import numeral from 'numeral';
 
-
 const ProductCard = ({ product }) => {
-
     //redux
     const { user, cart } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
@@ -32,9 +30,8 @@ const ProductCard = ({ product }) => {
             });
             //remove duplicates
             let unique = _.uniqWith(cart, _.isEqual);
-            //save to localstorage
+            //save to local storage
             localStorage.setItem('cart', JSON.stringify(unique));
-
 
             //add to redux state
             dispatch({
@@ -52,44 +49,45 @@ const ProductCard = ({ product }) => {
     //destructure
     const { images, title, description, slug, price } = product;
     return (
-        <Card className="w-72 h-[492px] overflow-hidden hover:shadow-lg hover:scale-105 transition">
-            <CardHeader shadow={false} floated={false} className="h-52">
-                <img
-                    src={images && images.length ? images[0].url : unknown}
-                    alt={title}
-                    className="h-full w-full object-cover"
-                />
-            </CardHeader>
-            <CardBody>
-                <div className="pb-2 flex items-center justify-between gap-x-2">
-                    <p className="text-xl font-medium text-light-on-surface">{title}</p>
-                    <div>
-                        <Typography className="text-xl font-medium text-light-primary">
-                            {numeral(price).format('0,0')}
-                        </Typography>
+        <Link to={`/product/${slug}`}>
+            <Card className="w-72 h-[492px] overflow-hidden hover:shadow-lg hover:scale-105 transition">
+                <CardHeader shadow={false} floated={false} className="h-52">
+                    <img
+                        src={images && images.length ? images[0].url : unknown}
+                        alt={title}
+                        className="h-full w-full object-cover"
+                    />
+                </CardHeader>
+                <CardBody>
+                    <div className="pb-2 flex items-center justify-between gap-x-2">
+                        <p className="text-xl font-medium text-light-on-surface">{title}</p>
+                        <div>
+                            <Typography className="text-xl font-medium text-light-primary">
+                                {numeral(price).format('0,0')}
+                            </Typography>
+                        </div>
                     </div>
-                </div>
-                <Typography variant="small" className="font-normal opacity-75 text-light-on-surface-variant">
-                    {description}
-                </Typography>
-                {product && product.ratings && product.ratings.length > 0 ? (
-                    showAverage(product)
-                ) : (
-                    <Typography className="pt-2 text-light-on-surface text-xs">No ratings yet</Typography>
-                )}
-            </CardBody>
-            <CardFooter className="w-full flex items-center justify-between space-x-2">
-                <Link to={`/product/${slug}`}>
-                    <Button
-                        size="sm"
-                        ripple
-                        variant="outlined"
-                        className="flex items-center space-x-1 rounded-full border-light-outline hover:bg-light-primary/8 text-light-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    >
-                        {/* <EyeIcon className="w-6 h-6" /> */}
-                        <Typography className="text-xs font-bold">View Product</Typography>
-                    </Button>
-                </Link>
+                    <Typography variant="small" className="font-normal opacity-75 text-light-on-surface-variant">
+                        {description}
+                    </Typography>
+                    {product && product.ratings && product.ratings.length > 0 ? (
+                        showAverage(product)
+                    ) : (
+                        <Typography className="pt-2 text-light-on-surface text-xs">No ratings yet</Typography>
+                    )}
+                </CardBody>
+                <CardFooter className="w-full flex items-center justify-between space-x-2">
+                    <Link to={`/product/${slug}`}>
+                        <Button
+                            size="sm"
+                            ripple
+                            variant="outlined"
+                            className="flex items-center space-x-1 rounded-full border-light-outline hover:bg-light-primary/8 text-light-primary shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+                        >
+                            {/* <EyeIcon className="w-6 h-6" /> */}
+                            <Typography className="text-xs font-bold">View Product</Typography>
+                        </Button>
+                    </Link>
                     <Button
                         fullWidth
                         size="sm"
@@ -104,8 +102,9 @@ const ProductCard = ({ product }) => {
                             <Typography className="text-xs font-bold">Add to Cart</Typography>
                         )}
                     </Button>
-            </CardFooter>
-        </Card>
+                </CardFooter>
+            </Card>
+        </Link>
 
         // {/* <Card
         //     cover={
