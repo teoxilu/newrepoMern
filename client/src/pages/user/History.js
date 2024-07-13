@@ -87,14 +87,14 @@ const History = () => {
             </thead>
 
             <tbody>
-                {order.products.map((p, i) => (
+                {order.products?.map((p, i) => (
                     <tr key={i}>
                         <td className="bg-light-tertiary-container/50 w-[20%] h-full">
                             <div className="w-full m-auto ">
-                                {p.product.images.length > 0 ? (
+                                {p.product?.images.length > 0 ? (
                                     <ModalImage
-                                        small={p.product.images[0].url}
-                                        large={p.product.images[0].url}
+                                        small={p.product?.images[0].url}
+                                        large={p.product?.images[0].url}
                                         className="w-full h-full !max-h-32 object-cover rounded-lg"
                                     />
                                 ) : (
@@ -103,13 +103,13 @@ const History = () => {
                             </div>
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="m-auto w-[20%]">
-                            <p>{p.product.title}</p>
+                            <p>{p.product?.title}</p>
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="bg-light-tertiary-container/50 w-[15%]">
-                            <p className="text-light-on-tertiary-container">{numeral(p.product.price).format('0,0')}</p>
+                            <p className="text-light-on-tertiary-container">{numeral(p.product?.price).format('0,0')}</p>
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="w-[15%]">
-                            {p.product.brand}
+                            {p.product?.brand}
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="bg-light-tertiary-container/50 w-[15%]">
                             <p className="text-light-on-tertiary-container">{p.size}</p>
