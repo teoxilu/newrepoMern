@@ -3,6 +3,9 @@ import UserNav from '../../components/nav/UserNav';
 import { getWishlist, removeWishlist } from '../../functions/user';
 import { useSelector } from 'react-redux';
 import DelDialog from './DelDialog';
+import { Typography } from '@material-tailwind/react';
+import { Link } from 'react-router-dom';
+import config from '~/config';
 
 const Wishlist = () => {
     const [wishlist, setWishlist] = useState([]);
@@ -41,11 +44,23 @@ const Wishlist = () => {
                 <div className="col">
                     <h1 className="font-medium text-base">Wishlist</h1>
 
-                    <div className="flex flex-col space-y-4 mt-4">
-                        {wishlist?.map((p) => (
-                                <DelDialog handleRemove={handleRemove} p={p} title={p.title}/>
-                        ))}
-                    </div>
+                    {wishlist.length > 0 ? (
+                        <div className="flex flex-col space-y-4 mt-4">
+                            {wishlist?.map((p) => (
+                                <DelDialog handleRemove={handleRemove} p={p} title={p.title} />
+                            ))}
+                        </div>
+                    ) : (
+                        <Typography className="text-center translate-y-4 text-light-on-background">
+                            No products in your wish list yet.{' '}
+                            <Link
+                                to={config.routes.shop}
+                                className="transition-opacity opacity-80 hover:text-light-primary hover:opacity-100 underline hover:no-underline text-light-primary"
+                            >
+                                Continue Shopping.
+                            </Link>
+                        </Typography>
+                    )}
                 </div>
             </div>
         </div>

@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
     //destructure
     const { images, title, description, slug, price } = product;
     return (
-        <Link to={`/product/${slug}`}>
+        // <Link to={`/product/${slug}`}>
             <Card className="w-72 h-[492px] overflow-hidden hover:shadow-lg hover:scale-105 transition">
                 <CardHeader shadow={false} floated={false} className="h-52">
                     <img
@@ -61,9 +61,12 @@ const ProductCard = ({ product }) => {
                 <CardBody>
                     <div className="pb-2 flex items-center justify-between gap-x-2">
                         <p className="text-xl font-medium text-light-on-surface">{title}</p>
-                        <div>
+                        <div className='flex flex-col items-end'>
                             <Typography className="text-xl font-medium text-light-primary">
                                 {numeral(price).format('0,0')}
+                            </Typography>
+                            <Typography className="text-xl font-medium text-light-primary">
+                               VND
                             </Typography>
                         </div>
                     </div>
@@ -104,37 +107,7 @@ const ProductCard = ({ product }) => {
                     </Button>
                 </CardFooter>
             </Card>
-        </Link>
-
-        // {/* <Card
-        //     cover={
-        //         // <Link to={`/product/${slug}`}>
-        //         <Link to={config.routes.product}>
-        //             <img
-        //                 src={images && images.length ? images[0].url : unknown}
-        //                 alt={title}
-        //                 style={{ height: '230px', objectFit: 'cover' }}
-        //                 className="p-1"
-        //             />
-        //         </Link>
-        //     }
-        //     actions={[
-        //         <Link to={config.routes.product}>
-        //             <EyeOutlined className="text-warning" /> <br /> View Product
-        //         </Link>,
-        //         <Tooltip title={tooltip}>
-        //             <button className="btn mb-2" onClick={handleAddToCart} disabled={product.quantity < 1}>
-        //                 <ShoppingCartOutlined className="text-danger" /> <br />{' '}
-        //                 {product.quantity < 1 ? 'Out of stock' : 'Add to Cart'}
-        //             </button>
-        //         </Tooltip>,
-        //     ]}
-        // >
-        //     <Meta
-        //         title={`${title} - ${price} VND`}
-        //         description={`${description && description.substring(0, 60)}...`}
-        //     />
-        // </Card> */}
+        /* </Link> */
     );
 };
 

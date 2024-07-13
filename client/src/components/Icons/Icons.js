@@ -10,6 +10,7 @@ import {
     faMedal,
     faCartShopping,
     faTag,
+    faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import images from '~/images';
@@ -106,6 +107,12 @@ export const CouponIcon = ({ className: customClassName }) => (
     />
 );
 
+export const SpinnerIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon
+        icon={faSpinner}
+        className={`w-6 h-6 transition-colors text-light-primary animate-spin ${customClassName}`}
+    />
+);
 export const CustomLeftArrowIcon = (props) => {
     const { className, style, onClick } = props;
     return <div className={`${className} slick-prev`} style={{ ...style }} onClick={onClick} />;

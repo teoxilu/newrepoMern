@@ -20,9 +20,6 @@ export const getProduct = async (slug) => await axios.get(`${process.env.REACT_A
 
 export const getAllProducts = async () => await axios.get(`${process.env.REACT_APP_API}/products/all`);
 
-export const getAllProducts = async () =>
-  await axios.get(`${process.env.REACT_APP_API}/products/all`);
-
 export const updateProduct = async (slug, product, authtoken) =>
     await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
         headers: {
