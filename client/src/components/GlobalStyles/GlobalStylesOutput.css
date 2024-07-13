@@ -1773,6 +1773,14 @@ h1,
   max-height: 48px;
 }
 
+.max-h-\[720px\]{
+  max-height: 720px;
+}
+
+.max-h-\[480px\]{
+  max-height: 480px;
+}
+
 .min-h-12{
   min-height: 3rem;
 }

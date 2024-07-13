@@ -70,9 +70,9 @@ const ProductCard = ({ product }) => {
                             </Typography>
                         </div>
                     </div>
-                    <Typography variant="small" className="font-normal opacity-75 text-light-on-surface-variant">
+                    <p className="font-normal opacity-75 text-light-on-surface-variant">
                         {description}
-                    </Typography>
+                    </p>
                     {product && product.ratings && product.ratings.length > 0 ? (
                         showAverage(product)
                     ) : (

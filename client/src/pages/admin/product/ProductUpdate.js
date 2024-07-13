@@ -7,6 +7,7 @@ import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
 import { LoadingOutlined } from '@ant-design/icons';
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
+import { SpinnerIcon } from '~/components/Icons';
 
 const initialState = {
     title: '',
@@ -119,7 +120,10 @@ const ProductUpdate = ({ match, history }) => {
 
                 <div className="col-md-10">
                     {loading ? (
-                        <LoadingOutlined className="text-light-on-surface-variant h1" />
+                        <div className="flex items-center space-x-2">
+                            <SpinnerIcon />
+                            <p className="font-medium text-base text-left text-light-primary">Loading...</p>
+                        </div>
                     ) : (
                         <h1 className="font-medium text-base text-left">Product Update</h1>
                     )}
@@ -142,7 +146,6 @@ const ProductUpdate = ({ match, history }) => {
                         setArrayOfSubIds={setArrayOfSubIds}
                         selectedCategory={selectedCategory}
                     />
-                    <hr />
                 </div>
             </div>
         </div>

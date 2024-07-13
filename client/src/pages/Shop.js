@@ -24,31 +24,29 @@ const Shop = () => {
     const [sub, setSub] = useState('');
     const [brands, setBrands] = useState([
         'Last Resort AB',
-        'DC',
         'Adidas',
         'Nike',
         'Asics',
-        'Yonex',
-        'Salomon',
         'Vans',
         'Converse',
+        'Reebok',
         'All',
     ]);
     const [brand, setBrand] = useState('');
     const [sizes, setSizes] = useState([
+        '36',
         '37',
         '38',
         '39',
         '40',
+        '40.5',
         '41',
+        '41.5',
         '42',
         '42.5',
         '43',
-        '44',
-        '40.5',
-        '41.5',
         '43.5',
-        '36',
+        '44',
         'All',
     ]);
     const [starList, setStarList] = useState([5, 4, 3, 2, 1, 0]);

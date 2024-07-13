@@ -20,19 +20,19 @@ const Orders = ({ orders, handleStatusChange }) => {
                 {order.products.map((p, i) => (
                     <tr key={i}>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            <b>{p.product.title}</b>
+                            <b>{p.product?.title}</b>
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            {numeral(p.product.price).format('0,0')}
+                            {numeral(p.product?.price).format('0,0')}
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            {p.product.brand}
+                            {p.product?.brand}
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            {p.size}
+                            {p?.size}
                         </td>
                         <td className="w-[20%]" style={{ verticalAlign: 'middle' }}>
-                            {p.count}
+                            {p?.count}
                         </td>
                     </tr>
                 ))}
