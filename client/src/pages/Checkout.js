@@ -120,8 +120,8 @@ const Checkout = () => {
             }
             // error
             if (res.data.err) {
+                setTotalAfterDiscount(0);
                 setDiscountError(res.data.err);
-                // toast.error(res.data.err);
 
                 // update redux coupon applied true/false
                 dispatch({
@@ -162,11 +162,9 @@ const Checkout = () => {
                     getUserOrders(user.token).then((res) => {
                         setOrderInfo(res.data[res.data.length - 1]);
                         setIsOpenDialog(true);
-                        console.log(products);
                         sendConfirmationEmail(user.email, res.data[res.data.length - 1], user.token);
+
                         const tempOrder = res.data[res.data.length - 1];
-                        console.log('Total after discount:', totalAfterDiscount);
-                        console.log('Total:', total);
 
                         // Create GHN order
                         const orderData = {
@@ -198,20 +196,18 @@ const Checkout = () => {
                             service_id: 3,
                             payment_type_id: 1,
                             // Weight: 200, // Example weight, adjust as needed
-                            required_note: 'CHOXEMHANGKHONGTHU', // or any required note per your GHN settings
+                            required_note: 'Only view, not test', // or any required note per your GHN settings
                             // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
                         };
                         createGhnOrder(orderData).then((ghnRes) => {
-                            console.log('hello');
-                            updateOrder(user.token, tempOrder._id, ghnRes.data.data.order_code).then((resp) => {
-                                console.log(resp);
+                            updateOrder(user.token, tempOrder._id, ghnRes.data.data.order_code).then(() => {
+                                console.log(ghnRes.data);
                             });
 
                             if (ghnRes.data) {
                                 toast.success('GHN order created successfully');
                             } else {
                                 toast.error('GHN order creation failed');
-                                console.log('hello');
                             }
                         });
                     });
@@ -336,7 +332,7 @@ const Checkout = () => {
                 <div>
                     <p className="text-2xl font-normal">Phone Number</p>
                     <input
-                        type="text"
+                        type="number"
                         className="w-1/2 focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
                         label="Phone number"
                         placeholder="Phone number"
@@ -385,10 +381,10 @@ const Checkout = () => {
                         <span className="font-bold">{numeral(total).format('0,0')} VND</span>
                     </div>
 
-                    <div>
+                    <div className="flex-col space-y-2">
                         <AnimatePresence mode="wait">
                             {totalAfterDiscount <= 0 && (
-                                <motion.div
+                                <div
                                     initial={{ opacity: 0, transform: 'translateX((-200px)' }}
                                     animate={{ opacity: 1, transform: 'translateX(0)' }}
                                     exit={{ opacity: 0, transform: 'translateX(-200px)' }}
@@ -412,7 +408,7 @@ const Checkout = () => {
                                     >
                                         Apply
                                     </Button>
-                                </motion.div>
+                                </div>
                             )}
                         </AnimatePresence>
 
@@ -445,6 +441,7 @@ const Checkout = () => {
                                 </motion.div>
                             )}
                         </AnimatePresence>
+
                         <AnimatePresence>
                             {discountError && (
                                 <motion.p

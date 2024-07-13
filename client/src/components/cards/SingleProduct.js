@@ -128,7 +128,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                                         src={i.url}
                                         key={i.public_id}
                                         alt={title}
-                                        className="object-cover w-full rounded-lg"
+                                        className="object-cover w-full max-h-[480px] h-auto rounded-lg"
                                     />
                                 ))}
                         </Carousel>

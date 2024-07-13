@@ -1,4 +1,17 @@
-import { faFire, faXmark, faHeart, faAward, faHandPointer, faTrophy, faShield, faHeadset, faMedal, faCartShopping, faTag } from '@fortawesome/free-solid-svg-icons';
+import {
+    faFire,
+    faXmark,
+    faHeart,
+    faAward,
+    faHandPointer,
+    faTrophy,
+    faShield,
+    faHeadset,
+    faMedal,
+    faCartShopping,
+    faTag,
+    faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import images from '~/images';
 
@@ -55,23 +68,57 @@ export const TopPickIcon = ({ className: customClassName }) => (
 );
 
 export const TrophyIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faTrophy} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faTrophy}
+        className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`}
+    />
 );
 
 export const SecureIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faShield} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faShield}
+        className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`}
+    />
 );
 
 export const SupportIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faHeadset} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faHeadset}
+        className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`}
+    />
 );
 
 export const WarrantyIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faAward} className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faAward}
+        className={`w-12 h-12 transition-colors text-light-on-tertiary-container ${customClassName}`}
+    />
 );
 export const ShoppingCartIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faCartShopping} className={`w-6 h-6 transition-colors text-light-on-surface ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faCartShopping}
+        className={`w-6 h-6 transition-colors text-light-on-surface ${customClassName}`}
+    />
 );
 export const CouponIcon = ({ className: customClassName }) => (
-    <FontAwesomeIcon icon={faTag} className={`w-6 h-6 transition-colors text-light-on-tertiary-container ${customClassName}`} />
+    <FontAwesomeIcon
+        icon={faTag}
+        className={`w-6 h-6 transition-colors text-light-on-tertiary-container ${customClassName}`}
+    />
 );
+
+export const SpinnerIcon = ({ className: customClassName }) => (
+    <FontAwesomeIcon
+        icon={faSpinner}
+        className={`w-6 h-6 transition-colors text-light-primary animate-spin ${customClassName}`}
+    />
+);
+export const CustomLeftArrowIcon = (props) => {
+    const { className, style, onClick } = props;
+    return <div className={`${className} slick-prev`} style={{ ...style }} onClick={onClick} />;
+};
+
+export const CustomRightArrowIcon = (props) => {
+    const { className, style, onClick } = props;
+    return <div className={`${className} slick-next`} style={{ ...style }} onClick={onClick} />;
+};

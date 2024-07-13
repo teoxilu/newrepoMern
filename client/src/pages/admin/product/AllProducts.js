@@ -36,7 +36,7 @@ const AllProducts = () => {
       removeProduct(slug, user.token)
         .then((res) => {
           loadAllProducts();
-          toast.error(`${res.data.title} is deleted`);
+          toast.success(`${res.data.title} is deleted successfully`);
         })
         .catch((err) => {
           console.log(err);

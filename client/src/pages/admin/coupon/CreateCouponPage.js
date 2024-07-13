@@ -93,7 +93,7 @@ const CreateCouponPage = () => {
                         </div>
 
                         <div className="form-group">
-                            <label className="text-muted required">Expiry</label>
+                            <label className="text-muted required">Expired</label>
                             <br />
                             <DatePicker
                                 className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
@@ -124,7 +124,7 @@ const CreateCouponPage = () => {
                             <thead className="thead-light text-center">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Expiry</th>
+                                    <th scope="col">Expired</th>
                                     <th scope="col">Discount</th>
                                     <th scope="col">Action</th>
                                 </tr>

@@ -2,17 +2,16 @@ import { Chip } from '@material-tailwind/react';
 import numeral from 'numeral';
 import React from 'react';
 
-const ShowPaymentInfo = ({order, showStatus = true }) => (
+const ShowPaymentInfo = ({ order, showStatus = true }) => (
     <div className="p-2 flex flex-col justify-center items-start space-y-2">
         <div className="flex items-center space-x-5">
             <p>
-                <span className="text-light-on-surface-variant">Order Id:</span> <b>{order._id.slice(0,8)}</b>
+                <span className="text-light-on-surface-variant">Order Id:</span> <b>{order._id.slice(0, 8)}</b>
             </p>
             <p>
                 <span className="text-light-on-surface-variant">Ordered on:</span>{' '}
                 <b>{new Date(order.paymentIntent.created * 1000).toLocaleString()}</b>
             </p>
-          
         </div>
         <div className="flex items-center space-x-5">
             <p>
@@ -25,12 +24,8 @@ const ShowPaymentInfo = ({order, showStatus = true }) => (
                     {numeral(order.paymentIntent.amount).format('0,0')} {order.paymentIntent.currency.toUpperCase()}
                 </b>
             </p>
-            <p>
-                <span className="text-light-on-surface-variant">GHN ID for Tracking:</span>{' '}
-                <b>{order.ghnID}</b>
-            </p>
         </div>
-        <div>
+        <div className="flex items-center space-x-5">
             {showStatus && (
                 <Chip
                     variant="outlined"
@@ -38,7 +33,9 @@ const ShowPaymentInfo = ({order, showStatus = true }) => (
                     value={`STATUS: ${order.orderStatus}`}
                 />
             )}
-            
+            <p>
+                <span className="text-light-on-surface-variant">GHN ID for Tracking:</span> <b>{order.ghnID}</b>
+            </p>
         </div>
         {/* <p>
       <span>Order Id: {order._id}</span>

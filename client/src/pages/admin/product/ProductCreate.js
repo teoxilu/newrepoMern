@@ -6,7 +6,7 @@ import { createProduct } from '../../../functions/product';
 import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
-import { LoadingOutlined } from '@ant-design/icons';
+import { SpinnerIcon } from '~/components/Icons';
 
 const initialState = {
     title: '',
@@ -30,7 +30,14 @@ const ProductCreate = () => {
     const [showSub, setShowSub] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const isEnable = values?.title.length > 0 && values?.description.length > 0 && values?.price.length > 0 && values?.quantity.length > 0 && values?.category.length>0 && values?.size.length>0 && values?.brand.length>0 ;
+    const isEnable =
+        values?.title.length > 0 &&
+        values?.description.length > 0 &&
+        values?.price.length > 0 &&
+        values?.quantity.length > 0 &&
+        values?.category.length > 0 &&
+        values?.size.length > 0 &&
+        values?.brand.length > 0;
 
     //redux
     const { user } = useSelector((state) => ({ ...state }));
@@ -45,8 +52,7 @@ const ProductCreate = () => {
         e.preventDefault();
         createProduct(values, user.token)
             .then((res) => {
-                console.log(res);
-                window.alert(`"${res.data.title}" is created`);
+                toast.success(`"${res.data.title}" is created`)
                 window.location.reload();
             })
             .catch((err) => {
@@ -80,8 +86,12 @@ const ProductCreate = () => {
 
                 <div className="col-md-10">
                     {loading ? (
-                        <LoadingOutlined className="text-danger h1" />
+                        <div className="flex items-center space-x-2">
+                            <SpinnerIcon />
+                            <p className="font-medium text-base text-left text-light-primary">Loading...</p>
+                        </div>
                     ) : (
+                        // <LoadingOutlined className="text-danger h1" />
                         <h1 className="font-medium text-base text-left">Product Create</h1>
                     )}
                     <hr className="text-light-outline-variant" />

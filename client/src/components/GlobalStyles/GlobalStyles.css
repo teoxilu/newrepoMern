@@ -151,7 +151,7 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        background: linear-gradient( #ff8a78,#ffffff);
+        background: linear-gradient(#ff8a78, #ffffff);
         transform-origin: bottom;
     }
 
@@ -161,12 +161,30 @@
         left: 0;
         width: 100%;
         height: 100vh;
-        background: linear-gradient( #ff8a78,#ffffff);
+        background: linear-gradient(#ff8a78, #ffffff);
         transform-origin: top;
     }
 
     .required:after {
-        content:" *";
+        content: ' *';
         color: #ba1a1a;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: #281714 !important;
+        /* width: 24px;
+        height: 24px;
+        padding: 8px;
+        border-radius: 9999px;
+        background-color: #e1e3dd; */
+    }
+    
+    .slick-prev:before {
+        content: '\f053';
+    }
+
+    .slick-next:before {
+        content: '\f054';
     }
 }

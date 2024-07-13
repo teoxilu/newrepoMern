@@ -133,7 +133,7 @@ const Cart = () => {
 
                 {cart.length === 0 ? (
                     <Typography className="text-center translate-y-4 text-light-on-background ">
-                        No products in cart.
+                        No products in cart.{' '}
                         <Link
                             to={config.routes.shop}
                             className="opacity-80 hover:opacity-100 transition-opacity hover:text-light-primary underline hover:no-underline"

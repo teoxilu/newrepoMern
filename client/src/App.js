@@ -124,7 +124,7 @@ const App = () => {
                     theme="light"
                     // transition={Bounce}
                 />
-                <div className="App bg-light-background transition-colors">
+                <div className="App bg-gradient-to-r from-light-background from-75% to-light-surface-container-lowest transition-colors">
                     <ScrollToTop />
                     <AnimatePresence mode='wait'>
                         <Switch>
