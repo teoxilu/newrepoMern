@@ -1383,6 +1383,10 @@ h1,
   grid-column: span 9 / span 9;
 }
 
+.col-span-10{
+  grid-column: span 10 / span 10;
+}
+
 .float-right{
   float: right;
 }
@@ -1769,16 +1773,12 @@ h1,
   max-height: 40px;
 }
 
-.max-h-\[48px\]{
-  max-height: 48px;
-}
-
-.max-h-\[720px\]{
-  max-height: 720px;
-}
-
 .max-h-\[480px\]{
   max-height: 480px;
+}
+
+.max-h-\[48px\]{
+  max-height: 48px;
 }
 
 .min-h-12{
@@ -2294,6 +2294,10 @@ h1,
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.cursor-none{
+  cursor: none;
 }
 
 .select-none{
@@ -4425,6 +4429,11 @@ h1,
 .text-yellow-900{
   --tw-text-opacity: 1;
   color: rgb(245 127 23 / var(--tw-text-opacity));
+}
+
+.text-light-surface-container-lowest{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .underline{

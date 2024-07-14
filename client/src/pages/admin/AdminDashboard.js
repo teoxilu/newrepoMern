@@ -33,7 +33,7 @@ const AdminDashboard = () => {
                     <AdminNav />
                 </div>
 
-                <div className="col-md-10">
+                <div className="">
                     <h1 className="font-medium text-base text-left">Admin Dashboard</h1>
                     <hr className="text-light-outline-variant" />
                     {/* {JSON.stringify(orders)} */}

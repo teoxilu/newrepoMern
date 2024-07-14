@@ -93,8 +93,8 @@ const History = () => {
                             <div className="w-full m-auto ">
                                 {p.product.images.length > 0 ? (
                                     <ModalImage
-                                        small={p.product.images[0].url}
-                                        large={p.product.images[0].url}
+                                        small={p.product?.images[0].url}
+                                        large={p.product?.images[0].url}
                                         className="w-full h-full !max-h-32 object-cover rounded-lg"
                                     />
                                 ) : (
