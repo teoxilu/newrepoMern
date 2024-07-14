@@ -43,31 +43,31 @@ const ForgotPassword = ({  }) => {
     };
 
     return (
-        <div>
-            <div className="container px-40 py-5">
-                <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
-                    {loading ? (
-                        <Typography className="text-base font-normal text-light-primary">Loading</Typography>
-                    ) : (
-                        <Typography className="text-base font-normal">Forgot Password</Typography>
-                    )}
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="email"
-                            className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Your Registered Email"
-                            autoFocus
-                        />
-                        <br />
-                        <Button onClick={handleSubmit} className="rounded-full bg-light-primary mt-3" disabled={!email}>
-                            Submit
-                        </Button>
-                    </form>
+            <div>
+                <div className="container px-40 pb-5 pt-28">
+                    <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
+                        {loading ? (
+                            <Typography className="text-base font-normal text-light-primary">Loading</Typography>
+                        ) : (
+                            <Typography className="text-base font-normal">Forgot Password</Typography>
+                        )}
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="email"
+                                className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Your Registered Email"
+                                autoFocus
+                            />
+                            <br />
+                            <Button onClick={handleSubmit} className="rounded-full bg-light-primary mt-3" disabled={!email}>
+                                Submit
+                            </Button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
         // <div className="container col-md-6 offset-md-3 p-5">
         //   {loading ? (

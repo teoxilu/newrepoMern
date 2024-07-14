@@ -69,12 +69,11 @@ const Login = () => {
                     });
                     roleBasedRedirect(res);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => console.error(err));
 
             history.push('/');
         } catch (error) {
-            console.error(error);
-            // toast.error(error.message);
+            toast.error(error.message);
             setLoading(false);
         }
     };
