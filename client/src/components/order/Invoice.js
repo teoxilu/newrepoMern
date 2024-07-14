@@ -181,28 +181,28 @@ const Invoice = ({ order }) => {
                             </View>
                         </View>
 
-                        {order.products.map((product) => (
+                        {order.products?.map((product) => (
                             <View style={styles.tableRow}>
                                 <View style={styles.tableColHeaderContentNonHighlight}>
-                                    <Text style={styles.tableCellHeader}>{product.product.title}</Text>
+                                    <Text style={styles.tableCellHeader}>{product.product?.title}</Text>
                                 </View>
                                 <View style={styles.tableColHeaderContentHighlight}>
                                     <Text
                                         style={styles.tableCellHeader}
                                         className="bg-light-tertiary-container/50 text-light-on-primary-container"
                                     >
-                                        {numeral(product.product.price).format('0,0')} VND
+                                        {numeral(product.product?.price).format('0,0')} VND
                                     </Text>
                                 </View>
                                 <View style={styles.tableColHeaderContentNonHighlight}>
-                                    <Text style={styles.tableCellHeader}>{product.product.brand}</Text>
+                                    <Text style={styles.tableCellHeader}>{product.product?.brand}</Text>
                                 </View>
                                 <View style={styles.tableColHeaderContentHighlight}>
                                     <Text
                                         style={styles.tableCellHeader}
                                         className="bg-light-tertiary-container/50 text-light-on-primary-container"
                                     >
-                                        {product.product.size}
+                                        {product.product?.size}
                                     </Text>
                                 </View>
                                 <View style={styles.tableColHeaderContentNonHighlight}>

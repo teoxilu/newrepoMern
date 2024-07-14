@@ -87,7 +87,7 @@ const History = () => {
             </thead>
 
             <tbody>
-                {order.products?.map((p, i) => (
+                {order.products.map((p, i) => (
                     <tr key={i}>
                         <td className="bg-light-tertiary-container/50 w-[20%] h-full">
                             <div className="w-full m-auto ">
