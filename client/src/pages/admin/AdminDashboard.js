@@ -4,20 +4,24 @@ import { getOrders, changeStatus } from '../../functions/admin';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import Orders from '../../components/order/Orders';
+import { SpinnerIcon } from '~/components/Icons';
 
 const AdminDashboard = () => {
     const [orders, setOrders] = useState([]);
     const { user } = useSelector((state) => ({ ...state }));
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         loadOrders();
     }, []);
 
-    const loadOrders = () =>
+    const loadOrders = () => {
+        setLoading(true);
         getOrders(user.token).then((res) => {
             // console.log(JSON.stringify(res.data, null, 4));
             setOrders(res.data);
+            setLoading(false);
         });
+    };
 
     const handleStatusChange = (orderId, orderStatus) => {
         changeStatus(orderId, orderStatus, user.token).then((res) => {
@@ -33,11 +37,18 @@ const AdminDashboard = () => {
                     <AdminNav />
                 </div>
 
-                <div className="col-md-10">
+                <div className="">
                     <h1 className="font-medium text-base text-left">Admin Dashboard</h1>
                     <hr className="text-light-outline-variant" />
                     {/* {JSON.stringify(orders)} */}
-                    <Orders orders={orders} handleStatusChange={handleStatusChange} />
+                    {loading ? (
+                        <div className="flex items-center space-x-2 mt-4">
+                            <SpinnerIcon />
+                            <p className="font-medium text-base text-left text-light-primary">Loading...</p>
+                        </div>
+                    ) : (
+                        <Orders orders={orders} handleStatusChange={handleStatusChange} />
+                    )}
                 </div>
             </div>
         </div>

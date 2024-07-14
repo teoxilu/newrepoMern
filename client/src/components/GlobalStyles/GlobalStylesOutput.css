@@ -1769,16 +1769,12 @@ h1,
   max-height: 40px;
 }
 
-.max-h-\[48px\]{
-  max-height: 48px;
-}
-
-.max-h-\[720px\]{
-  max-height: 720px;
-}
-
 .max-h-\[480px\]{
   max-height: 480px;
+}
+
+.max-h-\[48px\]{
+  max-height: 48px;
 }
 
 .min-h-12{
@@ -3855,6 +3851,10 @@ h1,
 
 .pt-px{
   padding-top: 1px;
+}
+
+.pt-40{
+  padding-top: 10rem;
 }
 
 .text-left{

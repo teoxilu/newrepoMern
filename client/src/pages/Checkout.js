@@ -356,12 +356,12 @@ const Checkout = () => {
                             const classes = isFirst ? undefined : 'pt-2';
                             return (
                                 <div className={`flex items-center justify-between ${classes}`} key={i}>
-                                    <p className="font-medium">{p.product.title}</p>
+                                    <p className="font-medium">{p.product?.title}</p>
                                     <div className="flex flex-col items-end">
                                         <span className="text-base font-medium text-light-primary">
-                                            {numeral(p.product.price).format('0,0')}
+                                            {numeral(p.product?.price).format('0,0')}
                                         </span>
-                                        <span>x{p.count}</span>
+                                        <span>x{p?.count}</span>
                                     </div>
                                 </div>
                             );
