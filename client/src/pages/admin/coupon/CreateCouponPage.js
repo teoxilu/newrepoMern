@@ -10,7 +10,7 @@ import { Button } from '@material-tailwind/react';
 
 const CreateCouponPage = () => {
     const [name, setName] = useState('');
-    const [expiry, setExpiry] = useState('');
+    const [expiry, setExpiry] = useState(new Date());
     const [discount, setDiscount] = useState('');
     const [loading, setLoading] = useState('');
     const [coupons, setCoupons] = useState([]);
@@ -97,8 +97,7 @@ const CreateCouponPage = () => {
                             <br />
                             <DatePicker
                                 className="form-control focus:border-light-primary focus:shadow focus:shadow-light-primary focus:outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
-                                selected={new Date()}
-                                value={expiry}
+                                selected={expiry}
                                 onChange={(date) => setExpiry(date)}
                                 required
                             />

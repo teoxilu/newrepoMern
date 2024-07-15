@@ -20,7 +20,7 @@ const CategoryForm = ({ handleSubmit, name, setName, isFromSubCategory = false, 
                 <Button
                     type="submit"
                     className="bg-light-primary text-light-on-primary rounded-full"
-                    disabled={isFromSubCategory ? !(isEnabled && name.length > 0) : !(name.length > 0)}
+                    disabled={isFromSubCategory ? !(isEnabled && name?.length > 0) : !(name?.length > 0)}
                 >
                     Save
                 </Button>

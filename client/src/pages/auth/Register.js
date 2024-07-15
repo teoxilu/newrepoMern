@@ -19,19 +19,31 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const config = {
-            url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-            handleCodeInApp: true,
-        };
 
-        await auth.sendSignInLinkToEmail(email, config);
-        toast.success(`An email was sent to ${email}, please click the link in it to confirm your registration. `);
+        try {
+            const signInMethods = await auth.fetchSignInMethodsForEmail(email);
+            // console.log('Sign-in methods:', signInMethods);
+            if (signInMethods.length > 0) {
+                toast.error('This email is already registered. Please try logging in.');
+                return;
+            }
 
-        //save user's email in local storage
-        window.localStorage.setItem('emailForRegistration', email);
+            const config = {
+                url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
+                handleCodeInApp: true,
+            };
 
-        //clear state
-        setEmail('');
+            await auth.sendSignInLinkToEmail(email, config);
+            toast.success(`An email was sent to ${email}, please click the link in it to confirm your registration.`);
+
+            // Save user's email in local storage
+            window.localStorage.setItem('emailForRegistration', email);
+
+            // Clear state
+            setEmail('');
+        } catch (error) {
+            toast.error(error.message);
+        }
     };
 
     const registerform = () => (

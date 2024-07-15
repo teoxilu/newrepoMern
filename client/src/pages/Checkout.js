@@ -196,7 +196,7 @@ const Checkout = () => {
                             service_id: 3,
                             payment_type_id: 1,
                             // Weight: 200, // Example weight, adjust as needed
-                            required_note: 'Only view, not test', // or any required note per your GHN settings
+                            required_note: 'KHONGCHOXEMHANG', // or any required note per your GHN settings
                             // total: totalAfterDiscount > 0 ? totalAfterDiscount : total,
                         };
                         createGhnOrder(orderData).then((ghnRes) => {

@@ -73,7 +73,7 @@ const Login = () => {
 
             history.push('/');
         } catch (error) {
-            toast.error(error.message);
+            toast("Wrong e-mail or password. Please try again.");
             setLoading(false);
         }
     };
