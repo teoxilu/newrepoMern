@@ -17,34 +17,37 @@ const ProductCard = ({ product }) => {
 
     const handleAddToCart = () => {
         //create cart array
-        let cart = [];
-        if (typeof window !== 'undefined') {
-            //if cart is in local storage, GET
-            if (localStorage.getItem('cart')) {
-                cart = JSON.parse(localStorage.getItem('cart'));
-            }
-            //push new products to cart
-            cart.push({
+        let newCart = [...cart];
+    if (typeof window !== 'undefined') {
+        // Check if the product already exists in the cart
+        const existingProductIndex = newCart.findIndex((item) => item._id === product._id);
+
+        if (existingProductIndex >= 0) {
+            // If the product exists, increase its count
+            newCart[existingProductIndex].count += 1;
+        } else {
+            // If the product does not exist, push new product to cart
+            newCart.push({
                 ...product,
                 count: 1,
             });
-            //remove duplicates
-            let unique = _.uniqWith(cart, _.isEqual);
-            //save to local storage
-            localStorage.setItem('cart', JSON.stringify(unique));
-
-            //add to redux state
-            dispatch({
-                type: 'ADD_TO_CART',
-                payload: unique,
-            });
-
-            //show cart item in side drawer
-            dispatch({
-                type: 'SET_VISIBLE',
-                payload: true,
-            });
         }
+
+        // Save to local storage
+        localStorage.setItem('cart', JSON.stringify(newCart));
+
+        // Add to redux state
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: newCart,
+        });
+
+        // Show cart item in side drawer
+        dispatch({
+            type: 'SET_VISIBLE',
+            payload: true,
+        });
+    }
     };
     //destructure
     const { images, title, description, slug, price } = product;

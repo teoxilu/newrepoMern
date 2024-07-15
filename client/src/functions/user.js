@@ -58,16 +58,16 @@ export const applyCoupon = async (authtoken, coupon) =>
         },
     );
 
-    export const updateOrder = async (authtoken, orderId, newGhnId) =>
-        await axios.put(
-            `${process.env.REACT_APP_API}/update-order/${orderId}`,
-            { newGhnId },
-            {
-                headers: {
-                    authtoken,
-                },
+export const updateOrder = async (authtoken, orderId, newGhnId) =>
+    await axios.put(
+        `${process.env.REACT_APP_API}/update-order/${orderId}`,
+        { newGhnId },
+        {
+            headers: {
+                authtoken,
             },
-        );
+        },
+    );
 
 export const createOrder = async (stripeResponse, authtoken) =>
     await axios.post(
@@ -81,14 +81,22 @@ export const createOrder = async (stripeResponse, authtoken) =>
     );
 
 export const createGhnOrder = async (orderData) =>
+    await axios.post('https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create', orderData, {
+        headers: {
+            'Content-Type': 'application/json',
+            ShopId: process.env.REACT_APP_GHN_SHOP_ID,
+            Token: process.env.REACT_APP_GHN_API_KEY,
+        },
+    });
+
+export const getGhnOrder = async (orderCode) =>
     await axios.post(
-        'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/create',
-         orderData ,
+        'https://dev-online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/detail',
+        { order_code: orderCode },
         {
             headers: {
                 'Content-Type': 'application/json',
-                'ShopId': process.env.REACT_APP_GHN_SHOP_ID,
-                'Token': process.env.REACT_APP_GHN_API_KEY,
+                Token: process.env.REACT_APP_GHN_API_KEY,
             },
         },
     );
