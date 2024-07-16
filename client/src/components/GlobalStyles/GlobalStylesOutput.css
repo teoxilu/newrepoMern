@@ -1012,6 +1012,31 @@ h1,
   content: '\f054';
 }
 
+.or {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #281714;
+}
+
+.or:after,
+    .or:before {
+  content: '';
+  display: block;
+  background: #e6bdb7;
+  width: 46%;
+  height: 1px;
+  margin: 0 10px;
+}
+
+.or:before {
+  margin-left: 0;
+}
+
+.or:after {
+  margin-right: 0;
+}
+
 *, ::before, ::after{
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -1444,6 +1469,11 @@ h1,
 .my-20{
   margin-top: 5rem;
   margin-bottom: 5rem;
+}
+
+.my-5{
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .-ml-1{
@@ -2440,12 +2470,6 @@ h1,
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
-
-.space-y-10 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
 }
 
 .space-y-12 > :not([hidden]) ~ :not([hidden]){
@@ -3497,6 +3521,10 @@ h1,
   --tw-gradient-from-position: 75%;
 }
 
+.from-80\%{
+  --tw-gradient-from-position: 80%;
+}
+
 .via-light-primary{
   --tw-gradient-to: rgb(143 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #8f0000 var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -3746,11 +3774,6 @@ h1,
   padding-bottom: 1rem;
 }
 
-.py-6{
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -3810,10 +3833,6 @@ h1,
 
 .pt-1{
   padding-top: 0.25rem;
-}
-
-.pt-10{
-  padding-top: 2.5rem;
 }
 
 .pt-2{
@@ -3947,10 +3966,6 @@ h1,
 
 .uppercase{
   text-transform: uppercase;
-}
-
-.lowercase{
-  text-transform: lowercase;
 }
 
 .capitalize{

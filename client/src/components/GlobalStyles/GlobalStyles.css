@@ -179,12 +179,34 @@
         border-radius: 9999px;
         background-color: #e1e3dd; */
     }
-    
+
     .slick-prev:before {
         content: '\f053';
     }
 
     .slick-next:before {
         content: '\f054';
+    }
+
+    .or {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #281714;
+    }
+    .or:after,
+    .or:before {
+        content: '';
+        display: block;
+        background: #e6bdb7;
+        width: 46%;
+        height: 1px;
+        margin: 0 10px;
+    }
+    .or:before {
+        margin-left: 0;
+    }
+    .or:after {
+        margin-right: 0;
     }
 }

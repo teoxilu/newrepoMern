@@ -81,7 +81,7 @@ const ProductUpdate = ({ match, history }) => {
             .catch((err) => {
                 setLoading(false);
 
-                console.log(err);
+                console.error(err);
                 toast.error(err.response.data.err);
                 setLoading(false);
             });

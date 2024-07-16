@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { Typography } from '@material-tailwind/react';
+import { Button, Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
-import {useHistory} from 'react-router-dom'; 
+import { useHistory } from 'react-router-dom';
 import StickyHeader from '~/components/StickyHeader';
-
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const { user } = useSelector((state) => ({ ...state }));
-    const history = useHistory()
+    const history = useHistory();
 
     const screenWidth = window.innerWidth;
     useEffect(() => {
-        if (user && user.token) history.push("/");
+        if (user && user.token) history.push('/');
     }, [user, history]);
 
     const handleSubmit = async (e) => {
@@ -47,7 +46,7 @@ const Register = () => {
         }
     };
 
-    const registerform = () => (
+    const registerForm = () => (
         <form onSubmit={handleSubmit}>
             <input
                 type="email"
@@ -58,39 +57,21 @@ const Register = () => {
                 autoFocus
                 required
             />
-            <Typography variant="small" className="mt-2 flex items-center gap-1 font-normal text-light-on-background">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="light-on-surface"
-                    className="-mt-px h-4 w-4"
-                >
-                    <path
-                        fillRule="evenodd"
-                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                        clipRule="evenodd"
-                    />
-                </svg>
-                Use at least 6 characters, one uppercase, one lowercase and one number.
-            </Typography>
 
             <br />
-            <button
-                type="submit"
-                className="rounded-full bg-light-primary px-4 py-6 h-12 flex items-center disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 "
-            >
-                <span className="text-xs font-bold text-light-on-primary">Register</span>
-            </button>
+            <Button type="submit" className="rounded-full bg-light-primary text-light-on-primary mt-3" disabled={!email}>
+                Register
+            </Button>
         </form>
     );
     return (
         <>
-        <StickyHeader/>
+            <StickyHeader />
             <div>
                 <div className="container px-40 pb-5 pt-28">
                     <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
                         <Typography className="text-base font-normal text-light-on-surface">Register</Typography>
-                        {registerform()}
+                        {registerForm()}
                     </div>
                 </div>
             </div>

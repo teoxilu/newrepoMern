@@ -57,7 +57,7 @@ const ProductCreate = () => {
                 window.location.reload();
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 // if (err.response.status === 400) toast.error(err.response.data);
                 toast.error(err.response.data.err);
             });
