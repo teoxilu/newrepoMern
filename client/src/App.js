@@ -105,7 +105,6 @@ const App = () => {
             }
         >
             <BrowserRouter basename="/newrepoMern">
-                <StickyHeader />
                 <SideDrawer />
                 <ToastContainer
                     toastClassName={(context) =>

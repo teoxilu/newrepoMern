@@ -9,6 +9,7 @@ import { DollarOutlined, DownSquareOutlined, StarOutlined } from '@ant-design/ic
 import Star from '../components/forms/Star';
 import { Typography } from '@material-tailwind/react';
 import { useDebounce } from '~/hooks';
+import StickyHeader from '~/components/StickyHeader';
 const { SubMenu, ItemGroup } = Menu;
 
 const Shop = () => {
@@ -417,119 +418,122 @@ const Shop = () => {
     // const ArrayItem =
 
     return (
-        <div className="grid grid-cols-12 px-40 pt-28 gap-x-2">
-            <div className="col-span-3">
-                <Menu
-                    defaultOpenKeys={['1', '2', '3', '4', '5', '6']}
-                    mode="inline"
-                    className="bg-light-surface-container-lowest shadow-xl shadow-light-outline"
-                    borderRadius={24}
-                >
-                    {/* price */}
-                    <SubMenu
-                        key="1"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <DollarOutlined /> Price
-                            </span>
-                        }
+       <>
+       <StickyHeader isShopPage/>
+            <div className="grid grid-cols-12 px-40 pt-28 gap-x-2">
+                <div className="col-span-3">
+                    <Menu
+                        defaultOpenKeys={['1', '2', '3', '4', '5', '6']}
+                        mode="inline"
+                        className="bg-light-surface-container-lowest shadow-xl shadow-light-outline"
+                        borderRadius={24}
                     >
-                        <div>
-                            <Slider
-                                className="ml-4 mr-4"
-                                formatter={(v) => `${v} VND`}
-                                range
-                                value={price}
-                                onChange={handleSlider}
-                                max="5000000"
-                            />
-                        </div>
-                    </SubMenu>
-
-                    {/* brands */}
-                    <SubMenu
-                        key="2"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <DownSquareOutlined /> Brands
-                            </span>
-                        }
-                    >
-                        <div style={{ maringTop: '-10px' }} className="pr-5">
-                            {showBrands()}
-                        </div>
-                    </SubMenu>
-
-                    {/* Rating */}
-                    <SubMenu
-                        key="3"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <StarOutlined /> Rating
-                            </span>
-                        }
-                    >
-                        <div style={{ maringTop: '-10px' }}>{showStars()}</div>
-                    </SubMenu>
-
-                    {/* size */}
-                    <SubMenu
-                        key="4"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <DownSquareOutlined /> Sizes
-                            </span>
-                        }
-                    >
-                        <div style={{ maringTop: '-10px' }} className="pr-5">
-                            {showSizes()}
-                        </div>
-                    </SubMenu>
-
-                    {/* category */}
-                    <SubMenu
-                        key="5"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <DownSquareOutlined /> Categories
-                            </span>
-                        }
-                    >
-                        <div style={{ maringTop: '-10px' }}>{showCategories()}</div>
-                    </SubMenu>
-
-                    {/* sub category */}
-                    <SubMenu
-                        key="6"
-                        title={
-                            <span className="font-normal text-base text-light-on-surface">
-                                <DownSquareOutlined /> Sub Categories
-                            </span>
-                        }
-                    >
-                        <div style={{ maringTop: '-10px' }} className="pl-4 pr-4">
-                            {showSubs()}
-                        </div>
-                    </SubMenu>
-                </Menu>
-            </div>
-
-            <div className="col-span-9">
-                {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
-
-                {arrayItem.length < 1 ? (
-                    <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
-                ) : (
-                    <div className="grid grid-cols-3">
-                        {arrayItem.map((p) => (
-                            <div key={p._id} className="col-md-4 mt-3">
-                                <ProductCard product={p} />
+                        {/* price */}
+                        <SubMenu
+                            key="1"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <DollarOutlined /> Price
+                                </span>
+                            }
+                        >
+                            <div>
+                                <Slider
+                                    className="ml-4 mr-4"
+                                    formatter={(v) => `${v} VND`}
+                                    range
+                                    value={price}
+                                    onChange={handleSlider}
+                                    max="5000000"
+                                />
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </SubMenu>
+    
+                        {/* brands */}
+                        <SubMenu
+                            key="2"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <DownSquareOutlined /> Brands
+                                </span>
+                            }
+                        >
+                            <div style={{ maringTop: '-10px' }} className="pr-5">
+                                {showBrands()}
+                            </div>
+                        </SubMenu>
+    
+                        {/* Rating */}
+                        <SubMenu
+                            key="3"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <StarOutlined /> Rating
+                                </span>
+                            }
+                        >
+                            <div style={{ maringTop: '-10px' }}>{showStars()}</div>
+                        </SubMenu>
+    
+                        {/* size */}
+                        <SubMenu
+                            key="4"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <DownSquareOutlined /> Sizes
+                                </span>
+                            }
+                        >
+                            <div style={{ maringTop: '-10px' }} className="pr-5">
+                                {showSizes()}
+                            </div>
+                        </SubMenu>
+    
+                        {/* category */}
+                        <SubMenu
+                            key="5"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <DownSquareOutlined /> Categories
+                                </span>
+                            }
+                        >
+                            <div style={{ maringTop: '-10px' }}>{showCategories()}</div>
+                        </SubMenu>
+    
+                        {/* sub category */}
+                        <SubMenu
+                            key="6"
+                            title={
+                                <span className="font-normal text-base text-light-on-surface">
+                                    <DownSquareOutlined /> Sub Categories
+                                </span>
+                            }
+                        >
+                            <div style={{ maringTop: '-10px' }} className="pl-4 pr-4">
+                                {showSubs()}
+                            </div>
+                        </SubMenu>
+                    </Menu>
+                </div>
+    
+                <div className="col-span-9">
+                    {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
+    
+                    {arrayItem.length < 1 ? (
+                        <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
+                    ) : (
+                        <div className="grid grid-cols-3">
+                            {arrayItem.map((p) => (
+                                <div key={p._id} className="col-md-4 mt-3">
+                                    <ProductCard product={p} />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+       </>
     );
 };
 

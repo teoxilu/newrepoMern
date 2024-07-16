@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
 import {useHistory} from 'react-router-dom'; 
+import StickyHeader from '~/components/StickyHeader';
 
 
 const Register = () => {
@@ -83,14 +84,17 @@ const Register = () => {
         </form>
     );
     return (
-        <div>
-            <div className="container px-40 pb-5 pt-28">
-                <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
-                    <Typography className="text-base font-normal text-light-on-surface">Register</Typography>
-                    {registerform()}
+        <>
+        <StickyHeader/>
+            <div>
+                <div className="container px-40 pb-5 pt-28">
+                    <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
+                        <Typography className="text-base font-normal text-light-on-surface">Register</Typography>
+                        {registerform()}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

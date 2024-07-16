@@ -9,6 +9,7 @@ import { Button, Dialog, DialogBody, DialogFooter, DialogHeader } from '@materia
 const RatingModal = ({ children }) => {
     const { user } = useSelector((state) => ({ ...state }));
     const [dialogVisible, setDialogVisible] = useState(false);
+    let history = useHistory();
 
     const handleOpen = () => setDialogVisible(!dialogVisible);
     let { slug } = useParams();
@@ -17,7 +18,7 @@ const RatingModal = ({ children }) => {
         if (user && user.token) {
             setDialogVisible(true);
         } else {
-            this.props.history.push({
+            history.push({
                 pathname: '/login',
                 state: { from: `/product/${slug}` },
             });

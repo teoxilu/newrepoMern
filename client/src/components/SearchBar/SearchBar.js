@@ -9,19 +9,23 @@ function SearchBar() {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     var { search } = useSelector((state) => ({ ...state }));
-    const { text } = search;
-
+    const [textValue,setTextValue] = useState(search.text);
     // const debouncedValue = useDebounce(text, 700);
     const inputRef = useRef();
 
     const handleClear = () => {
-        inputRef.current.valueOf().value = '';
+        setTextValue('')
+        dispatch({
+            type: 'SEARCH_QUERY',
+            payload: { text: '' },
+        });
         inputRef.current.focus();
     };
 
     const history = useHistory();
 
     const handleChange = (e) => {
+        setTextValue(e.target.value)
         dispatch({
             type: 'SEARCH_QUERY',
             payload: { text: e.target.value },
@@ -30,7 +34,7 @@ function SearchBar() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        history.push(`/shop?${text}`);
+        history.push(`/shop?${textValue}`);
     };
 
     // useEffect(() => {
@@ -51,13 +55,13 @@ function SearchBar() {
                 ref={inputRef}
                 onChange={handleChange}
                 type="text"
-                value={text}
+                value={textValue}
                 spellCheck={false}
                 className="pl-2 text-base text-light-on-surface outline-none placeholder:text-light-on-surface-variant/75 w-full bg-transparent"
                 placeholder="Nike"
             />
             <div className="flex items-center">
-                {!!text && !loading && (
+                {!!textValue && !loading && (
                     <IconButton variant="text" className="rounded-full" onClick={handleClear}>
                         <XCircleIcon className="h-6 w-6 text-light-on-surface" />
                     </IconButton>

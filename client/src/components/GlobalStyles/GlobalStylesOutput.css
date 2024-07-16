@@ -3746,11 +3746,6 @@ h1,
   padding-bottom: 1rem;
 }
 
-.py-5{
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-}
-
 .py-6{
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -3851,10 +3846,6 @@ h1,
 
 .pt-px{
   padding-top: 1px;
-}
-
-.pt-40{
-  padding-top: 10rem;
 }
 
 .text-left{

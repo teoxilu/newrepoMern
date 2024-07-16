@@ -7,6 +7,7 @@ import ProductCreateForm from '../../../components/forms/ProductCreateForm';
 import { getCategories, getCategorySubs } from '../../../functions/category';
 import FileUpload from '../../../components/forms/FileUpload';
 import { SpinnerIcon } from '~/components/Icons';
+import StickyHeader from '~/components/StickyHeader';
 
 const initialState = {
     title: '',
@@ -52,7 +53,7 @@ const ProductCreate = () => {
         e.preventDefault();
         createProduct(values, user.token)
             .then((res) => {
-                toast.success(`"${res.data.title}" is created`)
+                toast.success(`"${res.data.title}" is created`);
                 window.location.reload();
             })
             .catch((err) => {
@@ -78,40 +79,43 @@ const ProductCreate = () => {
     };
 
     return (
-        <div className="container-fluid pt-28">
-            <div className="row">
-                <div className="col-md-2">
-                    <AdminNav />
-                </div>
-
-                <div className="col-md-10">
-                    {loading ? (
-                        <div className="flex items-center space-x-2">
-                            <SpinnerIcon />
-                            <p className="font-medium text-base text-left text-light-primary">Loading...</p>
-                        </div>
-                    ) : (
-                        // <LoadingOutlined className="text-danger h1" />
-                        <h1 className="font-medium text-base text-left">Product Create</h1>
-                    )}
-                    <hr className="text-light-outline-variant" />
-                    <div className="p-3 mt-4">
-                        <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
+        <>
+            <StickyHeader isAdmin/>
+            <div className="container-fluid pt-28">
+                <div className="row">
+                    <div className="col-md-2">
+                        <AdminNav />
                     </div>
 
-                    <ProductCreateForm
-                        handleSubmit={handleSubmit}
-                        handleChange={handleChange}
-                        setValues={setValues}
-                        values={values}
-                        handleCategoryChange={handleCategoryChange}
-                        subOptions={subOptions}
-                        showSub={showSub}
-                        isEnable={isEnable}
-                    />
+                    <div className="col-md-10">
+                        {loading ? (
+                            <div className="flex items-center space-x-2">
+                                <SpinnerIcon />
+                                <p className="font-medium text-base text-left text-light-primary">Loading...</p>
+                            </div>
+                        ) : (
+                            // <LoadingOutlined className="text-danger h1" />
+                            <h1 className="font-medium text-base text-left">Product Create</h1>
+                        )}
+                        <hr className="text-light-outline-variant" />
+                        <div className="p-3 mt-4">
+                            <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
+                        </div>
+
+                        <ProductCreateForm
+                            handleSubmit={handleSubmit}
+                            handleChange={handleChange}
+                            setValues={setValues}
+                            values={values}
+                            handleCategoryChange={handleCategoryChange}
+                            subOptions={subOptions}
+                            showSub={showSub}
+                            isEnable={isEnable}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

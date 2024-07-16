@@ -23,9 +23,11 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
     const [userWishList, setUserWishList] = useState(() => {
         let result = [];
-        getWishlist(user?.token).then((res) => {
-            result.push(res.data.wishlist);
-        });
+        if (user && user?.token) {
+            getWishlist(user?.token).then((res) => {
+                result.push(res.data.wishlist);
+            });
+        }
         return result;
     });
     const [isAddToWishList, setIsAddToWishList] = useState(false);
@@ -43,36 +45,36 @@ const SingleProduct = ({ product, onStarClick, star }) => {
     const handleAddToCart = () => {
         //create cart array
         let newCart = [...cart];
-    if (typeof window !== 'undefined') {
-        // Check if the product already exists in the cart
-        const existingProductIndex = newCart.findIndex((item) => item._id === product._id);
+        if (typeof window !== 'undefined') {
+            // Check if the product already exists in the cart
+            const existingProductIndex = newCart.findIndex((item) => item._id === product._id);
 
-        if (existingProductIndex >= 0) {
-            // If the product exists, increase its count
-            newCart[existingProductIndex].count += 1;
-        } else {
-            // If the product does not exist, push new product to cart
-            newCart.push({
-                ...product,
-                count: 1,
+            if (existingProductIndex >= 0) {
+                // If the product exists, increase its count
+                newCart[existingProductIndex].count += 1;
+            } else {
+                // If the product does not exist, push new product to cart
+                newCart.push({
+                    ...product,
+                    count: 1,
+                });
+            }
+
+            // Save to local storage
+            localStorage.setItem('cart', JSON.stringify(newCart));
+
+            // Add to redux state
+            dispatch({
+                type: 'ADD_TO_CART',
+                payload: newCart,
+            });
+
+            // Show cart item in side drawer
+            dispatch({
+                type: 'SET_VISIBLE',
+                payload: true,
             });
         }
-
-        // Save to local storage
-        localStorage.setItem('cart', JSON.stringify(newCart));
-
-        // Add to redux state
-        dispatch({
-            type: 'ADD_TO_CART',
-            payload: newCart,
-        });
-
-        // Show cart item in side drawer
-        dispatch({
-            type: 'SET_VISIBLE',
-            payload: true,
-        });
-    }
     };
 
     var result = [];
@@ -98,7 +100,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 addWishListRef.current.blur();
             });
         } else {
-            toast.error('Please log in first.');
+            // toast.error('Please log in first.');
             history.push('/login');
         }
     };
@@ -167,17 +169,29 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                                     </div>
                                 )}
                             </Button>,
-                            isAddToWishList ? (
-                                <Button
-                                    ref={removeWishListRef}
-                                    variant="outlined"
-                                    ripple
-                                    onClick={() => handleRemove(product._id)}
-                                    className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary bg-light-primary/8 hover:bg-light-primary *:hover:text-light-on-primary"
-                                >
-                                    <HeartFilled className="rounded-lg" />
-                                    <br /> <p>Remove</p>
-                                </Button>
+                            user && user?.token ? (
+                                isAddToWishList ? (
+                                    <Button
+                                        ref={removeWishListRef}
+                                        variant="outlined"
+                                        ripple
+                                        onClick={() => handleRemove(product._id)}
+                                        className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary bg-light-primary/8 hover:bg-light-primary *:hover:text-light-on-primary"
+                                    >
+                                        <HeartFilled className="rounded-lg" />
+                                        <br /> <p>Remove</p>
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        ref={addWishListRef}
+                                        variant="outlined"
+                                        ripple
+                                        onClick={handleAddToWishlist}
+                                        className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary hover:bg-light-primary/8"
+                                    >
+                                        <HeartOutlined className="rounded-lg" /> <br /> <p>Add to Wishlist</p>
+                                    </Button>
+                                )
                             ) : (
                                 <Button
                                     ref={addWishListRef}
@@ -186,7 +200,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                                     onClick={handleAddToWishlist}
                                     className="*:text-light-primary border-light-primary focus:outline-none focus:ring-light-primary hover:bg-light-primary/8"
                                 >
-                                    <HeartOutlined className="rounded-lg" /> <br /> <p>Add to Wishlist</p>
+                                    <HeartOutlined className="rounded-lg" /> <br /> <p>Log in to wishlist</p>
                                 </Button>
                             ),
                             <RatingModal>

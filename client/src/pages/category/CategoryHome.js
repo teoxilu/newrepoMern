@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { getCategory } from '../../functions/category';
 import ProductCard from '../../components/cards/ProductCard';
+import StickyHeader from '~/components/StickyHeader';
 const CategoryHome = () => {
     const [category, setCategory] = useState({});
     const [products, setProducts] = useState([]);
@@ -23,31 +24,34 @@ const CategoryHome = () => {
     }, []);
 
     return (
-        <div className="px-40 text-light-on-surface mt-28">
-            <div className="row">
-                <div className="col text-center py-2">
-                    {loading ? (
-                        <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-transparent via-light-primary to-transparent text-light-on-primary-container animate-pulse">
-                            Loading...
-                        </Typography>
-                    ) : (
-                        <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container ">
-                            {products.length} Product(s) in "{category.name}" category
-                        </Typography>
-                    )}
+        <>
+        <StickyHeader/>
+            <div className="px-40 text-light-on-surface mt-28">
+                <div className="row">
+                    <div className="col text-center py-2">
+                        {loading ? (
+                            <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-transparent via-light-primary to-transparent text-light-on-primary-container animate-pulse">
+                                Loading...
+                            </Typography>
+                        ) : (
+                            <Typography className="mx-[-160px] py-4 text-center text-[32px] leading-10 bg-gradient-to-r from-light-secondary via-light-primary to-light-tertiary text-light-on-primary-container ">
+                                {products.length} Product(s) in "{category.name}" category
+                            </Typography>
+                        )}
+                    </div>
+                </div>
+    
+                <div className="row mt-2">
+                    <div className="w-full grid gap-5 grid-flow-col">
+                        {products.map((p) => (
+                            <div key={p._id}>
+                                <ProductCard product={p} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-
-            <div className="row mt-2">
-                <div className="w-full grid gap-5 grid-flow-col">
-                    {products.map((p) => (
-                        <div key={p._id}>
-                            <ProductCard product={p} />
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </div>
+        </>
     );
 };
 

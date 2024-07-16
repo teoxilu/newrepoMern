@@ -8,6 +8,7 @@ import { createSub, removeSub, getSub, updateSub } from '../../../functions/sub'
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import LocalSearch from '../../../components/forms/LocalSearch';
+import StickyHeader from '~/components/StickyHeader';
 
 const SubUpdate = ({ match, history }) => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -50,36 +51,43 @@ const SubUpdate = ({ match, history }) => {
     };
 
     return (
-        <div className="container-fluid pt-28">
-            <div className="row">
-                <div className="col-md-2">
-                    <AdminNav />
-                </div>
-                <div className="col">
-                    {loading ? (
-                        <h4 className="text-danger">Loading..</h4>
-                    ) : (
-                        <h1 className="font-medium text-base text-left">Update subcategory</h1>
-                    )}
-                    <hr className="text-light-outline-variant" />
-
-                    <div className="form-group mt-4">
-                        <label>Category</label>
-                        <select name="category" className="form-control" onChange={(e) => setParent(e.target.value)}>
-                            <option>Please select</option>
-                            {categories.length > 0 &&
-                                categories.map((c) => (
-                                    <option key={c._id} value={c._id} selected={c._id === parent}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                        </select>
+        <>
+            <StickyHeader isAdmin/>
+            <div className="container-fluid pt-28">
+                <div className="row">
+                    <div className="col-md-2">
+                        <AdminNav />
                     </div>
+                    <div className="col">
+                        {loading ? (
+                            <h4 className="text-danger">Loading..</h4>
+                        ) : (
+                            <h1 className="font-medium text-base text-left">Update subcategory</h1>
+                        )}
+                        <hr className="text-light-outline-variant" />
 
-                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                        <div className="form-group mt-4">
+                            <label>Category</label>
+                            <select
+                                name="category"
+                                className="form-control"
+                                onChange={(e) => setParent(e.target.value)}
+                            >
+                                <option>Please select</option>
+                                {categories.length > 0 &&
+                                    categories.map((c) => (
+                                        <option key={c._id} value={c._id} selected={c._id === parent}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+
+                        <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

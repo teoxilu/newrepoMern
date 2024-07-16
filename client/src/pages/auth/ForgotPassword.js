@@ -5,8 +5,9 @@ import { useSelector } from 'react-redux';
 import { Button, Typography } from '@material-tailwind/react';
 import transition from '~/utils/transition';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import StickyHeader from '~/components/StickyHeader';
 
-const ForgotPassword = ({  }) => {
+const ForgotPassword = () => {
     const [email, setEmail] = useState();
     const [loading, setLoading] = useState(false);
     const history = useHistory()
@@ -43,31 +44,34 @@ const ForgotPassword = ({  }) => {
     };
 
     return (
-            <div>
-                <div className="container px-40 pb-5 pt-28">
-                    <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
-                        {loading ? (
-                            <Typography className="text-base font-normal text-light-primary">Loading</Typography>
-                        ) : (
-                            <Typography className="text-base font-normal">Forgot Password</Typography>
-                        )}
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                type="email"
-                                className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Your Registered Email"
-                                autoFocus
-                            />
-                            <br />
-                            <Button onClick={handleSubmit} className="rounded-full bg-light-primary mt-3" disabled={!email}>
-                                Submit
-                            </Button>
-                        </form>
+            <>
+            <StickyHeader/>
+                <div>
+                    <div className="container px-40 pb-5 pt-28">
+                        <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-5`}>
+                            {loading ? (
+                                <Typography className="text-base font-normal text-light-primary">Loading</Typography>
+                            ) : (
+                                <Typography className="text-base font-normal">Forgot Password</Typography>
+                            )}
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    type="email"
+                                    className="w-full focus:border-light-primary focus:shadow focus:shadow-light-primary outline-none px-3 py-2 text-base text-light-on-surface bg-light-surface-container-lowest border rounded-lg border-light-outline"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Your Registered Email"
+                                    autoFocus
+                                />
+                                <br />
+                                <Button onClick={handleSubmit} className="rounded-full bg-light-primary mt-3" disabled={!email}>
+                                    Submit
+                                </Button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
 
         // <div className="container col-md-6 offset-md-3 p-5">
         //   {loading ? (

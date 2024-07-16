@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
 import transition from '~/utils/transition';
+import StickyHeader from "~/components/StickyHeader";
 
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -90,14 +91,19 @@ const RegisterComplete = ({ history }) => {
     </form>
   );
   return (
-    <div className="container p-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h4>Register Complete</h4>
-          {completeRegistrationForm()}
+    <>
+    <StickyHeader/>
+     <div>
+        <div className="container px-40 pb-5 pt-28">
+          <div className="row">
+            <div className="col-md-6 offset-md-3">
+              <h4>Register Complete</h4>
+              {completeRegistrationForm()}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+     </div>
+    </>
   );
 };
 
