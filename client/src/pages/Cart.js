@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
-import { userCart } from '../functions/user';
+import { userCart, getUserCart } from '../functions/user';
 import config from '~/config';
 import { Button, Card, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
@@ -52,7 +52,18 @@ const Cart = () => {
     useEffect(() => {
         const headerHeight = document.getElementById('header')?.offsetHeight;
         setHeaderHeight(headerHeight);
-    }, []);
+        // Load cart from backend
+        if (user && user.token) {
+            getUserCart(user.token).then((res) => {
+                dispatch({
+                    type: 'ADD_TO_CART',
+                    payload: res.data.cart,
+                });
+            });
+        }
+    }, [user, dispatch]);
+
+
     const showCartItems = () => (
         <Card className={`h-full w-full overflow-y-scroll`}>
             <table className="table table-auto table-bordered">
