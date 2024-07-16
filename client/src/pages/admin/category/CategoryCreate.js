@@ -7,6 +7,7 @@ import { createCategory, getCategories, removeCategory } from '../../../function
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import LocalSearch from '../../../components/forms/LocalSearch';
+import StickyHeader from '~/components/StickyHeader';
 
 const CategoryCreate = () => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -68,41 +69,44 @@ const CategoryCreate = () => {
     const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
 
     return (
-        <div className="container-fluid pt-28">
-            <div className="row">
-                <div className="col-md-2">
-                    <AdminNav />
-                </div>
-                <div className="col">
-                    {loading ? (
-                        <h4 className="text-danger">Loading..</h4>
-                    ) : (
-                        <h1 className="font-medium text-base text-left">Create category</h1>
-                    )}
-                    <hr className="text-light-outline-variant" />
-
-                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
-                    {/* step 2 & 3 */}
-                    <LocalSearch keyword={keyword} setKeyword={setKeyword} />
-
-                    {/* step 5 */}
-
-                    {categories.filter(searched(keyword)).map((c) => (
-                        <div className="alert alert-secondary" key={c._id}>
-                            {c.name}
-                            <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
-                                <DeleteOutlined className="text-danger" />
-                            </span>
-                            <Link to={`/admin/category/${c.slug}`}>
-                                <span className="btn btn-sm float-right">
-                                    <EditOutlined className="text-warning" />
+        <>
+        <StickyHeader isAdmin/>
+            <div className="container-fluid pt-28">
+                <div className="row">
+                    <div className="col-md-2">
+                        <AdminNav />
+                    </div>
+                    <div className="col">
+                        {loading ? (
+                            <h4 className="text-danger">Loading..</h4>
+                        ) : (
+                            <h1 className="font-medium text-base text-left">Create category</h1>
+                        )}
+                        <hr className="text-light-outline-variant" />
+    
+                        <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                        {/* step 2 & 3 */}
+                        <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+    
+                        {/* step 5 */}
+    
+                        {categories.filter(searched(keyword)).map((c) => (
+                            <div className="alert alert-secondary" key={c._id}>
+                                {c.name}
+                                <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
+                                    <DeleteOutlined className="text-danger" />
                                 </span>
-                            </Link>
-                        </div>
-                    ))}
+                                <Link to={`/admin/category/${c.slug}`}>
+                                    <span className="btn btn-sm float-right">
+                                        <EditOutlined className="text-warning" />
+                                    </span>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

@@ -3,6 +3,7 @@ import UserNav from '../../components/nav/UserNav';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { Button } from '@material-tailwind/react';
+import StickyHeader from '~/components/StickyHeader';
 
 const Password = () => {
     const [password, setPassword] = useState('');
@@ -62,21 +63,24 @@ const Password = () => {
     );
 
     return (
-        <div className="container-fluid pt-28 text-light-on-surface">
-            <div className="row">
-                <div className="col-md-2">
-                    <UserNav />
-                </div>
-                <div className="col">
-                    {loading ? (
-                        <h1 className="text-danger">Loading...</h1>
-                    ) : (
-                        <h1 className="font-medium text-base">Password Update</h1>
-                    )}
-                    {passwordUpdateForm()}
+        <>
+        <StickyHeader/>
+            <div className="container-fluid pt-28 text-light-on-surface">
+                <div className="row">
+                    <div className="col-md-2">
+                        <UserNav />
+                    </div>
+                    <div className="col">
+                        {loading ? (
+                            <h1 className="text-danger">Loading...</h1>
+                        ) : (
+                            <h1 className="font-medium text-base">Password Update</h1>
+                        )}
+                        {passwordUpdateForm()}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

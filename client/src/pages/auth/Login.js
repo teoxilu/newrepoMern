@@ -9,6 +9,7 @@ import config from '~/config';
 import images from '~/images';
 import { createOrUpdateUser } from '~/functions/auth';
 import transition from '~/utils/transition';
+import StickyHeader from '~/components/StickyHeader';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -73,7 +74,7 @@ const Login = () => {
 
             history.push('/');
         } catch (error) {
-            toast("Wrong e-mail or password. Please try again.");
+            toast.error("Wrong e-mail or password. Please try again.");
             setLoading(false);
         }
     };
@@ -103,7 +104,6 @@ const Login = () => {
                 history.push('/');
             })
             .catch((err) => {
-                console.error(err);
                 toast.error(err.message);
             });
     };
@@ -140,59 +140,62 @@ const Login = () => {
         </form>
     );
     return (
-        <div className="container px-40 pb-5 pt-28">
-            <div
-                className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-10 divide-y divide-light-outline-variant`}
-            >
-                <div className="flex-col space-y-5">
-                    {loading ? (
-                        <h4 className="text-light-on-surface-variant animate-pulse">Loading...</h4>
-                    ) : (
-                        <Typography className="text-base font-normal text-light-on-surface">Log in</Typography>
-                    )}
-                    {loginForm()}
-                </div>
-
-                <div className="flex-col space-y-5 pt-10">
-                    <Button
-                        onClick={handleSubmit}
-                        variant="outlined"
-                        size="lg"
-                        className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
-                    >
-                        <img src={images.emailIcon} alt="metamask" className="h-6 w-6" />
-                        <Typography className="text-light-primary text-sm font-bold">
-                            Login with Email & Password
-                        </Typography>
-                    </Button>
-
-                    <Button
-                        onClick={googleLogin}
-                        // type="danger"
-                        variant="outlined"
-                        className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
-                        size="lg"
-                    >
-                        <img
-                            src="https://docs.material-tailwind.com/icons/google.svg"
-                            alt="metamask"
-                            className="h-6 w-6"
-                        />
-                        <Typography className="text-light-primary text-sm font-bold">Login with Google</Typography>
-                    </Button>
-
-                    <Link to={config.routes.forgotPassword} className="float-right">
-                        <Typography
-                            variant="small"
-                            className="text-light-on-background opacity-80 hover:opacity-100 transition-opacity font-normal
-                        "
+        <>
+        <StickyHeader/>
+            <div className="container px-40 pb-5 pt-28">
+                <div
+                    className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-10 divide-y divide-light-outline-variant`}
+                >
+                    <div className="flex-col space-y-5">
+                        {loading ? (
+                            <h4 className="text-light-on-surface-variant animate-pulse">Loading...</h4>
+                        ) : (
+                            <Typography className="text-base font-normal text-light-on-surface">Log in</Typography>
+                        )}
+                        {loginForm()}
+                    </div>
+    
+                    <div className="flex-col space-y-5 pt-10">
+                        <Button
+                            onClick={handleSubmit}
+                            variant="outlined"
+                            size="lg"
+                            className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
                         >
-                            Forgot Password?
-                        </Typography>
-                    </Link>
+                            <img src={images.emailIcon} alt="metamask" className="h-6 w-6" />
+                            <Typography className="text-light-primary text-sm font-bold">
+                                Login with Email & Password
+                            </Typography>
+                        </Button>
+    
+                        <Button
+                            onClick={googleLogin}
+                            // type="danger"
+                            variant="outlined"
+                            className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
+                            size="lg"
+                        >
+                            <img
+                                src="https://docs.material-tailwind.com/icons/google.svg"
+                                alt="metamask"
+                                className="h-6 w-6"
+                            />
+                            <Typography className="text-light-primary text-sm font-bold">Login with Google</Typography>
+                        </Button>
+    
+                        <Link to={config.routes.forgotPassword} className="float-right">
+                            <Typography
+                                variant="small"
+                                className="text-light-on-background opacity-80 hover:opacity-100 transition-opacity font-normal
+                            "
+                            >
+                                Forgot Password?
+                            </Typography>
+                        </Link>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

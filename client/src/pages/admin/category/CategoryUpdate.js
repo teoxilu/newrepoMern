@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { updateCategory, getCategory } from '../../../functions/category';
 import CategoryForm from '../../../components/forms/CategoryForm';
+import StickyHeader from '~/components/StickyHeader';
 
 const CategoryUpdate = ({ history, match }) => {
     const { user } = useSelector((state) => ({ ...state }));
@@ -59,22 +60,25 @@ const CategoryUpdate = ({ history, match }) => {
     //   };
 
     return (
-        <div className="container-fluid pt-28">
-            <div className="row">
-                <div className="col-md-2">
-                    <AdminNav />
-                </div>
-                <div className="col">
-                    {loading ? (
-                        <h4 className="text-danger">Loading..</h4>
-                    ) : (
-                        <h1 className="font-medium text-base text-left">Update category</h1>
-                    )}
-                    <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
-                    <hr />
+        <>
+        <StickyHeader isAdmin/>
+            <div className="container-fluid pt-28">
+                <div className="row">
+                    <div className="col-md-2">
+                        <AdminNav />
+                    </div>
+                    <div className="col">
+                        {loading ? (
+                            <h4 className="text-danger">Loading..</h4>
+                        ) : (
+                            <h1 className="font-medium text-base text-left">Update category</h1>
+                        )}
+                        <CategoryForm handleSubmit={handleSubmit} name={name} setName={setName} />
+                        <hr />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

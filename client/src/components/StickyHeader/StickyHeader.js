@@ -11,7 +11,7 @@ import SearchBar from '~/components/SearchBar';
 import images from '~/images';
 import ProfileMenu from '~/components/ProfileMenu';
 
-function StickyHeader() {
+function StickyHeader({ isShopPage = false, isAdmin = false }) {
     const [openNav, setOpenNav] = useState(false);
     const [current, setCurrent] = useState('home');
 
@@ -41,7 +41,7 @@ function StickyHeader() {
     }, []);
     useEffect(() => {
         const checkTime = setInterval(() => {
-            // Handle Logout when session timeout 
+            // Handle Logout when session timeout
         }, 60000 * 3);
 
         return () => {
@@ -69,26 +69,28 @@ function StickyHeader() {
             className="fixed top-0 z-50 h-max max-w-full w-screen rounded-none px-40 py-2 lg:px-40 lg:py-4 bg-light-surface"
         >
             <div className="flex items-center justify-between text-light-on-surface">
-                <Link to={config.routes.home}>
+                {isAdmin ? (
                     <img src={images.logo2} alt="Logo" className="h-auto max-w-full max-h-20 rounded-full z-50" />
-                </Link>
-                <SearchBar />
+                ) : (
+                    <Link to={config.routes.home}>
+                        <img src={images.logo2} alt="Logo" className="h-auto max-w-full max-h-20 rounded-full z-50" />
+                    </Link>
+                )}
+                {isShopPage && <SearchBar />}
                 <div className="flex items-center space-x-5">
                     {/* NavList */}
-                    <div className="hidden lg:block">{navList}</div>
+                    {!isAdmin && <div className="hidden lg:block">{navList}</div>}
 
                     {/* Icon Cart */}
-                    <Link to={config.routes.cart}>
-                        <Badge content={cart.length} withBorder>
-                            <IconButton
-                                variant="text"
-                                className="rounded-full hover:bg-light-primary/8"
-                            >
-                                <ShoppingCartIcon />
-                            </IconButton>
-                        </Badge>
-                    </Link>
-
+                    {!isAdmin && (
+                        <Link to={config.routes.cart}>
+                            <Badge content={cart.length} withBorder>
+                                <IconButton variant="text" className="rounded-full hover:bg-light-primary/8">
+                                    <ShoppingCartIcon />
+                                </IconButton>
+                            </Badge>
+                        </Link>
+                    )}
                     {/* Register/ Login */}
                     {!user && (
                         <>

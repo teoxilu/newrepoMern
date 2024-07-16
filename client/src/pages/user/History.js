@@ -12,6 +12,7 @@ import { getUserOrders } from '~/functions/user';
 import Invoice from '~/components/order/Invoice';
 import unknown from '~/images/unknown.jpg';
 import transition from '~/utils/transition';
+import StickyHeader from '~/components/StickyHeader';
 
 const History = () => {
     const [orders, setOrders] = useState([]);
@@ -36,50 +37,32 @@ const History = () => {
             <thead className="thead-light">
                 <tr>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Image
                         </Typography>
                     </th>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Title
                         </Typography>
                     </th>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Price
                         </Typography>
                     </th>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Brand
                         </Typography>
                     </th>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Size
                         </Typography>
                     </th>
                     <th scope="col" className="!bg-light-surface-container-lowest">
-                        <Typography
-                            variant="small"
-                            className="font-normal opacity-70 text-light-on-surface"
-                        >
+                        <Typography variant="small" className="font-normal opacity-70 text-light-on-surface">
                             Quantity
                         </Typography>
                     </th>
@@ -98,7 +81,11 @@ const History = () => {
                                         className="w-full h-full !max-h-32 object-cover rounded-lg"
                                     />
                                 ) : (
-                                    <ModalImage small={unknown} large={unknown} className="w-full h-full !max-h-24  object-cover rounded-lg" />
+                                    <ModalImage
+                                        small={unknown}
+                                        large={unknown}
+                                        className="w-full h-full !max-h-24  object-cover rounded-lg"
+                                    />
                                 )}
                             </div>
                         </td>
@@ -106,7 +93,9 @@ const History = () => {
                             <p>{p.product?.title}</p>
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="bg-light-tertiary-container/50 w-[15%]">
-                            <p className="text-light-on-tertiary-container">{numeral(p.product?.price).format('0,0')}</p>
+                            <p className="text-light-on-tertiary-container">
+                                {numeral(p.product?.price).format('0,0')}
+                            </p>
                         </td>
                         <td style={{ verticalAlign: 'middle' }} className="w-[15%]">
                             {p.product?.brand}
@@ -145,19 +134,22 @@ const History = () => {
         ));
 
     return (
-        <div className="container-fluid pt-28 text-light-on-surface">
-            <div className="row">
-                <div className="col-md-2">
-                    <UserNav />
-                </div>
-                <div className="col text-center">
-                    <h1 className="font-medium text-base text-left">
-                        {orders.length > 0 ? 'Purchase Orders' : 'No Purchase Orders'}
-                    </h1>
-                    {showEachOrders()}
+        <>
+            <StickyHeader />
+            <div className="container-fluid pt-28 text-light-on-surface">
+                <div className="row">
+                    <div className="col-md-2">
+                        <UserNav />
+                    </div>
+                    <div className="col text-center">
+                        <h1 className="font-medium text-base text-left">
+                            {orders.length > 0 ? 'Purchase Orders' : 'No Purchase Orders'}
+                        </h1>
+                        {showEachOrders()}
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
