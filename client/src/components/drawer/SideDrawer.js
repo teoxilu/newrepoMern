@@ -12,7 +12,6 @@ const SideDrawer = () => {
     const bottomNavbar = document.getElementById('bottomNavbar');
     const heightBottomNavbar = bottomNavbar?.offsetHeight;
 
-
     return (
         <Drawer
             className="text-center h-screen text-light-on-surface"
@@ -29,12 +28,12 @@ const SideDrawer = () => {
             {/* Items Container */}
             <div className={`h-full`}>
                 {cart.map((p, index) => {
-                  const isLast = index === cart.length-1;
-                  const classes = isLast ? `pb-[${heightBottomNavbar + 20}px]` : undefined
+                    const isLast = index === cart.length - 1;
+                    const classes = isLast ? `pb-[${heightBottomNavbar + 20}px]` : undefined;
                     return (
                         <div key={p._id} className={`row w-full ${classes}`}>
                             <div className="flex items-center">
-                                {p.images[0] ? (
+                                {p.images && p.images.length > 0 ? (
                                     <img
                                         src={p.images[0].url}
                                         alt={p.title}
