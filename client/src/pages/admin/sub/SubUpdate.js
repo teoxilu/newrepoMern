@@ -40,7 +40,7 @@ const SubUpdate = ({ match, history }) => {
                 console.log(res);
                 setLoading(false);
                 setName('');
-                toast.success(`"${res.data.name}" is updated`);
+                toast.success(`"${res.data.name}" is updated successfully`);
                 history.push('/admin/sub');
             })
             .catch((err) => {

@@ -52,7 +52,7 @@ const CategoryCreate = () => {
                 .then((res) => {
                     console.log('HI');
                     setLoading(false);
-                    toast.error(`${res.data.name} deleted`);
+                    toast.success(`${res.data.name} deleted successfully`);
                     loadCategories();
                 })
                 .catch((err) => {

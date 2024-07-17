@@ -50,7 +50,7 @@ const NotFoundPage = lazy(() => import('~/pages/NotFoundPage'));
 // const Test = lazy(() => import('~/pages/Test'));
 
 const contextClass = {
-    success: 'bg-gradient-to-r from-green-600 from-75% to-light-tertiary',
+    success: 'bg-gradient-to-r from-green-600 from-80% to-light-tertiary',
     error: 'bg-gradient-to-r from-red-600 from-50% to-light-tertiary',
     info: 'bg-gradient-to-r from-blue-600 from-50% to-light-primary',
     warning: 'bg-gradient-to-r from-yellow-600 from-50% to-light-tertiary text-light-on-surface',

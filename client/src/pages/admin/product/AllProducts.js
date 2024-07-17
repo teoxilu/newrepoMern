@@ -40,7 +40,7 @@ const AllProducts = () => {
                     toast.success(`${res.data.title} is deleted successfully`);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     if (err.response.status === 400) toast.error(err.response.data);
                 });
         }

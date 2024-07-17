@@ -15,6 +15,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const { user } = useSelector((state) => ({ ...state }));
 
     const screenWidth = window.innerWidth;
@@ -74,7 +75,8 @@ const Login = () => {
 
             history.push('/');
         } catch (error) {
-            toast.error("Wrong e-mail or password. Please try again.");
+            setError('Wrong e-mail or password. Please try again.');
+            // toast.error('Wrong e-mail or password. Please try again.');
             setLoading(false);
         }
     };
@@ -128,6 +130,7 @@ const Login = () => {
                 placeholder="Your password"
                 required
             />
+            {error && <p className="text-light-error">{error}</p>}
             <Button
                 onClick={handleSubmit}
                 variant="filled"
@@ -139,13 +142,15 @@ const Login = () => {
             </Button>
         </form>
     );
+
+    useEffect(() => {
+        setError('');
+    }, [email, password]);
     return (
         <>
-        <StickyHeader/>
+            <StickyHeader />
             <div className="container px-40 pb-5 pt-28">
-                <div
-                    className={`flex-col max-w-[${screenWidth / 2}px] m-auto space-y-10 divide-y divide-light-outline-variant`}
-                >
+                <div className={`flex-col max-w-[${screenWidth / 2}px] m-auto `}>
                     <div className="flex-col space-y-5">
                         {loading ? (
                             <h4 className="text-light-on-surface-variant animate-pulse">Loading...</h4>
@@ -154,25 +159,26 @@ const Login = () => {
                         )}
                         {loginForm()}
                     </div>
-    
-                    <div className="flex-col space-y-5 pt-10">
-                        <Button
+                    <div className="or my-5">or</div>
+
+                    <div className="flex-col space-y-5">
+                        {/* <Button
                             onClick={handleSubmit}
                             variant="outlined"
                             size="lg"
-                            className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
+                            className="inline-flex w-full justify-center items-center gap-3 rounded-full !border-light-primary hover:bg-light-primary/8 transition-colors"
                         >
                             <img src={images.emailIcon} alt="metamask" className="h-6 w-6" />
                             <Typography className="text-light-primary text-sm font-bold">
                                 Login with Email & Password
                             </Typography>
-                        </Button>
-    
+                        </Button> */}
+
                         <Button
                             onClick={googleLogin}
                             // type="danger"
                             variant="outlined"
-                            className="inline-flex w-full justify-center items-center gap-3 rounded-full border-light-outline hover:bg-light-primary/8 transition-colors"
+                            className="inline-flex w-full justify-center items-center gap-3 rounded-full !border-light-primary hover:bg-light-primary/8 transition-colors"
                             size="lg"
                         >
                             <img
@@ -182,15 +188,15 @@ const Login = () => {
                             />
                             <Typography className="text-light-primary text-sm font-bold">Login with Google</Typography>
                         </Button>
-    
+
                         <Link to={config.routes.forgotPassword} className="float-right">
-                            <Typography
-                                variant="small"
-                                className="text-light-on-background opacity-80 hover:opacity-100 transition-opacity font-normal
-                            "
+                            <Button
+                                size="sm"
+                                variant="text"
+                                className="text-light-on-background hover:text-light-primary hover:bg-light-primary/8 rounded-full transition-colors"
                             >
                                 Forgot Password?
-                            </Typography>
+                            </Button>
                         </Link>
                     </div>
                 </div>
