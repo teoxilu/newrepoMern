@@ -33,7 +33,7 @@ const RatingModal = ({ children }) => {
                 className="text-light-primary rounded-lg hover:bg-light-primary/8"
             >
                 <StarOutlined className="text-light-primary" /> <br />
-                {user ? 'Leave Rating' : 'Login to leave rating'}
+                {user ? 'Leave Rating' : 'Login to rating'}
             </Button>
 
             <Dialog open={dialogVisible} handler={handleOpen}>

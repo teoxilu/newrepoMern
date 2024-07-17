@@ -55,7 +55,7 @@ function StickyHeader({ isShopPage = false, isAdmin = false }) {
             <Link to={config.routes.shop}>
                 <Button
                     variant="text"
-                    className="rounded-full text-light-on-surface hover:text-light-primary hover:bg-light-primary/8"
+                    className="rounded-full text-light-on-surface hover:text-light-primary hover:bg-light-primary/8 transition-colors"
                 >
                     Shop
                 </Button>
@@ -97,7 +97,7 @@ function StickyHeader({ isShopPage = false, isAdmin = false }) {
                             <Link to={config.routes.register}>
                                 <Button
                                     variant="outlined"
-                                    className="hidden lg:inline-block rounded-full border-light-outline hover:bg-light-primary/8"
+                                    className="hidden lg:inline-block rounded-full !border-light-outline hover:bg-light-primary/8"
                                 >
                                     <span className="text-light-primary">Register</span>
                                 </Button>

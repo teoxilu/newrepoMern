@@ -1,5 +1,4 @@
 const withMT = require('@material-tailwind/react/utils/withMT');
-const { transform } = require('lodash');
 /** @type {import('tailwindcss').Config} */
 module.exports = withMT({
     content: ['./src/**/*.{html,js}'],

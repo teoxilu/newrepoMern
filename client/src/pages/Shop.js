@@ -16,10 +16,11 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [filteredItem, setFilteredItem] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [price, setPrice] = useState([0, 0]);
+    const [price, setPrice] = useState([0, 5000000]);
     const [ok, setOk] = useState(false);
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);
+    const [chooseSize, setChooseSize] = useState([]);
     const [star, setStar] = useState('');
     const [subs, setSubs] = useState([]);
     const [sub, setSub] = useState('');
@@ -327,7 +328,6 @@ const Shop = () => {
     };
 
     // 8. show products based on size
-    const [chooseSize, setChooseSize] = useState([]);
     const fetchSize = (arg) => {
         fetchProductsByFilter(arg).then((res) => {
             setChooseSize(res.data);
@@ -418,8 +418,8 @@ const Shop = () => {
     // const ArrayItem =
 
     return (
-       <>
-       <StickyHeader isShopPage/>
+        <>
+            <StickyHeader isShopPage />
             <div className="grid grid-cols-12 px-40 pt-28 gap-x-2">
                 <div className="col-span-3">
                     <Menu
@@ -448,7 +448,7 @@ const Shop = () => {
                                 />
                             </div>
                         </SubMenu>
-    
+
                         {/* brands */}
                         <SubMenu
                             key="2"
@@ -462,7 +462,7 @@ const Shop = () => {
                                 {showBrands()}
                             </div>
                         </SubMenu>
-    
+
                         {/* Rating */}
                         <SubMenu
                             key="3"
@@ -474,7 +474,7 @@ const Shop = () => {
                         >
                             <div style={{ maringTop: '-10px' }}>{showStars()}</div>
                         </SubMenu>
-    
+
                         {/* size */}
                         <SubMenu
                             key="4"
@@ -488,7 +488,7 @@ const Shop = () => {
                                 {showSizes()}
                             </div>
                         </SubMenu>
-    
+
                         {/* category */}
                         <SubMenu
                             key="5"
@@ -500,7 +500,7 @@ const Shop = () => {
                         >
                             <div style={{ maringTop: '-10px' }}>{showCategories()}</div>
                         </SubMenu>
-    
+
                         {/* sub category */}
                         <SubMenu
                             key="6"
@@ -516,10 +516,10 @@ const Shop = () => {
                         </SubMenu>
                     </Menu>
                 </div>
-    
+
                 <div className="col-span-9">
                     {loading ? <h4 className="text-3xl text-danger text-center translate-y-16">Loading...</h4> : <></>}
-    
+
                     {arrayItem.length < 1 ? (
                         <Typography className="text-3xl text-center translate-y-16 ">No products found</Typography>
                     ) : (
@@ -533,7 +533,7 @@ const Shop = () => {
                     )}
                 </div>
             </div>
-       </>
+        </>
     );
 };
 

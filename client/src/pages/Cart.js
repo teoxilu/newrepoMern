@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
 import { userCart } from '../functions/user';
 import config from '~/config';
-import { Button, Card, Typography } from '@material-tailwind/react';
+import { Button, Card, Dialog, DialogBody, DialogFooter, DialogHeader, Typography } from '@material-tailwind/react';
 import numeral from 'numeral';
 import { useEffect } from 'react';
 import transition from '~/utils/transition';
@@ -12,6 +12,12 @@ import StickyHeader from '~/components/StickyHeader';
 
 const Cart = () => {
     const [headerHeight, setHeaderHeight] = useState(null);
+    const [isOpenDialog, setIsOpenDialog] = useState(false);
+    const [outOfStockItems, setOutOfStockItems] = useState([]);
+    const [availableItems, setAvailableItems] = useState([]);
+
+    const handleOpen = () => setIsOpenDialog(!isOpenDialog);
+
     const history = useHistory();
     const { cart, user } = useSelector((state) => ({ ...state }));
     const dispatch = useDispatch();
@@ -32,6 +38,11 @@ const Cart = () => {
             .then((res) => {
                 // console.log('CART POST RES', res);
                 if (res.data.ok) history.push('/checkout');
+                else if (res.data.isSomeItemsOutOfStock) {
+                    setAvailableItems(res.data.availableItems);
+                    setOutOfStockItems(res.data.outOfStockItems);
+                    setIsOpenDialog(true);
+                }
             })
             .catch((err) => console.log('cart save err', err));
     };
@@ -46,8 +57,36 @@ const Cart = () => {
             .then((res) => {
                 // console.log('CART POST RES', res);
                 if (res.data.ok) history.push('/checkout');
+                else if (res.data.isSomeItemsOutOfStock) {
+                    setAvailableItems(res.data.availableItems);
+                    setOutOfStockItems(res.data.outOfStockItems);
+                    setIsOpenDialog(true);
+                }
             })
-            .catch((err) => console.error('cart save err', err));
+            .catch((err) => console.log('cart save err', err));
+    };
+
+    function removeFromCart() {
+        outOfStockItems.forEach((item) => {
+            dispatch({ type: 'REMOVE_FROM_CART', payload: { _id: item.product } });
+        });
+    }
+    const handleProceedWithAvailableItems = async () => {
+        removeFromCart().then(() => {
+            userCart(cart, user.token)
+                .then((res) => {
+                    // console.log('CART POST RES', res);
+                    if (res.data.ok) history.push('/checkout');
+                    else if (res.data.isSomeItemsOutOfStock) {
+                        setAvailableItems(res.data.availableItems);
+                        setOutOfStockItems(res.data.outOfStockItems);
+                        setIsOpenDialog(true);
+                    }
+                })
+                .catch((err) => console.log('cart save err', err));
+        });
+
+        setIsOpenDialog(false);
     };
 
     useEffect(() => {
@@ -195,6 +234,43 @@ const Cart = () => {
                     )}
                 </div>
             </div>
+            <Dialog open={isOpenDialog} handler={handleOpen}>
+                <DialogHeader className="text-light-on-surface flex items-center space-x-2">Some items are out of stock</DialogHeader>
+                <DialogBody className='text-light-on-surface'>
+                    <ol className='flex flex-col space-y-2'>
+                        {outOfStockItems.map((item) => (
+                            <li key={item._id} className='text-light-on-surface font-medium text-xl list-item'>{item.title}</li>
+                        ))}
+                    </ol>
+                    <p className='text-light-on-surface-variant'>not enough quantity to proceed with payment</p>
+                </DialogBody>
+                <DialogFooter>
+                    {/* {availableItems.length > 0 ? (
+                        <>
+                            <Button
+                                onClick={() => setIsOpenDialog(false)}
+                                variant="text"
+                                className="rounded-full text-light-primary hover:bg-light-primary/8 transition-colors"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={handleProceedWithAvailableItems}
+                                className="rounded-full bg-light-primary text-light-on-primary"
+                            >
+                                Proceed with Available Items
+                            </Button>
+                        </>
+                    ) : ( */}
+                    <Button
+                        onClick={() => setIsOpenDialog(false)}
+                        className="rounded-full bg-light-primary text-light-on-primary"
+                    >
+                        Got it!
+                    </Button>
+                    {/* )} */}
+                </DialogFooter>
+            </Dialog>
         </>
     );
 };

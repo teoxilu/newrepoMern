@@ -29,7 +29,7 @@ function AdvertiseBannerSection() {
 
     return (
         <section>
-            <ul className={`mt-[${screenHeight / 1.9}px] w-full px-40 py-8 bg-light-tertiary-container shadow-inner flex items-center justify-between`}>
+            <ul className={`mt-[${screenHeight / 1.7}px] w-full px-40 py-8 bg-light-tertiary-container shadow-inner flex items-center justify-between`}>
                 {BANNER_ITEM.map((item) => (
                     <motion.li
                         key={item.id}

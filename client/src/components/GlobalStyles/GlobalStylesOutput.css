@@ -1644,6 +1644,10 @@ h1,
   display: grid;
 }
 
+.list-item{
+  display: list-item;
+}
+
 .hidden{
   display: none;
 }
