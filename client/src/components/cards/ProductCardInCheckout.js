@@ -94,7 +94,7 @@ const ProductCardInCheckout = ({ p }) => {
             <tr>
                 <td className="bg-light-tertiary-container/50 w-[20%] h-full" style={{ verticalAlign: 'middle' }}>
                     <div className="w-full m-auto">
-                        {p.images.length ? (
+                        {p.images && p.images.length ? (
                             <ModalImage
                                 small={p.images[0].url}
                                 large={p.images[0].url}
